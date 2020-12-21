@@ -1,7 +1,11 @@
 import React from "react";
-
+import Login from "../../views/login";
 const App: React.FC = () => {
-  return <div>作为blog 的后台管理</div>;
+  return (
+    <>
+      <Login />
+    </>
+  );
 };
 
 export default App;

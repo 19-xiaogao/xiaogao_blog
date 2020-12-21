@@ -9,7 +9,7 @@ router.post("/insert_blog", (req, res) => {
     req.body,
     (result) => {
         res.writeHead(200)
-        res.write(writeResult({success:true,message:ResponseState.succcess,data:result}))
+        res.write(writeResult({success:true,message:ResponseState.success,data:result}))
         res.end()
     },
     (error) => {
