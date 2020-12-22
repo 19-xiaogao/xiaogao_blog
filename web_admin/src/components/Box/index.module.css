@@ -1,0 +1,45 @@
+.box {
+    height: 100%;
+    width: 100%;
+}
+
+.header {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 87%;
+    height: 7%;
+    background-color: red;
+    border-bottom: 1px solid #eee;
+}
+
+.tools {
+    position: relative;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 13%;
+    background-color: #001529;
+    text-align: center;
+    padding-top: 15px;
+}
+
+.tools_logo {
+    width: 80%;
+    height: 30px;
+    line-height: 30px;
+    margin-left: 15px;
+    color: #ffffff;
+    font-size: 18px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    background-color: #4d5c6a;
+}
+
+.body {
+    position: absolute;
+    top: 7%;
+    right: 0px;
+    background-color: saddlebrown;
+    width: 87%;
+    height: 93%;
+}

@@ -50,7 +50,7 @@ export const selectBlog = async (options: ISelectBlog, success: (res) => any, er
       error(err);
     }
   } else {
-    const sqlStr = 'select * from blog where like = "%?%" limit ? ? ;'
+    const sqlStr = 'select * from blog where title like = "%?%" limit ? ? ;'
     const params = [options.title, options.pageNo, options.pageSize];
     try {
       const result = await performSql(sqlStr, params);
