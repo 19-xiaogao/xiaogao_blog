@@ -1,11 +1,13 @@
 import React from "react";
 import { Button, Dropdown, Menu } from "antd";
 import { ApartmentOutlined } from "@ant-design/icons";
+import { useHistory } from "react-router-dom";
 import "./index.scss";
 
 const Header: React.FC = () => {
+  const history = useHistory();
   const logout = () => {
-    alert("退出");
+    history.push("/login");
   };
   const menu = (
     <Menu>
