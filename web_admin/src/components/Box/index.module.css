@@ -8,9 +8,9 @@
     top: 0;
     right: 0;
     width: 87%;
-    height: 7%;
-    background-color: red;
-    border-bottom: 1px solid #eee;
+    height: 65px;
+    line-height: 65px;
+    background-color: #ffffff;
 }
 
 .tools {
@@ -39,7 +39,7 @@
     position: absolute;
     top: 7%;
     right: 0px;
-    background-color: saddlebrown;
+    background-color: #eee;
     width: 87%;
     height: 93%;
 }

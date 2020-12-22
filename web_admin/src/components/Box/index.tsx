@@ -6,19 +6,19 @@ interface BoxProps {
 }
 
 export default class Box extends React.Component<BoxProps, {}> {
-  public static Header = (props: any) => (
+  public static Header = (props: BoxProps) => (
     <div className={Styles.header}>{props.children}</div>
   );
 
-  public static ToolsLogo = (props: any) => (
+  public static ToolsLogo = (props: BoxProps) => (
     <div className={Styles.tools_logo}>{props.children}</div>
   );
 
-  public static Tools = (props: any) => (
+  public static Tools = (props: BoxProps) => (
     <div className={Styles.tools}>{props.children}</div>
   );
 
-  public static Body = (props: any) => (
+  public static Body = (props: BoxProps) => (
     <div className={Styles.body}>{props.children}</div>
   );
 
