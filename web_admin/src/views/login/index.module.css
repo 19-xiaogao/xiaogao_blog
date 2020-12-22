@@ -14,7 +14,6 @@
     text-align: center;
     display: flex;
     flex-direction: column;
-    /* justify-content: space-around; */
     align-items: center;
     background-color: #141414;
     opacity: 0.8;
@@ -26,12 +25,15 @@
     width: 70%;
     margin-top: 60px;
     padding-left: 10px;
+    font-size: 16px;
     color: #fafafa;
-    caret-color: #13c2c2;
+    caret-color: #ffffff;
+    border-bottom: 2px solid #fafafa;
+    padding-bottom: 3px;
 }
 
 .login_box input:focus {
-    border-bottom: 1px solid #1890ff;
+    border-bottom: 2px solid #1890ff;
 }
 
 .login_box button {
@@ -41,5 +43,25 @@
     outline: none;
     cursor: pointer;
     text-align: center;
+    border-radius: 10px;
+    font-size: 17px;
+    color: #fafafa;
     background-image: linear-gradient(50deg, #e6fffb, #002766);
+}
+
+/* .login_box button :hover {
+    animation: back 8s ease-in-out;
+} */
+
+@keyframes back {
+    0% {
+        background-color: aliceblue;
+        left: 0%;
+    }
+
+    100% {
+        background-color: red;
+
+        left: 400%;
+    }
 }

@@ -1,6 +1,4 @@
-  
 import express from "express";
-// import textRouter from "./routers/test";
 import blogRouter from "./routers/blogList";
 const app: express.Application = express();
 const host = process.env.HOST || "127.0.0.1";
@@ -14,7 +12,6 @@ app.use(
 );
 // 解析 json 格式请求体
 app.use(express.json());
-// app.use("/test", textRouter);
 app.use("/blog", blogRouter);
 
 app.get("/", (req, res) => {
