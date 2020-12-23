@@ -4,6 +4,7 @@ import Box from "../../components/Box";
 import Menu from "../../views/menu/index";
 import HeaderTiTile from "../../views/Header";
 import { Helmet } from "react-helmet";
+import Body from "../body";
 import image from "../../assets/image/bg.jpg";
 export default class Home extends React.Component {
   render() {
@@ -20,7 +21,9 @@ export default class Home extends React.Component {
           <Box.ToolsLogo>XiaoGao博客</Box.ToolsLogo>
           <Menu />
         </Box.Tools>
-        <Box.Body>内容展示区域</Box.Body>
+        <Box.Body>
+          <Body />
+        </Box.Body>
       </Box>
     );
   }

@@ -1,4 +1,7 @@
 import { IRouters } from "../types/routerType";
+import routerPath from "./pathenum";
+import CreatArticle from "../views/creatArticle";
+import BlogList from '../views/blogList'
 import {
   AppstoreOutlined,
   MailOutlined,
@@ -6,19 +9,22 @@ import {
 } from "@ant-design/icons";
 const router: IRouters[] = [
   {
-    path: "/",
+    path: routerPath.articleList,
     title: "文章列表",
-    icon: (): JSX.Element => <AppstoreOutlined />,
+    components: () => <BlogList />,
+    icon: () => <AppstoreOutlined />,
   },
   {
-    path: "/a",
+    path: routerPath.creatArticle,
     title: "创建文章",
-    icon: (): JSX.Element => <MailOutlined />,
+    components: () => <CreatArticle />,
+    icon: () => <MailOutlined />,
   },
   {
-    path: "/b",
+    path: routerPath.commentReply,
     title: "评论回复",
-    icon: (): JSX.Element => <SettingOutlined />,
+    components: () => <CreatArticle />,
+    icon: () => <SettingOutlined />,
   },
 ];
 
