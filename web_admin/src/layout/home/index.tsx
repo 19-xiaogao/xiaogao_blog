@@ -4,13 +4,14 @@ import Box from "../../components/Box";
 import Menu from "../../views/menu/index";
 import HeaderTiTile from "../../views/Header";
 import { Helmet } from "react-helmet";
+import image from "../../assets/image/bg.jpg";
 export default class Home extends React.Component {
   render() {
     return (
       <Box>
         <Helmet>
           <title>首页</title>
-          <link rel="canonical" href="http://mysite.com/example" />
+          <link rel="canonical" href={image} />
         </Helmet>
         <Box.Header>
           <HeaderTiTile />

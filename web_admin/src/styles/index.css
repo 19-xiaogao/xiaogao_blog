@@ -129,6 +129,11 @@ input {
     border: none;
     outline: medium;
 }
+
 button {
     border: none;
+}
+
+a {
+    text-decoration: none !important;
 }
