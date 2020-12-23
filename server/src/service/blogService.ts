@@ -8,6 +8,7 @@ interface InsertBlogOptions {
   releaseDate: string; // 发布日期
   likeCount: number; // 被希望的次数
 }
+
 // 插入博客
 export const insertBlog = (
   options: InsertBlogOptions,
@@ -36,6 +37,7 @@ interface ISelectBlog {
   pageNo?: number;
   pageSize?: number;
 }
+
 // 查找博客
 export const selectBlog = async (options: ISelectBlog, success: (res) => any, error: (error: any) => void) => {
   options.pageNo = Number(options.pageNo ? options.pageNo : 1);
