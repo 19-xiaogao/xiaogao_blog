@@ -1,22 +1,14 @@
 import React from "react";
 import { Row, Col, Input, Button, message } from "antd";
-import MdEditor from 'react-markdown-editor-lite'
-import MarkdownIt from 'markdown-it'
 import { UploadOutlined } from "@ant-design/icons";
-import 'react-markdown-editor-lite/lib/index.css';
+import MarkDowns from './components/MdEditor'
 import "./index.scss";
-
 interface ICreateArticleState {
   updateContext: any;
 }
 export default class CreateArticle extends React.Component<{}, ICreateArticleState> {
-  private mdParser: any = null
-  constructor(props: any) {
-    super(props)
-    this.state = {
-      updateContext: '',
-    }
-    this.mdParser = new MarkdownIt(/* Markdown-it options */)
+  state = {
+    updateContext: '',
   }
   private handleEditorChange = ({ html, text }: { html: string, text: string }) => {
     this.setState({
@@ -66,12 +58,9 @@ export default class CreateArticle extends React.Component<{}, ICreateArticleSta
     return (
       <>
         <div className="creatArticle_header">{this.renderInput()}</div>
-        <MdEditor
-          style={{ height: "500px" }}
-          value={this.state.updateContext}
-          renderHTML={(text) => this.mdParser.render(text)}
-          onChange={this.handleEditorChange}
-        />
+        <div className="markDown">
+          <MarkDowns context={this.state.updateContext} onchange={this.handleEditorChange} />
+        </div>
       </>
     );
   }

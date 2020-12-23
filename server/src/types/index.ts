@@ -1,5 +1,5 @@
 export interface Response {
     success: boolean;
     message: string;
-    data: any[] | object;
+    data: any[] | object | string;
   }
