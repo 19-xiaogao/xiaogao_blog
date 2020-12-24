@@ -1,12 +1,14 @@
 // 设置代理 
-const { createProxyMiddleware } = require('http-proxy-middleware');
+const {
+  createProxyMiddleware
+} = require('http-proxy-middleware');
 
 module.exports = function (app) {
-  app.use(createProxyMiddleware([process.env.ACT_APP_API], {
-    target: process.env.REACT_APP_BASE_URL,
+  app.use(createProxyMiddleware('/devApi', {
+    target: 'http://localhost:3003',
     changeOrigin: true,
     pathRewrite: {
-      [`^${process.env.REACT_APP_API}`]: "",
+      "^/devApi": "",
     }
   }));
 };

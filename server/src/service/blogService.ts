@@ -4,9 +4,9 @@ import { performSql } from "../db/performSql";
 interface InsertBlogOptions {
   title: string; // 标题
   content: string; // 内容
-  viewCount: number; // 被查看的次数
-  releaseDate: string; // 发布日期
-  likeCount: number; // 被希望的次数
+  createDate: string; // 发布日期
+  imgUrl: string;
+  number_words: number
 }
 
 // 插入博客
@@ -16,13 +16,17 @@ export const insertBlog = (
   error: (error: any) => void
 ) => {
   const sqlStr =
-    "INSERT INTO blog SET title = ?,content = ?,imgUrl = ?,viewCount = ? ,releaseDate = ?,likeCount = ?;";
+    "INSERT INTO blog SET title = ?,content = ?,imgUrl = ?,createDate = ?,number_words = ?;";
+  const fromTime = options.createDate.replace(new RegExp('-', 'gm'), "/")
+  // console.log(fromTime)
+  const timeStamp = (new Date(fromTime))
+  // console.log(timeStamp)
   const params = [
     options.title,
     options.content,
-    options.viewCount,
-    options.releaseDate,
-    options.likeCount,
+    options.imgUrl,
+    timeStamp,
+    options.number_words
   ];
   const connection = createConnection();
   connection.connect();
