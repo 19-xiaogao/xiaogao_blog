@@ -1,5 +1,5 @@
-import axios from "axios";
-
+import axios, { AxiosResponse } from "axios";
+import { IResponse } from '../types/response'
 const server = axios.create({
   baseURL: '/devApi',
   timeout: 5000,
@@ -14,7 +14,7 @@ server.interceptors.request.use(
 );
 
 server.interceptors.response.use(
-  (response) => {
+  (response): AxiosResponse<IResponse> => {
     return response.data;
   },
   (err) => Promise.reject(err)

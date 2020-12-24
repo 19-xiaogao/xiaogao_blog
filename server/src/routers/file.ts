@@ -15,10 +15,9 @@ const storage = multer.diskStorage({
     }
 })
 const upload = multer({ storage });
-
-router.post('/update_img', upload.single('avatar'), (req: any, res) => {
+router.post('/update_img', upload.single('file'), (req: any, res) => {
     const imgUrl = `http://${req.headers.host}/images/${req.file.originalname}`
-    res.writeHead(200, { 'Content-Type': ResponseState.ContentType });
+    res.writeHead(200,{'Content-Type':ResponseState.ContentType});
     res.write(writeResult({ success: true, message: ResponseState.success, data: imgUrl }))
     res.end();
 })

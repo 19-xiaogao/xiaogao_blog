@@ -1,21 +1,40 @@
 import React, { useState } from 'react'
-import { Upload, message } from 'antd'
+import { Upload, message, Modal } from 'antd'
 import { UploadChangeParam, RcFile } from 'antd/lib/upload'
-import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
+import { PlusOutlined } from '@ant-design/icons';
 interface UpdateImageProps {
     className?: string
+    onUpdateImage: (value: any) => void
 }
-
 const UpdateImage: React.FC<UpdateImageProps> = (props) => {
-    const [loading, setLoading] = useState<boolean>(false)
-    const [imageUrl, setImageUrl] = useState<string>('')
-    const actionUrl ='/devApi/api/image/update_img'
 
-    function getBase64(img: any, callback: (res: any) => void) {
-        const reader = new FileReader();
-        reader.addEventListener('load', () => callback(reader.result));
-        reader.readAsDataURL(img);
+    const [previewVisible, setPreviewVisible] = useState<boolean>(false)
+    const [previewImage, setPreviewImage] = useState<string>('')
+    const [previewTitle, setPreviewTitle] = useState<string>('')
+    const [fileList, setFileList] = useState<any[]>([])
+
+    const actionUrl = '/devApi/api/image/update_img'
+
+    function getBase64(file: any) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = error => reject(error);
+        });
     }
+
+    const handleCancel = () => setPreviewVisible(false)
+
+    const handlePreview = async (file: any) => {
+        if (!file.url && !file.preview) {
+            file.preview = await getBase64(file.originFileObj);
+        }
+        setPreviewImage(file.url || file.preview)
+        setPreviewVisible(true)
+        setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1))
+    };
+
     const beforeUpload = (file: RcFile) => {
         const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
         if (!isJpgOrPng) {
@@ -27,34 +46,40 @@ const UpdateImage: React.FC<UpdateImageProps> = (props) => {
         }
         return isJpgOrPng && isLt2M;
     }
+    // 这里会调用3次 淦 就没有上传成功的api嘛
     const handleChange = (info: UploadChangeParam) => {
-        if (info.file.status === 'uploading') {
-            setLoading(true)
-            return;
-        }
-        if (info.file.status === 'done') {
-            getBase64(info.file.originFileObj, imageUrl => {
-                setLoading(false)
-                setImageUrl(imageUrl)
-            });
+        setFileList(info.fileList);
+        if (info.file.response && info.file.response.success) {
+            props.onUpdateImage(info.file.response.data)
         }
     }
     const uploadButton = (
         <div>
-            {loading ? <LoadingOutlined /> : <PlusOutlined />}
-            <div style={{ marginTop: 8 }}>上传图片</div>
+            <PlusOutlined />
+            <div style={{ marginTop: 8 }}>Upload</div>
         </div>
     );
-    return <Upload
-        name="avatar"
-        listType="picture-card"
-        className={props.className}
-        showUploadList={false}
-        action={actionUrl}
-        beforeUpload={beforeUpload}
-        onChange={handleChange}
-    >
-        {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
-    </Upload>
+    return <>
+        <Upload
+            listType="picture-card"
+            className={props.className}
+            action={actionUrl}
+            fileList={fileList}
+            beforeUpload={beforeUpload}
+            onPreview={handlePreview}
+            onChange={handleChange}
+        >
+            {fileList.length >= 1 ? null : uploadButton}
+        </Upload>
+        <Modal
+            visible={previewVisible}
+            title={previewTitle}
+            footer={null}
+            onCancel={handleCancel}
+        >
+            <img alt="example" style={{ width: '100%' }} src={previewImage} />
+        </Modal>
+    </>
+
 }
 export default UpdateImage

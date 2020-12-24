@@ -32,12 +32,25 @@
   display: flex;
   height: 90%;
   width: 100%;
+
   .markDown {
     flex: 1;
     margin-top: 8px;
     margin-left: 8px;
   }
-  .updateImg{
-    width: 10%;
+  .updateImg {
+    margin-top: 45px;
+    margin-left: 30px;
+    width: 20%;
   }
 }
+.ant-upload-select-picture-card {
+  width: 300px !important;
+
+  height: 215px !important;
+}
+.ant-upload-list-picture-card-container {
+  width: 300px !important;
+  height: 215px !important;
+}
+

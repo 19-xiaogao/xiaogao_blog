@@ -7,7 +7,7 @@ const createConnection = () =>
     port: 3306,
     user: "root",
     password: "root",
-    database: "xiaogao_blog",
+    database: "xiao_gao",
   });
 
 export default createConnection;

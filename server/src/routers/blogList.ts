@@ -9,7 +9,7 @@ router.post("/insert_blog", (req, res) => {
   insertBlog(
     req.body,
     (result) => {
-      res.writeHead(200)
+      res.writeHead(200, { 'Content-Type': ResponseState.ContentType })
       res.write(writeResult({ success: true, message: ResponseState.success, data: result }))
       res.end()
     },
@@ -23,7 +23,7 @@ router.post("/insert_blog", (req, res) => {
 router.get('/list_blog', (req, res) => {
   selectBlog(req.params, (result) => {
     res.writeHead(200)
-    res.write(writeResult({ success: true, message: ResponseState.success, data: result }))
+    res.write(writeResult({ success: true, message: ResponseState.success, data: '' }))
     res.end()
   }, (error) => {
     res.write(writeResult({ success: false, message: ResponseState.failed, data: error }))
