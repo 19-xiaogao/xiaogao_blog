@@ -1,7 +1,9 @@
 import React from "react";
 import { Row, Col, Input, Button, message } from "antd";
-import { UploadOutlined } from "@ant-design/icons";
+import { UploadOutlined, } from "@ant-design/icons";
 import MarkDowns from './components/MdEditor'
+import UpdateImage from './components/updateImage'
+import { getText } from '../../api/text'
 import "./index.scss";
 interface ICreateArticleState {
   updateContext: any;
@@ -53,13 +55,20 @@ export default class CreateArticle extends React.Component<{}, ICreateArticleSta
       </Row>
     );
   };
-
+  private getTextRequest = () => {
+    
+    getText().then(res => {
+      console.log(res)
+    })
+  }
   render() {
     return (
       <>
-        <div className="creatArticle_header">{this.renderInput()}</div>
-        <div className="markDown">
-          <MarkDowns context={this.state.updateContext} onchange={this.handleEditorChange} />
+      <Button onClick={this.getTextRequest}>ss</Button>
+        <div className="creatArticle_header" >{this.renderInput()}</div>
+        <div className="markDownUpdate">
+          <div className="markDown"><MarkDowns context={this.state.updateContext} onchange={this.handleEditorChange} /></div>
+          <UpdateImage className={'updateImg'} />
         </div>
       </>
     );
