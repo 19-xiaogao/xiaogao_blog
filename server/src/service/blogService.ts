@@ -8,6 +8,7 @@ interface InsertBlogOptions {
   imgUrl: string;
   number_words: number
 }
+
 // 插入博客
 export const insertBlog = (
   options: InsertBlogOptions,
@@ -17,9 +18,7 @@ export const insertBlog = (
   const sqlStr =
     "INSERT INTO blog SET title = ?,content = ?,imgUrl = ?,createDate = ?,number_words = ?;";
   const fromTime = options.createDate.replace(new RegExp('-', 'gm'), "/")
-  // console.log(fromTime)
   const timeStamp = (new Date(fromTime))
-  // console.log(timeStamp)
   const params = [
     options.title,
     options.content,

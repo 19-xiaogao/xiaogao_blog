@@ -29,7 +29,6 @@ app.all('*', cors(corsOptionsDelegate), (req, res, next) => {
   }
 })
 
-// 兼容旧的版本，使用新的 qs 库解析 body 消息体
 app.use(
   express.urlencoded({
     extended: true,
@@ -46,12 +45,5 @@ app.get('/images/*', (req, res) => {
 
 app.use("/api/blog", blogRouter);
 app.use('/api/image', file)
-
-app.get("/login", (req, res) => {
-  res.writeHead(200)
-  res.write(JSON.stringify({ data: [1, 3, 4, 5, 6] }))
-  res.end()
-});
-
 
 app.listen(post, () => console.log(`runling ${host}:${post}`));
