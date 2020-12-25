@@ -5,7 +5,15 @@ interface IInsertBlog {
     title: string
     content: string
     imgUrl: string
-    createDate:  string
+    createDate: string
     number_words: number
 }
-export const httpPostInsertBlog = (params: IInsertBlog): Promise<IResponse> => axios.post('/api/blog/insert_blog', params)
+export const httpPostInsertBlog = (data: IInsertBlog): Promise<IResponse> => axios.post('/api/blog/insert_blog', data);
+
+// 分页查询博客
+interface ISelectBlog {
+    pageNo: number
+    pageSize: number
+    title?: string
+}
+export const httpGetSelectBlog = (params: ISelectBlog): Promise<IResponse> => axios.get('/api/blog/list_blog', { params })

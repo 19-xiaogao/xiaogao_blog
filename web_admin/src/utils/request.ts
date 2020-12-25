@@ -7,7 +7,6 @@ const server = axios.create({
 
 server.interceptors.request.use(
   (confirm) => {
-    console.log(confirm.url)
     return confirm;
   },
   (err) => Promise.reject(err)

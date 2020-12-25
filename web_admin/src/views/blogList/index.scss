@@ -1,0 +1,37 @@
+.blogList_box {
+  padding: 10px;
+  height: 100%;
+  width: 100%;
+  .renderHeader {
+    display: flex;
+    background-color: #ffffff;
+    border-radius: 30px;
+    height: 80px;
+    padding-left: 30px;
+    align-items: center;
+    span {
+      width: 40px;
+    }
+    input {
+      border-radius: 10px;
+      width: 200px;
+      margin: 0 20px;
+    }
+    button {
+      border-radius: 20px;
+    }
+  }
+  .BlogList_table {
+    margin-top: 10px;
+    background-color: #ffffff;
+    height: 86%;
+    table {
+      border-radius: 30px;
+    }
+  }
+  .pagination {
+    text-align: right;
+    margin-right: 8px;
+    margin-top: 5px;
+  }
+}
