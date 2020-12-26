@@ -22,5 +22,4 @@ router.post('/update_img', upload.single('file'), (req: any, res) => {
     res.end();
 })
 
-
 export default router
