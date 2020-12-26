@@ -19,11 +19,12 @@ router.post("/insert_blog", (req, res) => {
     }
   );
 });
+
 // 查找博客
 router.get('/list_blog', (req, res) => {
-  selectBlog(req.params, (result) => {
-    res.writeHead(200)
-    res.write(writeResult({ success: true, message: ResponseState.success, data: '' }))
+  selectBlog(req.query, (result) => {
+    res.writeHead(200, { 'Content-Type': ResponseState.ContentType })
+    res.write(writeResult({ success: true, message: ResponseState.success, data: result }))
     res.end()
   }, (error) => {
     res.write(writeResult({ success: false, message: ResponseState.failed, data: error }))

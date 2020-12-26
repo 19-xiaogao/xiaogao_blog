@@ -1,7 +1,7 @@
 import React from "react";
 import { Row, Col, Input, Button, message, DatePicker, Space } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-import moment from 'moment';
+import moment, { Moment } from 'moment';
 import MarkDowns from './components/MdEditor'
 import UpdateImage from './components/updateImage'
 import { SaveIcon } from '../../styles/icon'
@@ -9,7 +9,7 @@ import { httpPostInsertBlog } from '../../api/api'
 import "./index.scss";
 interface ICreateArticleState {
   updateContext: any;
-  createTime: string
+  createTime: Moment | undefined
   imgUrl: string
   title: string
 }
@@ -17,7 +17,7 @@ const dateFormat = 'YYYY-MM-DD mm:ss';
 export default class CreateArticle extends React.Component<{}, ICreateArticleState> {
   state = {
     updateContext: '',
-    createTime: '',
+    createTime: undefined,
     imgUrl: '',
     title: ''
   }
@@ -46,7 +46,7 @@ export default class CreateArticle extends React.Component<{}, ICreateArticleSta
   //选择时间
   private onSelectTimeOk = (value: any) => {
     this.setState({
-      createTime: moment(value).format(dateFormat)
+      createTime: value
     })
   }
   private titleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -54,12 +54,12 @@ export default class CreateArticle extends React.Component<{}, ICreateArticleSta
   }
   private updateBlog = async () => {
     const { title, imgUrl, createTime, updateContext } = this.state
-    const { success } = await httpPostInsertBlog({ title, content: updateContext, imgUrl, createDate: createTime, number_words: updateContext.length })
+    const { success } = await httpPostInsertBlog({ title, content: updateContext, imgUrl, createDate: moment(createTime).format(dateFormat), number_words: updateContext.length })
     if (!success) { return message.error('创建失败') }
     message.success('创建成功')
     this.setState({
       updateContext: '',
-      createTime: '',
+      createTime: undefined,
       imgUrl: '',
       title: ''
     })
@@ -67,6 +67,7 @@ export default class CreateArticle extends React.Component<{}, ICreateArticleSta
   private onUpdateImage = (value: string) => {
     this.setState({ imgUrl: value })
   }
+
   // 渲染头部input栏
   private renderInput = () => {
     return (
@@ -83,7 +84,7 @@ export default class CreateArticle extends React.Component<{}, ICreateArticleSta
         </Col>
         <Col className="gutter-row" span={6}>
           <Space direction="vertical" size={12}>
-            <DatePicker showTime onOk={this.onSelectTimeOk} onChange={this.onSelectTimeOk} />
+            <DatePicker showTime onOk={this.onSelectTimeOk} placeholder="请选择日期时间" value={this.state.createTime} onChange={this.onSelectTimeOk} />
           </Space>
         </Col>
         <Col className="gutter-row" span={6}>

@@ -1,6 +1,6 @@
 import createConnection from "../db";
 // 执行mysql方法
-export const performSql = (sql, params) =>
+export const performSql = (sql, params?) =>
     new Promise((resolve, reject) => {
         const connection = createConnection();
         connection.connect();

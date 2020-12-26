@@ -12,9 +12,8 @@ const UpdateImage: React.FC<UpdateImageProps> = (props) => {
     const [previewImage, setPreviewImage] = useState<string>('')
     const [previewTitle, setPreviewTitle] = useState<string>('')
     const [fileList, setFileList] = useState<any[]>([])
-
     const actionUrl = '/devApi/api/image/update_img'
-
+    
     function getBase64(file: any) {
         return new Promise((resolve, reject) => {
             const reader = new FileReader();
@@ -46,7 +45,7 @@ const UpdateImage: React.FC<UpdateImageProps> = (props) => {
         }
         return isJpgOrPng && isLt2M;
     }
-    // 这里会调用3次 淦 就没有上传成功的api嘛
+
     const handleChange = (info: UploadChangeParam) => {
         setFileList(info.fileList);
         if (info.file.response && info.file.response.success) {
