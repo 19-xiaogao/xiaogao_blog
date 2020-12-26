@@ -55,7 +55,7 @@ export const selectBlog = async (options: ISelectBlog, success: (res) => any, er
       success({ list: resList, total: resTotal[0].total });
     } catch (err) {
       error(err);
-    }
+    } 
   } else {
     console.log(options.title)
     const sqlStr = `SELECT * FROM blog WHERE title = ? ORDER BY createDate DESC limit ?,? ;`
