@@ -1,7 +1,8 @@
 import express from "express";
 import cors from 'cors'
 import blogRouter from "./routers/blogList";
-import file from './routers/file'
+import fileRouter from './routers/file'
+import loginRouter  from './routers/login'
 const app: express.Application = express();
 const host = process.env.HOST || "127.0.0.1";
 const post = process.env.POST || 3003;
@@ -28,7 +29,6 @@ app.all('*', cors(corsOptionsDelegate), (req, res, next) => {
     next()
   }
 })
-
 app.use(
   express.urlencoded({
     extended: true,
@@ -43,7 +43,8 @@ app.get('/images/*', (req, res) => {
   res.sendFile(__dirname + '/' + req.url)
 })
 
-app.use("/api/blog", blogRouter);
-app.use('/api/image', file)
+app.use("/api/webAdmin/blog", blogRouter);
+app.use('/api/webAdmin/image', fileRouter)
+app.use('/api/webAdmin/',loginRouter)
 
 app.listen(post, () => console.log(`runling ${host}:${post}`));

@@ -7,6 +7,7 @@ import "./index.scss";
 const Header: React.FC = () => {
   const history = useHistory();
   const logout = () => {
+    localStorage.clear()
     history.push("/login");
   };
   const menu = (
