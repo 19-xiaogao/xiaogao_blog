@@ -42,7 +42,6 @@ interface ISelectBlog {
 
 // 查找博客
 export const selectBlog = async (options: ISelectBlog, success: (res) => any, error: (error: any) => void) => {
-  console.log(options)
   options.pageNo = Number(options.pageNo);
   options.pageSize = Number(options.pageSize);
   const sqlTotalStr = 'select COUNT(title) as total from blog;'
@@ -57,7 +56,6 @@ export const selectBlog = async (options: ISelectBlog, success: (res) => any, er
       error(err);
     }
   } else {
-    console.log(options.title)
     const sqlStr = `SELECT * FROM blog WHERE title = ? ORDER BY createDate DESC limit ?,? ;`
     const params = [options.title, options.pageNo, options.pageSize];
     try {
