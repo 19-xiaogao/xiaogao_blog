@@ -2,6 +2,7 @@ import axios from '../utils/request'
 import { IResponse } from '../types/response'
 type AxiosResponse = Promise<IResponse>
 
+// 登陆
 interface ILogin {
     username: string
     password: string
@@ -25,3 +26,15 @@ interface ISelectBlog {
     title?: string
 }
 export const httpGetSelectBlog = (params: ISelectBlog): AxiosResponse => axios.get('/api/webAdmin/blog/list_blog', { params })
+
+
+
+interface IUpdateBlog {
+    title?: string
+    imgUlr?: string
+    id: number
+    content?: string
+    show_blog: string
+}
+// 更新blog
+export const httpPostUpateBlog = (data: IUpdateBlog): AxiosResponse => axios.post('/api/webAdmin/blog/update_blog', data)

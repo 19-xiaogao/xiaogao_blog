@@ -69,13 +69,25 @@ export const selectBlog = async (options: ISelectBlog, success: (res) => any, er
 };
 
 interface IUpdateBlog {
-  title: string
-  imgUrl: string
-  content: string
+  title?: string
+  imgUrl?: string
+  content?: string
+  show_blog?: string
   id: number
 }
 // 更新文章
 export const updateBlog = async (options: IUpdateBlog, success: (res) => void, error: (err) => void) => {
+
+  if (options.show_blog) {
+    const sqlStr = 'update blog set show_blog =? where id = ?;'
+    const prams = [options.show_blog, options.id]
+    try {
+      const result = await performSql(sqlStr, prams)
+      success(result)
+    } catch (error) {
+      error(error)
+    }
+  }
   const sqlStr = 'UPDATE blog SET title = ?,imgUrl = ?,content = ? WHERE id = ?;'
   const params = [options.title, options.imgUrl, options.content, options.id];
   try {

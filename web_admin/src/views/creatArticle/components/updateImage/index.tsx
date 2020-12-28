@@ -12,7 +12,7 @@ const UpdateImage: React.FC<UpdateImageProps> = (props) => {
     const [previewImage, setPreviewImage] = useState<string>('')
     const [previewTitle, setPreviewTitle] = useState<string>('')
     const [fileList, setFileList] = useState<any[]>([])
-    const actionUrl = '/devApi/api/image/update_img'
+    const actionUrl = '/devApi/api/webAdmin/image/update_img'
     
     function getBase64(file: any) {
         return new Promise((resolve, reject) => {

@@ -1,5 +1,6 @@
 import React from "react";
-import { Input, Button, message, Table, Tag, Image, Pagination } from 'antd'
+import { Input, Button, message, Table, Image, Pagination, Switch } from 'antd'
+import { CheckOutlined, CloseOutlined } from '@ant-design/icons'
 import Drawer from '../../components/Drawer'
 import { httpGetSelectBlog } from '../../api/api'
 import moment from 'moment'
@@ -53,7 +54,8 @@ export default class BlogList extends React.Component<{}, IBlogListState> {
       title: '是否展示',
       key: 'show_blog',
       dataIndex: 'show_blog',
-      render: (text: any) => <Tag>{text === 1 ? '显示' : '隐藏'}</Tag>
+      render: (text: any) => <Switch checkedChildren={<CheckOutlined />}
+        unCheckedChildren={<CloseOutlined />} defaultChecked={text === 1 ? true : false} loading={this.state.loading} onClick={this.switchClick} />
     },
     {
       title: '字数',
@@ -93,6 +95,9 @@ export default class BlogList extends React.Component<{}, IBlogListState> {
   }
   private blogDetail = (row: any) => {
     this.setState({ blogDetailVisible: true, temporaryText: row })
+  }
+  private switchClick = (checked: boolean) => {
+    console.log(checked)
   }
   private oncloseDrawer = () => {
     this.setState({ blogDetailVisible: false, temporaryText: '' })
