@@ -7,6 +7,10 @@ const server = axios.create({
 
 server.interceptors.request.use(
   (confirm) => {
+    const token = localStorage.getItem('token')
+    if (token) {
+      confirm.headers.Authorization = token
+    }
     return confirm;
   },
   (err) => Promise.reject(err)

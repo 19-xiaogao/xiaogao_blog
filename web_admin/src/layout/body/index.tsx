@@ -5,7 +5,7 @@ import { IRouters } from "../../types/routerType";
 const HomeBody: React.FC = () => {
   const renderRoute = (router: IRouters[]) =>
     router.map((item) => (
-      <Route path={item.path} render={() => item.components()} key={item.path} />
+      <Route path={item.path} exact render={() => item.components()} key={item.path} />
     ));
   return <Switch>{renderRoute(routers)}</Switch>;
 };

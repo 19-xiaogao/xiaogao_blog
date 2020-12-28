@@ -1,30 +1,37 @@
 import { IRouters } from "../types/routerType";
-import routerPath from "./pathenum";
 import CreatArticle from "../views/creatArticle";
 import BlogList from '../views/blogList'
+import FistScreen from '../views/fistScreen'
 import {
-  AppstoreOutlined,
-  MailOutlined,
-  SettingOutlined,
+  CoffeeOutlined,
+  AppleOutlined,
+  FundProjectionScreenOutlined,
+  UnorderedListOutlined
 } from "@ant-design/icons";
 const router: IRouters[] = [
   {
-    path: routerPath.articleList,
+    path: '/',
+    title: "首页",
+    components: () => <FistScreen />,
+    icon: () => <FundProjectionScreenOutlined />
+  },
+  {
+    path: '/articleList',
     title: "文章列表",
     components: () => <BlogList />,
-    icon: () => <AppstoreOutlined />,
+    icon: () => <UnorderedListOutlined />,
   },
   {
-    path: routerPath.creatArticle,
+    path: '/creatArticle',
     title: "创建文章",
     components: () => <CreatArticle />,
-    icon: () => <MailOutlined />,
+    icon: () => <CoffeeOutlined />,
   },
   {
-    path: routerPath.commentReply,
+    path: '/commentReply',
     title: "评论回复",
     components: () => <CreatArticle />,
-    icon: () => <SettingOutlined />,
+    icon: () => <AppleOutlined />,
   },
 ];
 

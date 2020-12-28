@@ -67,3 +67,21 @@ export const selectBlog = async (options: ISelectBlog, success: (res) => any, er
     }
   }
 };
+
+interface IUpdateBlog {
+  title: string
+  imgUrl: string
+  content: string
+  id: number
+}
+// 更新文章
+export const updateBlog = async (options: IUpdateBlog, success: (res) => void, error: (err) => void) => {
+  const sqlStr = 'UPDATE blog SET title = ?,imgUrl = ?,content = ? WHERE id = ?;'
+  const params = [options.title, options.imgUrl, options.content, options.id];
+  try {
+    const result = await performSql(sqlStr, params)
+    success(result)
+  } catch (error) {
+    error(error)
+  }
+}

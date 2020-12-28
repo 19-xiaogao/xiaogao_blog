@@ -1,12 +1,23 @@
 import React from "react";
+import { RouteComponentProps } from 'react-router-dom'
 import "./index.scss";
 import Box from "../../components/Box";
 import Menu from "../../views/menu/index";
 import HeaderTiTile from "../../views/Header";
 import { Helmet } from "react-helmet";
+
 import Body from "../body";
 import image from "../../assets/image/bg.jpg";
-export default class Home extends React.Component {
+const getToken = () => localStorage.getItem('token')
+
+export default class Home extends React.Component<RouteComponentProps, {}> {
+
+  componentDidMount() {
+    if (!getToken()) {
+      this.props.history.push('/login')
+    }
+  }
+
   render() {
     return (
       <Box>

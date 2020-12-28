@@ -1,7 +1,12 @@
 import express from "express";
 import cors from 'cors'
 import blogRouter from "./routers/blogList";
-import file from './routers/file'
+import fileRouter from './routers/file'
+import loginRouter from './routers/login'
+import { SSHKEY } from './auth/index'
+import JWTverify from './auth/jwt'
+import { writeResult } from "./utils/result";
+
 const app: express.Application = express();
 const host = process.env.HOST || "127.0.0.1";
 const post = process.env.POST || 3003;
@@ -28,7 +33,6 @@ app.all('*', cors(corsOptionsDelegate), (req, res, next) => {
     next()
   }
 })
-
 app.use(
   express.urlencoded({
     extended: true,
@@ -42,8 +46,18 @@ app.use(express.json());
 app.get('/images/*', (req, res) => {
   res.sendFile(__dirname + '/' + req.url)
 })
-
-app.use("/api/blog", blogRouter);
-app.use('/api/image', file)
+app.use('/api/webAdmin/', loginRouter)
+app.all('/api/webAdmin/*', (req, res, next) => {
+  const token = req.headers.authorization ? req.headers.authorization : ''
+  try {
+    const vertifyResult = JWTverify(token, SSHKEY)
+    next()
+  } catch (error) {
+    res.write(writeResult({ success: false, message: '登陆失效', data: error }))
+    res.send()
+  }
+})
+app.use("/api/webAdmin/blog", blogRouter);
+app.use('/api/webAdmin/image', fileRouter)
 
 app.listen(post, () => console.log(`runling ${host}:${post}`));
