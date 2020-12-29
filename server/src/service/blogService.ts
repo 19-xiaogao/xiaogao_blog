@@ -69,19 +69,31 @@ export const selectBlog = async (options: ISelectBlog, success: (res) => any, er
 };
 
 interface IUpdateBlog {
-  title: string
-  imgUrl: string
-  content: string
+  title?: string
+  imgUrl?: string
+  content?: string
+  show_blog?: string
   id: number
 }
 // 更新文章
-export const updateBlog = async (options: IUpdateBlog, success: (res) => void, error: (err) => void) => {
-  const sqlStr = 'UPDATE blog SET title = ?,imgUrl = ?,content = ? WHERE id = ?;'
-  const params = [options.title, options.imgUrl, options.content, options.id];
-  try {
-    const result = await performSql(sqlStr, params)
-    success(result)
-  } catch (error) {
-    error(error)
+export const updateBlog = async (options: IUpdateBlog, success: (res) => void, error: (error: any) => void) => {
+  if (options.show_blog) {
+    const sqlStr = 'update blog set show_blog =? where id = ?;'
+    const prams = [options.show_blog, options.id]
+    try {
+      const result = await performSql(sqlStr, prams)
+      success(result)
+    } catch (err) {
+      error(err)
+    }
+  } else {
+    const sqlStr = 'UPDATE blog SET title = ?,imgUrl = ?,content = ? WHERE id = ?;'
+    const params = [options.title, options.imgUrl, options.content, options.id];
+    try {
+      const result = await performSql(sqlStr, params)
+      success(result)
+    } catch (err) {
+      error(err)
+    }
   }
 }

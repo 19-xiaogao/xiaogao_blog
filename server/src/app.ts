@@ -47,6 +47,7 @@ app.get('/images/*', (req, res) => {
   res.sendFile(__dirname + '/' + req.url)
 })
 app.use('/api/webAdmin/', loginRouter)
+app.use('/api/webAdmin/image', fileRouter)
 app.all('/api/webAdmin/*', (req, res, next) => {
   const token = req.headers.authorization ? req.headers.authorization : ''
   try {
@@ -58,6 +59,5 @@ app.all('/api/webAdmin/*', (req, res, next) => {
   }
 })
 app.use("/api/webAdmin/blog", blogRouter);
-app.use('/api/webAdmin/image', fileRouter)
 
 app.listen(post, () => console.log(`runling ${host}:${post}`));

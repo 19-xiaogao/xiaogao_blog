@@ -1,11 +1,13 @@
 import React from "react";
-import { Input, Button, message, Table, Tag, Image, Pagination } from 'antd'
-import Drawer from '../../components/Drawer'
-import { httpGetSelectBlog } from '../../api/api'
+import { Input, Button, message, Table, Image, Pagination, Switch } from 'antd'
+import { CheckOutlined, CloseOutlined } from '@ant-design/icons'
+import Drawer from './components/Drawer'
+import Modal from './components/modal'
+import { httpGetSelectBlog, httpPostUpdateBlog  } from '../../api/api'
 import moment from 'moment'
 import './index.scss';
 
-interface BlogData {
+export interface BlogData {
   imgUrl: string
   content: string
   createDate: string
@@ -25,9 +27,11 @@ interface IBlogListState {
   title: string | undefined
   blogDetailVisible: boolean
   temporaryText: string
+  visibleModal: boolean
 }
 
 export default class BlogList extends React.Component<{}, IBlogListState> {
+  private ModalData: BlogData | null = null;
   private columns = [
     {
       title: '标题',
@@ -53,7 +57,8 @@ export default class BlogList extends React.Component<{}, IBlogListState> {
       title: '是否展示',
       key: 'show_blog',
       dataIndex: 'show_blog',
-      render: (text: any) => <Tag>{text === 1 ? '显示' : '隐藏'}</Tag>
+      render: (text: any) => <Switch checkedChildren={<CheckOutlined />}
+        unCheckedChildren={<CloseOutlined />} defaultChecked={text === 1 ? true : false} loading={this.state.loading} onClick={(checked) => this.switchClick(checked, text)} />
     },
     {
       title: '字数',
@@ -70,9 +75,9 @@ export default class BlogList extends React.Component<{}, IBlogListState> {
       title: "操作",
       key: "context",
       dataIndex: 'content',
-      render: (text: any) => <div>
+      render: (text: any, row: BlogData) => <div>
         <Button type="link" onClick={() => this.blogDetail(text)}>内容</Button>
-        <Button type="link">修改</Button>
+        <Button type="link" onClick={() => this.blogAlter(row)}>修改</Button>
       </div>
     }
   ];
@@ -84,7 +89,8 @@ export default class BlogList extends React.Component<{}, IBlogListState> {
     total: 0,
     title: undefined,
     blogDetailVisible: false,
-    temporaryText: ''
+    temporaryText: '',
+    visibleModal: false
   }
 
   public async componentDidMount() {
@@ -94,6 +100,20 @@ export default class BlogList extends React.Component<{}, IBlogListState> {
   private blogDetail = (row: any) => {
     this.setState({ blogDetailVisible: true, temporaryText: row })
   }
+  private switchClick = async (checked: boolean, id: any) => {
+    this.setState(() => ({ loading: true }))
+    await httpPostUpdateBlog({ id, show_blog: checked ? '1' : '2' })
+    this.setState(() => ({ loading: false }))
+  }
+
+  private blogAlter = (row: BlogData) => {
+    this.setState({ visibleModal: true })
+    this.ModalData = row
+  }
+  private onOk = () => {
+    this.setState({ visibleModal: false })
+  }
+
   private oncloseDrawer = () => {
     this.setState({ blogDetailVisible: false, temporaryText: '' })
   }
@@ -142,6 +162,7 @@ export default class BlogList extends React.Component<{}, IBlogListState> {
         <Pagination current={this.state.pageNo + 1} className="pagination" total={this.state.total} onChange={this.pagInactionChange} />
       </div>
       <Drawer title="博客内容" visible={this.state.blogDetailVisible} context={this.state.temporaryText} onClose={this.oncloseDrawer} />
+      <Modal title="修改博客" visible={this.state.visibleModal} onOK={this.onOk} onCancel={this.onOk} data={this.ModalData} />
     </div>
   }
 }
