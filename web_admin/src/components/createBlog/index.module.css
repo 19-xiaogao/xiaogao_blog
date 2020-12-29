@@ -1,0 +1,20 @@
+.creatArticle_header {
+    margin: 5px 10px 0;
+    background-color: #ffffff;
+    display: flex;
+    height: 70px;
+    border-radius: 8px;
+}
+
+.gutter_row {
+    display: flex !important;
+    align-items: center;
+    justify-content: right;
+
+}
+
+.gutter_row input {
+    margin-left: 5px;
+    width: 250px;
+    height: 40px;
+}

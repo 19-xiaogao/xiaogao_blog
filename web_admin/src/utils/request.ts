@@ -8,6 +8,7 @@ const server = axios.create({
 server.interceptors.request.use(
   (confirm) => {
     const token = localStorage.getItem('token')
+    console.log(token)
     if (token) {
       confirm.headers.Authorization = token
     }

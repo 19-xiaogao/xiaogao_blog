@@ -7,6 +7,7 @@ interface ILogin {
     username: string
     password: string
 }
+
 export const httpPostLogin = (data: ILogin): AxiosResponse => axios.post('/api/webAdmin/login', data)
 
 // 创建博客

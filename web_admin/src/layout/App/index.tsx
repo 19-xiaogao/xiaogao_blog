@@ -10,7 +10,7 @@ const App: React.FC = () => {
     <>
       <Router>
         <Switch>
-          <Route path="/login" render={() => getToken() !== null ? <Redirect to="/" /> : <Login />} />
+          <Route path="/login" render={() => !getToken() ? <Login /> : <Redirect to="/" />} />
           <Route path="/" component={Home} />
         </Switch>
       </Router>
