@@ -64,6 +64,7 @@ export default class CreateArticle extends React.Component<{}, ICreateArticleSta
       title: ''
     })
   }
+  
   private onUpdateImage = (value: string) => {
     this.setState({ imgUrl: value })
   }

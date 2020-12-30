@@ -3,7 +3,7 @@ import { Input, Button, message, Table, Image, Pagination, Switch } from 'antd'
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons'
 import Drawer from './components/Drawer'
 import Modal from './components/modal'
-import { httpGetSelectBlog, httpPostUpdateBlog  } from '../../api/api'
+import { httpGetSelectBlog, httpPostUpdateBlog } from '../../api/api'
 import moment from 'moment'
 import './index.scss';
 
@@ -31,7 +31,7 @@ interface IBlogListState {
 }
 
 export default class BlogList extends React.Component<{}, IBlogListState> {
-  private ModalData: BlogData | null = null;
+  private ModalData!: BlogData;
   private columns = [
     {
       title: '标题',

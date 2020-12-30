@@ -12,7 +12,7 @@ const host = process.env.HOST || "127.0.0.1";
 const post = process.env.POST || 3003;
 
 const originList = ['http://localhost:3002'];
-
+// 设置跨域
 const corsOptionsDelegate = (req, callback) => {
   let corsOptions;
   if (originList.includes(req.header('Origin'))) {

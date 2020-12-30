@@ -12,11 +12,11 @@ export const httpPostLogin = (data: ILogin): AxiosResponse => axios.post('/api/w
 
 // 创建博客
 interface IInsertBlog {
-    title: string
-    content: string
-    imgUrl: string
-    createDate: string
-    number_words: number
+    title: string | undefined
+    content: string | undefined
+    imgUrl: string | undefined
+    createDate: string | undefined
+    number_words: number | undefined
 }
 export const httpPostInsertBlog = (data: IInsertBlog): AxiosResponse => axios.post('/api/webAdmin/blog/insert_blog', data);
 
