@@ -1,5 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import { IResponse } from '../types/response'
+import store from '../redux'
+
 const server = axios.create({
   baseURL: '/devApi',
   timeout: 5000,
@@ -7,8 +9,7 @@ const server = axios.create({
 
 server.interceptors.request.use(
   (confirm) => {
-    const token = localStorage.getItem('token')
-    console.log(token)
+    const token = store.getState().token
     if (token) {
       confirm.headers.Authorization = token
     }

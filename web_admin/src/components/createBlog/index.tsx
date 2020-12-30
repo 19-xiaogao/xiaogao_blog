@@ -10,7 +10,7 @@ interface ICreateBlog {
     title?: string
     imgUrl?: string
     context?: string
-    createTime?: string
+    createTime?: any
     WhetherToCreate: boolean
 }
 interface ICreateArticleState {
@@ -19,6 +19,7 @@ interface ICreateArticleState {
     imgUrl: string
     title: string
 }
+const dateFormat = 'YYYY-MM-DD mm:ss';
 class CreateBlog extends React.Component<ICreateBlog, ICreateArticleState> {
     state = {
         updateContext: '',
@@ -64,11 +65,12 @@ class CreateBlog extends React.Component<ICreateBlog, ICreateArticleState> {
     }
     // 渲染头部input栏
     private renderInput = () => {
+
         return (
             <Row gutter={16} style={{ width: "100%" }}>
                 <Col className={Styles.gutter_row} span={6}>
                     <span>文章标题:</span>
-                    <Input placeholder="请输入文章标题" value={this.state.title} onChange={this.titleChange} />
+                    <Input placeholder="请输入文章标题" value={this.props.title ? this.props.title : this.state.title} onChange={this.titleChange} />
                 </Col>
                 <Col className={Styles.gutter_row} span={6}>
                     <Button icon={<UploadOutlined />} className="updateBtn">
@@ -78,7 +80,7 @@ class CreateBlog extends React.Component<ICreateBlog, ICreateArticleState> {
                 </Col>
                 <Col className={Styles.gutter_row} span={6}>
                     <Space direction="vertical" size={12}>
-                        <DatePicker showTime onOk={this.onSelectTimeOk} placeholder="请选择日期时间" value={this.state.createTime} onChange={this.onSelectTimeOk} />
+                        <DatePicker showTime onOk={this.onSelectTimeOk} placeholder="请选择日期时间" value={this.props.createTime ? this.props.createTime : this.state.createTime} onChange={this.onSelectTimeOk} />
                     </Space>
                 </Col>
                 <Col className={Styles.gutter_row} span={6}>

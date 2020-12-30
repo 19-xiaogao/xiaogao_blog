@@ -1,13 +1,16 @@
 import React from "react";
 import { Button, Dropdown, Menu } from "antd";
 import { ApartmentOutlined } from "@ant-design/icons";
+import { clearToken } from '../../redux/action';
+import { useDispatch } from 'react-redux'
 import { useHistory } from "react-router-dom";
 import "./index.scss";
 
 const Header: React.FC = () => {
   const history = useHistory();
+  const dispatch = useDispatch();
   const logout = () => {
-    localStorage.clear()
+    dispatch(clearToken())
     history.push("/login");
   };
   const menu = (

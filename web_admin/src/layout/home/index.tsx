@@ -8,15 +8,8 @@ import { Helmet } from "react-helmet";
 
 import Body from "../body";
 import image from "../../assets/image/bg.jpg";
-const getToken = () => localStorage.getItem('token')
 
 export default class Home extends React.Component<RouteComponentProps, {}> {
-
-  componentDidMount() {
-    if (!getToken()) {
-      this.props.history.push('/login')
-    }
-  }
 
   render() {
     return (

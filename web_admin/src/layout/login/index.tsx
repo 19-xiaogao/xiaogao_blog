@@ -1,10 +1,16 @@
 import React, { Component } from "react";
-import { httpPostLogin } from '../../api/api'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { setToken } from '../../redux/action'
 import { message } from 'antd'
 import Styles from "./index.module.css";
+import { httpPostLogin } from '../../api/api'
 
-class Login extends Component<RouteComponentProps> {
+interface ILoginProps extends RouteComponentProps {
+  onSetToken: (value: string) => void
+}
+
+class Login extends Component<ILoginProps, {}> {
   state = {
     username: "",
     password: "",
@@ -21,7 +27,7 @@ class Login extends Component<RouteComponentProps> {
     const { data, success } = await httpPostLogin({ username, password })
     if (!success) { return message.error('密码错误') }
     message.success('登陆成功')
-    localStorage.setItem('token', data.token)
+    this.props.onSetToken(data.token)
     this.props.history.push('/')
   };
   render() {
@@ -36,4 +42,8 @@ class Login extends Component<RouteComponentProps> {
     );
   }
 }
-export default withRouter(Login)
+const mapToDispatchProps = (dispatch: any) => ({
+  onSetToken: (value: string) => dispatch(setToken(value))
+})
+
+export default connect(null, mapToDispatchProps)(withRouter(Login))

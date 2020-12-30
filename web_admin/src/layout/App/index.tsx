@@ -1,21 +1,26 @@
 import React from "react";
+import { useSelector } from 'react-redux'
 import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
+
 import Login from "../login";
 import Home from "../home";
+import PrivateRouter from '../../components/PrivateRouter'
 
-const getToken = () => localStorage.getItem('token')
+import { selector } from '../../redux/selector'
 
 const App: React.FC = () => {
+  const token = useSelector(selector)
   return (
     <>
       <Router>
         <Switch>
-          <Route path="/login" render={() => !getToken() ? <Login /> : <Redirect to="/" />} />
-          <Route path="/" component={Home} />
+          <Route path="/login" render={() => typeof token === 'string' ? <Redirect to="/" /> : <Login />} />
+          <PrivateRouter path="/" component={Home} />
         </Switch>
       </Router>
     </>
   );
 };
+
 
 export default App;
