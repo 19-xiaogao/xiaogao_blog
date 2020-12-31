@@ -22,7 +22,7 @@ interface ICreateArticleState {
     title: string | undefined
 }
 const dateFormat = 'YYYY-MM-DD mm:ss';
-class CreateBlog extends React.Component<ICreateBlogProps, ICreateArticleState> {
+class CreateBlog extends React.PureComponent<ICreateBlogProps, ICreateArticleState> {
 
     state = {
         updateContext: this.props.content,
@@ -116,7 +116,6 @@ class CreateBlog extends React.Component<ICreateBlogProps, ICreateArticleState> 
         );
     };
     render() {
-        console.log(this.state.updateContext)
         return <>
             <div className={Styles.creatArticle_header} >{this.renderInput()}</div>
             <div className="markDownUpdate">

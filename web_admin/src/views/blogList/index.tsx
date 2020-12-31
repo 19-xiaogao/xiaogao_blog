@@ -57,8 +57,8 @@ export default class BlogList extends React.Component<{}, IBlogListState> {
       title: '是否展示',
       key: 'show_blog',
       dataIndex: 'show_blog',
-      render: (text: any) => <Switch checkedChildren={<CheckOutlined />}
-        unCheckedChildren={<CloseOutlined />} defaultChecked={text === 1 ? true : false} loading={this.state.loading} onClick={(checked) => this.switchClick(checked, text)} />
+      render: (text: any, row: BlogData) => <Switch checkedChildren={<CheckOutlined />}
+        unCheckedChildren={<CloseOutlined />} defaultChecked={text === 1 ? true : false} loading={this.state.loading} onClick={(checked) => this.switchClick(checked, row)} />
     },
     {
       title: '字数',
@@ -101,9 +101,10 @@ export default class BlogList extends React.Component<{}, IBlogListState> {
   private blogDetail = (row: any) => {
     this.setState({ blogDetailVisible: true, temporaryText: row })
   }
-  private switchClick = async (checked: boolean, id: any) => {
+  private switchClick = async (checked: boolean, row: BlogData) => {
+
     this.setState(() => ({ loading: true }))
-    await httpPostUpdateBlog({ id, show_blog: checked ? '1' : '2' })
+    await httpPostUpdateBlog({ id: row.id, show_blog: checked ? '1' : '2' })
     this.setState(() => ({ loading: false }))
   }
 
