@@ -27,11 +27,11 @@ interface IBlogListState {
   title: string | undefined
   blogDetailVisible: boolean
   temporaryText: string
-  visibleModal: boolean
+  visibleModal: boolean,
+  ModalData: any
 }
 
 export default class BlogList extends React.Component<{}, IBlogListState> {
-  private ModalData!: BlogData;
   private columns = [
     {
       title: '标题',
@@ -90,7 +90,8 @@ export default class BlogList extends React.Component<{}, IBlogListState> {
     title: undefined,
     blogDetailVisible: false,
     temporaryText: '',
-    visibleModal: false
+    visibleModal: false,
+    ModalData: {}
   }
 
   public async componentDidMount() {
@@ -107,10 +108,11 @@ export default class BlogList extends React.Component<{}, IBlogListState> {
   }
 
   private blogAlter = (row: BlogData) => {
-    this.setState({ visibleModal: true })
-    this.ModalData = row
+    this.setState({ visibleModal: true, ModalData: row })
   }
   private onOk = () => {
+    const { pageNo, pageSize } = this.state
+    this.getInitData(pageNo, pageSize)
     this.setState({ visibleModal: false })
   }
 
@@ -162,7 +164,7 @@ export default class BlogList extends React.Component<{}, IBlogListState> {
         <Pagination current={this.state.pageNo + 1} className="pagination" total={this.state.total} onChange={this.pagInactionChange} />
       </div>
       <Drawer title="博客内容" visible={this.state.blogDetailVisible} context={this.state.temporaryText} onClose={this.oncloseDrawer} />
-      <Modal title="修改博客" visible={this.state.visibleModal} onOK={this.onOk} onCancel={this.onOk} data={this.ModalData} />
+      {this.state.visibleModal ? <Modal visible={this.state.visibleModal} onOK={this.onOk} onCancel={this.onOk} data={this.state.ModalData} /> : null}
     </div>
   }
 }

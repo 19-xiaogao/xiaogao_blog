@@ -1,0 +1,44 @@
+.creatArticle_header {
+    margin: 5px 10px 0;
+    background-color: #ffffff;
+    display: flex;
+    height: 70px;
+    border-radius: 8px;
+}
+
+.gutter_row {
+    display: flex !important;
+    align-items: center;
+    justify-content: right;
+}
+
+.gutter_row1 {
+    display: flex !important;
+    align-items: center;
+    justify-content: right;
+}
+
+.gutter_row1 span {
+    width: 100px;
+}
+
+.gutter_row1 input {
+    margin-left: 5px;
+    width: 250px;
+    height: 40px;
+}
+
+.updateBtn {
+    position: relative;
+    text-align: center;
+}
+
+.updateBtn input {
+    position: absolute;
+    display: block;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}

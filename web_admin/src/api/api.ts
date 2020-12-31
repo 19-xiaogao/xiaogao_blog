@@ -32,7 +32,7 @@ export const httpGetSelectBlog = (params: ISelectBlog): AxiosResponse => axios.g
 
 interface IUpdateBlog {
     title?: string
-    imgUlr?: string
+    imgUrl?: string
     id: number
     content?: string
     show_blog?: string 

@@ -5,15 +5,21 @@ import { PlusOutlined } from '@ant-design/icons';
 interface UpdateImageProps {
     className?: string
     onUpdateImage: (value: any) => void
+    imgUrl?: string
 }
 const UpdateImage: React.FC<UpdateImageProps> = (props) => {
-
+    const file = props.imgUrl ? [{
+        uid: '-1',
+        name: 'image.png',
+        status: 'done',
+        url: props.imgUrl,
+    }] : []
     const [previewVisible, setPreviewVisible] = useState<boolean>(false)
     const [previewImage, setPreviewImage] = useState<string>('')
     const [previewTitle, setPreviewTitle] = useState<string>('')
-    const [fileList, setFileList] = useState<any[]>([])
+    const [fileList, setFileList] = useState<any[]>(file)
     const actionUrl = '/devApi/api/webAdmin/image/update_img'
-    
+
     function getBase64(file: any) {
         return new Promise((resolve, reject) => {
             const reader = new FileReader();
@@ -48,6 +54,7 @@ const UpdateImage: React.FC<UpdateImageProps> = (props) => {
 
     const handleChange = (info: UploadChangeParam) => {
         setFileList(info.fileList);
+        console.log(info.fileList)
         if (info.file.response && info.file.response.success) {
             props.onUpdateImage(info.file.response.data)
         }
