@@ -102,7 +102,6 @@ export default class BlogList extends React.Component<{}, IBlogListState> {
     this.setState({ blogDetailVisible: true, temporaryText: row })
   }
   private switchClick = async (checked: boolean, row: BlogData) => {
-
     this.setState(() => ({ loading: true }))
     await httpPostUpdateBlog({ id: row.id, show_blog: checked ? '1' : '2' })
     this.setState(() => ({ loading: false }))
@@ -116,7 +115,6 @@ export default class BlogList extends React.Component<{}, IBlogListState> {
     this.getInitData(pageNo, pageSize)
     this.setState({ visibleModal: false })
   }
-
   private oncloseDrawer = () => {
     this.setState({ blogDetailVisible: false, temporaryText: '' })
   }
