@@ -9,7 +9,7 @@ module.exports = {
         return [
             {
                 source: '/webDev',
-                destination: '127.0.0.1:3003'
+                destination: '10.0.0.65:3003'
             }
         ]
     }

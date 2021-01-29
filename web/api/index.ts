@@ -1,8 +1,7 @@
 import http from '../util/request'
-import {AxiosResponse} from 'axios'
 import {IResponse} from '../types/response'
 
-type Response = Promise<AxiosResponse<IResponse>>
+type Response = Promise<IResponse>
 
 interface IPageDate {
     title?: string;
@@ -11,4 +10,4 @@ interface IPageDate {
 }
 
 // 查找博客列表
-export const getIndexPageData = (params: IPageDate): Response => http.get('/api/web/list_blog', {params})
+export const getIndexPageData = (params?: IPageDate): Response => http.get('/api/web/list_blog', {params})

@@ -3,6 +3,7 @@ import Parallax from 'parallax-js'
 import Styles from '../styles/index.module.scss'
 import {MenuOutlined} from '@ant-design/icons/lib'
 import {getIndexPageData} from '../api'
+import {message} from 'antd'
 
 interface IAppState {
     fatherBox: {
@@ -46,10 +47,6 @@ class App extends React.Component<IAppProps, IAppState> {
         })
     }
 
-    private renderMenu = () => {
-        return <MenuOutlined/>
-    }
-
     render() {
         return <>
             <div className={Styles.home} ref={this.scene}>
@@ -62,11 +59,18 @@ class App extends React.Component<IAppProps, IAppState> {
     }
 }
 
+const getBlogList = async () => {
+    const {data, success} = await getIndexPageData()
+    if (!success) return message.error('请求错误')
+    return data
+}
+
 // 获取数据
 export async function getStaticProps() {
+    const blogList: [] = []
     return {
         props: {
-            blogList: []
+            blogList
         }
     }
 }
