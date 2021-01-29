@@ -46,11 +46,12 @@ export const selectBlog = async (options: ISelectBlog, success: (res) => any, er
   options.pageSize = Number(options.pageSize);
   const sqlTotalStr = 'select COUNT(title) as total from blog;'
   if (!options.title) {
-    const sqlStr = "select * from blog limit ?,? ;";
+    const sqlStr = "select * from blog limit ?, ? ;";
     const params = [options.pageNo, options.pageSize];
     try {
       const resList = await performSql(sqlStr, params);
       const resTotal: any = await performSql(sqlTotalStr);
+      console.log(resTotal);
       success({ list: resList, total: resTotal[0].total });
     } catch (err) {
       error(err);

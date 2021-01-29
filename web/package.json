@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "node server.js",
     "build": "next build",
     "start": "next start"
   },
@@ -11,6 +11,8 @@
     "@ant-design/icons": "^4.4.0",
     "antd": "^4.11.2",
     "axios": "^0.21.1",
+    "express": "^4.17.1",
+    "http-proxy-middleware": "^1.0.6",
     "next": "10.0.4",
     "parallax-js": "^3.1.0",
     "react": "17.0.1",

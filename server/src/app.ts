@@ -48,7 +48,7 @@ app.get('/images/*', (req, res) => {
   res.sendFile(__dirname + '/' + req.url)
 })
 // web 路由
-app.use('/api/web/*', webRouter)
+app.use('/api/web/', webRouter)
 
 app.use('/api/webAdmin/', loginRouter)
 app.use('/api/webAdmin/image', fileRouter)
