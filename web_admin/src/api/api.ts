@@ -28,14 +28,12 @@ interface ISelectBlog {
 }
 export const httpGetSelectBlog = (params: ISelectBlog): AxiosResponse => axios.get('/api/webAdmin/blog/list_blog', { params })
 
-
-
 interface IUpdateBlog {
     title?: string
     imgUrl?: string
     id: number
     content?: string
-    show_blog?: string 
+    show_blog?: string
 }
 // 更新blog
 export const httpPostUpdateBlog = (data: IUpdateBlog): AxiosResponse => axios.post('/api/webAdmin/blog/update_blog', data)

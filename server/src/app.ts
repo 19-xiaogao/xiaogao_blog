@@ -3,6 +3,7 @@ import cors from 'cors'
 import blogRouter from "./routers/blogList";
 import fileRouter from './routers/file'
 import loginRouter from './routers/login'
+import webRouter from './routers/web'
 import { SSHKEY } from './auth/index'
 import JWTverify from './auth/jwt'
 import { writeResult } from "./utils/result";
@@ -46,12 +47,15 @@ app.use(express.json());
 app.get('/images/*', (req, res) => {
   res.sendFile(__dirname + '/' + req.url)
 })
+// web 路由
+app.use('/api/web/*', webRouter)
+
 app.use('/api/webAdmin/', loginRouter)
 app.use('/api/webAdmin/image', fileRouter)
 app.all('/api/webAdmin/*', (req, res, next) => {
   const token = req.headers.authorization ? req.headers.authorization : ''
   try {
-    const vertifyResult = JWTverify(token, SSHKEY)
+    JWTverify(token, SSHKEY)
     next()
   } catch (error) {
     res.write(writeResult({ success: false, message: '登陆失效', data: error }))
