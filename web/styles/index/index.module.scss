@@ -1,0 +1,57 @@
+.home {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  z-index: 9999;
+  overflow: hidden;
+}
+
+.head {
+  position: absolute !important;
+  width: 100%;
+  top: 70px !important;
+  color: #fff;
+  z-index: 9999999999;
+  padding: 0 40px;
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+
+  .logo {
+    font-size: 44px;
+    cursor: pointer;
+    transition: all .3s;
+  }
+
+  .menu {
+    width: 30px;
+    height: 30px;
+    line-height: 32px;
+    border-radius: 10px;
+    cursor: pointer;
+    color: #ff3600;
+    text-align: center;
+    background: hsla(0, 0%, 100%, 0.9);
+
+    span {
+      font-size: 28px;
+    }
+  }
+}
+
+
+.bg {
+  position: relative !important;
+
+  img {
+    position: absolute !important;
+    max-width: none;
+    display: block;
+  }
+
+  .icon {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+  }
+}

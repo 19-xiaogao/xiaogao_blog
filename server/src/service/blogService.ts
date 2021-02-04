@@ -51,7 +51,6 @@ export const selectBlog = async (options: ISelectBlog, success: (res) => any, er
     try {
       const resList = await performSql(sqlStr, params);
       const resTotal: any = await performSql(sqlTotalStr);
-      console.log(resTotal);
       success({ list: resList, total: resTotal[0].total });
     } catch (err) {
       error(err);

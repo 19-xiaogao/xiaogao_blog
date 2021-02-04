@@ -1,9 +1,9 @@
 import React from 'react';
 import Parallax from 'parallax-js'
-import Styles from '../styles/index.module.scss'
-import { MenuOutlined } from '@ant-design/icons/lib'
-import { getIndexPageData } from '../api'
-import { message } from 'antd'
+import Styles from '../styles/index/index.module.scss'
+import {getIndexPageData} from '../api'
+import {message} from 'antd'
+import LoadingDom from '../components/loading'
 
 interface IAppState {
     fatherBox: {
@@ -18,7 +18,6 @@ interface IAppProps {
     blogList: []
 }
 
-
 class App extends React.Component<IAppProps, IAppState> {
     private scene = React.createRef<any>()
     state = {
@@ -27,8 +26,7 @@ class App extends React.Component<IAppProps, IAppState> {
     }
 
     componentDidMount() {
-        console.log(this.props);
-        getBlogList().then(res =>{
+        getBlogList().then(res => {
             console.log(res)
         })
         this.initParallax(this.scene.current)
@@ -40,7 +38,7 @@ class App extends React.Component<IAppProps, IAppState> {
         window.removeEventListener('resize', this.disposeScreen)
     }
 
-    //TODO: 处理图片自适应问题
+    //TODO:处理图片自适应问题
     private disposeScreen = () => {
     }
 
@@ -52,26 +50,36 @@ class App extends React.Component<IAppProps, IAppState> {
     }
 
     render() {
-        return <>
-            <div className={Styles.home} ref={this.scene}>
-                <div data-depth="0.4" className={Styles.bg}>
-                    <img src='/image/bg.png' />
+        return <div>
+            <div className={Styles.home}>
+                <div ref={this.scene}>
+                    <div data-depth="0.4" className={Styles.bg}>
+                        <img src='/image/bg.png'/>
+                    </div>
                 </div>
-                <MenuOutlined twoToneColor="#eb2f96" rotate={180} className={Styles.icon} />
+                <div className={Styles.head}>
+                    <div className={Styles.logo}>
+                        <i className="web-font">小 · 膏</i>
+                    </div>
+                    <div className={Styles.menu}>
+                        <span className="iconfont">&#xe628;</span>
+                    </div>
+                </div>
             </div>
-        </>
+            <LoadingDom/>
+        </div>
     }
 }
 
 const getBlogList = async () => {
-    const { data, success } = await getIndexPageData({ pageNo: 1, pageSize: 10 })
+    const {data, success} = await getIndexPageData({pageNo: 1, pageSize: 10})
     if (!success) return message.error('请求错误')
     return data
 }
 
 // 获取数据
 export async function getStaticProps() {
-    const blogList: [] =[]
+    const blogList: [] = []
     return {
         props: {
             blogList: blogList

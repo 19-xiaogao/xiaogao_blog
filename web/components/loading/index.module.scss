@@ -1,0 +1,56 @@
+.loadingBox {
+  display: flex !important;
+  justify-content: center !important;
+  width: 100%;
+  z-index: 1111 !important;
+
+  div {
+    //TODO:px设置rem自适应
+    width: 20px;
+    height: 20px;
+    margin: 0 3px;
+    border-radius: 50%;
+    line-height: 40px;
+    animation: loading 2s infinite ease;
+
+    &:first-child {
+      background-color: #7cc9de;
+      animation-delay: 0s;
+    }
+
+    &:nth-child(2) {
+      background-color: #6eb0cf;
+      animation-delay: 0.2s;
+    }
+
+    &:nth-child(3) {
+      background-color: #96aacc;
+      animation-delay: 0.4s;
+    }
+
+    &:nth-child(4) {
+      background-color: #faaacc;
+      animation-delay: 0.6s;
+    }
+  }
+}
+
+@keyframes loading {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.8;
+  }
+  75%{
+    transform: scale(1.5);
+    opacity: 0.6;
+  }
+
+  100% {
+    transform: scale(0);
+    opacity: 1;
+  }
+}

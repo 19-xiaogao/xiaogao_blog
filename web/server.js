@@ -3,7 +3,7 @@ const next = require('next')
 const { createProxyMiddleware } = require('http-proxy-middleware')
 const devProxy = {
     '/webDev': {
-        target: '127.0.0.1:3003', // 端口自己配置合适的
+        target: '127.0.0.1:3003',
         pathRewrite: {
             '^/webDev': '/'
         },
