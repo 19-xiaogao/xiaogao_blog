@@ -6,12 +6,12 @@
   url('iconfont.woff') format('woff'),
   url('iconfont.ttf') format('truetype'),
   url('iconfont.svg#iconfont') format('svg');
-  src: url('webfont.eot');
-  src: url('webfont.eot?#iefix') format('embedded-opentype'),
-  url('webfont.woff2') format('woff2'),
-  url('webfont.woff') format('woff'),
-  url('webfont.ttf') format('truetype'),
-  url('webfont.svg#iconfont') format('svg');
+  /*src: url('webfont.eot');*/
+  /*src: url('webfont.eot?#iefix') format('embedded-opentype'),*/
+  /*url('webfont.woff2') format('woff2'),*/
+  /*url('webfont.woff') format('woff'),*/
+  /*url('webfont.ttf') format('truetype'),*/
+  /*url('webfont.svg#iconfont') format('svg');*/
 }
 .iconfont {
   font-family: "iconfont" !important;

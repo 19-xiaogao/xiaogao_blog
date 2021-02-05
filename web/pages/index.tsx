@@ -26,9 +26,6 @@ class App extends React.Component<IAppProps, IAppState> {
     }
 
     componentDidMount() {
-        getBlogList().then(res => {
-            console.log(res)
-        })
         this.initParallax(this.scene.current)
         window.addEventListener('resize', this.disposeScreen, false)
         this.disposeScreen()
@@ -50,7 +47,8 @@ class App extends React.Component<IAppProps, IAppState> {
     }
 
     render() {
-        return <div>
+        return <div className={Styles.container}>
+            {/*首屏样式*/}
             <div className={Styles.home}>
                 <div ref={this.scene}>
                     <div data-depth="0.4" className={Styles.bg}>
@@ -65,6 +63,93 @@ class App extends React.Component<IAppProps, IAppState> {
                         <span className="iconfont">&#xe628;</span>
                     </div>
                 </div>
+            </div>
+            <div className={Styles.content}>
+                <div className={Styles.post}>
+                    <div className={Styles.img_box}>
+                        <img src="/image/bg1.jpg" alt=""/>
+                    </div>
+                    <div className={Styles.info}>
+                        <div className={Styles.time}>2020-2-5</div>
+                        <div className={Styles.title}>做个烂人</div>
+                        <div className={Styles.text}>
+                            未名湖边的桃花开了，我曾经无数次梦想过，花开时湖边折枝的人群里会有自己的身影。那个时候，我的心情和大家一样迫切，目光却比你们更加,
+                            我的心情和大家一样迫切，目光却比你们更加我的心情和大家一样迫切，目光却比你们更加
+
+                        </div>
+                        {/*TODO:icon图片 编写*/}
+                        <div className={Styles.stuff}>
+                        </div>
+                    </div>
+                </div>
+                <div className={Styles.post}>
+                    <div className={Styles.img_box}>
+                        <img src="/image/bg.png" alt=""/>
+                    </div>
+                    <div className={Styles.info}>
+                        <div className={Styles.time}>2020-2-5</div>
+                        <div className={Styles.title}>做个烂人</div>
+                        <div className={Styles.text}>
+                            未名湖边的桃花开了，我曾经无数次梦想过，花开时湖边折枝的人群里会有自己的身影。那个时候，我的心情和大家一样迫切，目光却比你们更加,
+                            我的心情和大家一样迫切，目光却比你们更加我的心情和大家一样迫切，目光却比你们更加
+
+                        </div>
+                        {/*TODO:icon图片 编写*/}
+                        <div className={Styles.stuff}>
+                        </div>
+                    </div>
+                </div>
+                <div className={Styles.post}>
+                    <div className={Styles.img_box}>
+                        <img src="/image/bg.png" alt=""/>
+                    </div>
+                    <div className={Styles.info}>
+                        <div className={Styles.time}>2020-2-5</div>
+                        <div className={Styles.title}>做个烂人</div>
+                        <div className={Styles.text}>
+                            未名湖边的桃花开了，我曾经无数次梦想过，花开时湖边折枝的人群里会有自己的身影。那个时候，我的心情和大家一样迫切，目光却比你们更加,
+                            我的心情和大家一样迫切，目光却比你们更加我的心情和大家一样迫切，目光却比你们更加
+
+                        </div>
+                        {/*TODO:icon图片 编写*/}
+                        <div className={Styles.stuff}>
+                        </div>
+                    </div>
+                </div>
+                <div className={Styles.post}>
+                    <div className={Styles.img_box}>
+                        <img src="/image/bg.png" alt=""/>
+                    </div>
+                    <div className={Styles.info}>
+                        <div className={Styles.time}>2020-2-5</div>
+                        <div className={Styles.title}>做个烂人</div>
+                        <div className={Styles.text}>
+                            未名湖边的桃花开了，我曾经无数次梦想过，花开时湖边折枝的人群里会有自己的身影。那个时候，我的心情和大家一样迫切，目光却比你们更加,
+                            我的心情和大家一样迫切，目光却比你们更加我的心情和大家一样迫切，目光却比你们更加
+
+                        </div>
+                        {/*TODO:icon图片 编写*/}
+                        <div className={Styles.stuff}>
+                        </div>
+                    </div>
+                </div>
+                {/*<div className={Styles.post}>*/}
+                {/*    <div className={Styles.img_box}>*/}
+                {/*        <img src="/image/bg1.jpg" alt=""/>*/}
+                {/*    </div>*/}
+                {/*    <div className={Styles.info}>*/}
+                {/*        <div className={Styles.time}>2020-2-5</div>*/}
+                {/*        <div className={Styles.title}>做个烂人</div>*/}
+                {/*        <div className={Styles.text}>*/}
+                {/*            未名湖边的桃花开了，我曾经无数次梦想过，花开时湖边折枝的人群里会有自己的身影。那个时候，我的心情和大家一样迫切，目光却比你们更加,*/}
+                {/*            我的心情和大家一样迫切，目光却比你们更加我的心情和大家一样迫切，目光却比你们更加*/}
+
+                {/*        </div>*/}
+                {/*        /!*TODO:icon图片 编写*!/*/}
+                {/*        <div className={Styles.stuff}>*/}
+                {/*        </div>*/}
+                {/*    </div>*/}
+                {/*</div>*/}
             </div>
             <LoadingDom/>
         </div>
