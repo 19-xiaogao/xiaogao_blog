@@ -1,8 +1,9 @@
 import React from 'react';
 import Parallax from 'parallax-js'
 import Styles from '../styles/index/index.module.scss'
-import {getIndexPageData} from '../api'
-import {message} from 'antd'
+import { getIndexPageData } from '../api'
+import { message } from 'antd'
+import { SortDescendingOutlined } from '@ant-design/icons'
 import LoadingDom from '../components/loading'
 
 interface IAppState {
@@ -30,7 +31,6 @@ class App extends React.Component<IAppProps, IAppState> {
         window.addEventListener('resize', this.disposeScreen, false)
         this.disposeScreen()
     }
-
     componentWillUnmount() {
         window.removeEventListener('resize', this.disposeScreen)
     }
@@ -48,11 +48,10 @@ class App extends React.Component<IAppProps, IAppState> {
 
     render() {
         return <div className={Styles.container}>
-            {/*首屏样式*/}
             <div className={Styles.home}>
                 <div ref={this.scene}>
                     <div data-depth="0.4" className={Styles.bg}>
-                        <img src='/image/bg.png'/>
+                        <img src='/image/bg.png' />
                     </div>
                 </div>
                 <div className={Styles.head}>
@@ -67,7 +66,7 @@ class App extends React.Component<IAppProps, IAppState> {
             <div className={Styles.content}>
                 <div className={Styles.post}>
                     <div className={Styles.img_box}>
-                        <img src="/image/bg1.jpg" alt=""/>
+                        <img src="/image/bg1.jpg" alt="" />
                     </div>
                     <div className={Styles.info}>
                         <div className={Styles.time}>2020-2-5</div>
@@ -84,7 +83,7 @@ class App extends React.Component<IAppProps, IAppState> {
                 </div>
                 <div className={Styles.post}>
                     <div className={Styles.img_box}>
-                        <img src="/image/bg.png" alt=""/>
+                        <img src="/image/bg.png" alt="" />
                     </div>
                     <div className={Styles.info}>
                         <div className={Styles.time}>2020-2-5</div>
@@ -92,7 +91,6 @@ class App extends React.Component<IAppProps, IAppState> {
                         <div className={Styles.text}>
                             未名湖边的桃花开了，我曾经无数次梦想过，花开时湖边折枝的人群里会有自己的身影。那个时候，我的心情和大家一样迫切，目光却比你们更加,
                             我的心情和大家一样迫切，目光却比你们更加我的心情和大家一样迫切，目光却比你们更加
-
                         </div>
                         {/*TODO:icon图片 编写*/}
                         <div className={Styles.stuff}>
@@ -101,7 +99,7 @@ class App extends React.Component<IAppProps, IAppState> {
                 </div>
                 <div className={Styles.post}>
                     <div className={Styles.img_box}>
-                        <img src="/image/bg.png" alt=""/>
+                        <img src="/image/bg.png" alt="" />
                     </div>
                     <div className={Styles.info}>
                         <div className={Styles.time}>2020-2-5</div>
@@ -109,7 +107,6 @@ class App extends React.Component<IAppProps, IAppState> {
                         <div className={Styles.text}>
                             未名湖边的桃花开了，我曾经无数次梦想过，花开时湖边折枝的人群里会有自己的身影。那个时候，我的心情和大家一样迫切，目光却比你们更加,
                             我的心情和大家一样迫切，目光却比你们更加我的心情和大家一样迫切，目光却比你们更加
-
                         </div>
                         {/*TODO:icon图片 编写*/}
                         <div className={Styles.stuff}>
@@ -118,7 +115,7 @@ class App extends React.Component<IAppProps, IAppState> {
                 </div>
                 <div className={Styles.post}>
                     <div className={Styles.img_box}>
-                        <img src="/image/bg.png" alt=""/>
+                        <img src="/image/bg.png" alt="" />
                     </div>
                     <div className={Styles.info}>
                         <div className={Styles.time}>2020-2-5</div>
@@ -126,38 +123,31 @@ class App extends React.Component<IAppProps, IAppState> {
                         <div className={Styles.text}>
                             未名湖边的桃花开了，我曾经无数次梦想过，花开时湖边折枝的人群里会有自己的身影。那个时候，我的心情和大家一样迫切，目光却比你们更加,
                             我的心情和大家一样迫切，目光却比你们更加我的心情和大家一样迫切，目光却比你们更加
-
                         </div>
                         {/*TODO:icon图片 编写*/}
                         <div className={Styles.stuff}>
                         </div>
                     </div>
                 </div>
-                {/*<div className={Styles.post}>*/}
-                {/*    <div className={Styles.img_box}>*/}
-                {/*        <img src="/image/bg1.jpg" alt=""/>*/}
-                {/*    </div>*/}
-                {/*    <div className={Styles.info}>*/}
-                {/*        <div className={Styles.time}>2020-2-5</div>*/}
-                {/*        <div className={Styles.title}>做个烂人</div>*/}
-                {/*        <div className={Styles.text}>*/}
-                {/*            未名湖边的桃花开了，我曾经无数次梦想过，花开时湖边折枝的人群里会有自己的身影。那个时候，我的心情和大家一样迫切，目光却比你们更加,*/}
-                {/*            我的心情和大家一样迫切，目光却比你们更加我的心情和大家一样迫切，目光却比你们更加*/}
-
-                {/*        </div>*/}
-                {/*        /!*TODO:icon图片 编写*!/*/}
-                {/*        <div className={Styles.stuff}>*/}
-                {/*        </div>*/}
-                {/*    </div>*/}
-                {/*</div>*/}
+                <div className={Styles.more}>
+                    <div>加载更多</div>
+                </div>
             </div>
-            <LoadingDom/>
+            <LoadingDom />
+            <div className={Styles.foot}>
+                <a target="_blank">
+                    粤ICP备181222222号
+                    </a>
+            </div>
+            <div className={Styles.navigationBar}>
+                <SortDescendingOutlined />
+            </div>
         </div>
     }
 }
 
 const getBlogList = async () => {
-    const {data, success} = await getIndexPageData({pageNo: 1, pageSize: 10})
+    const { data, success } = await getIndexPageData({ pageNo: 1, pageSize: 10 })
     if (!success) return message.error('请求错误')
     return data
 }
