@@ -49,7 +49,6 @@ app.get('/images/*', (req, res) => {
 })
 // web 路由
 app.use('/api/web/', webRouter)
-
 app.use('/api/webAdmin/', loginRouter)
 app.use('/api/webAdmin/image', fileRouter)
 app.all('/api/webAdmin/*', (req, res, next) => {

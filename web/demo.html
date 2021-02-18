@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* 假设父元素的font-size是16px,button:20px,转换成em的话,6/20*/
+        button {
+            font-size: 125%;
+            padding: .3em .8em;
+            border: 1px solid rgba(0, 0, 0, .1);
+            background: #58a linear-gradient(hsla(0, 0%, 100%, .2), transparent);
+            border-radius: .2em;
+            box-shadow: 0 1px 0.05em gray;
+            color: white;
+            text-shadow: 0-1px 1px rgba(0, 0, 0, .5);
+            line-height: 1.5;
+        }
+
+        div {
+            background-color: #eee;
+            width: 200px;
+            height: 200px;
+            margin: 0 auto;
+            color: black;
+            font-size: 20px;
+            border: 1px solid currentColor;
+        }
+
+        .name {
+            display: block;
+            margin: 0 auto;
+            width: 100px;
+            height: 100px;
+            font-size: 20px;
+            text-decoration: none;
+        }
+
+        .name {
+            position: relative;
+            text-align: center;
+        }
+
+        .name::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            display: inline-block;
+            margin: 0 auto;
+            border-top: 1px dashed red;
+            transition: all .2s;
+            width: 0;
+        }
+
+        .name:hover::after {
+            width: 100% !important;
+        }
+    </style>
+</head>
+
+<body>
+    <button>Yes!</button>
+    <div>sss</div>
+    <a href="javascript:;" class="name">牛年大吉</a>
+</body>
+
+</html>
