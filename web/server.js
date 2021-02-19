@@ -3,9 +3,9 @@ const next = require('next')
 const { createProxyMiddleware } = require('http-proxy-middleware')
 const devProxy = {
     '/webDev': {
-        target: '127.0.0.1:3003',
+        target: 'http://localhost:3003',
         pathRewrite: {
-            '^/webDev': '/'
+            "^/webDev": "/"
         },
         changeOrigin: true
     }

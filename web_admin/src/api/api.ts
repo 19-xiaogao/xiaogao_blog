@@ -7,7 +7,6 @@ interface ILogin {
     username: string
     password: string
 }
-
 export const httpPostLogin = (data: ILogin): AxiosResponse => axios.post('/api/webAdmin/login', data)
 
 // 创建博客
@@ -27,7 +26,7 @@ interface ISelectBlog {
     title?: string
 }
 export const httpGetSelectBlog = (params: ISelectBlog): AxiosResponse => axios.get('/api/webAdmin/blog/list_blog', { params })
-
+// 更新博客
 interface IUpdateBlog {
     title?: string
     imgUrl?: string

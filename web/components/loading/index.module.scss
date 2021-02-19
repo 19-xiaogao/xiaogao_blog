@@ -6,30 +6,30 @@
 
   div {
     //TODO:px设置rem自适应
-    width: 20px;
-    height: 20px;
-    margin: 0 3px;
-    border-radius: 50%;
-    line-height: 40px;
+    width: 20px !important;
+    height: 20px !important;
+    margin: 0 3px !important;
+    border-radius: 50% !important;
+    line-height: 40px !important;
     animation: loading 2s infinite ease;
 
     &:first-child {
-      background-color: #7cc9de;
-      animation-delay: 0s;
+      background-color: #7cc9de !important;
+      animation-delay: 0s ;
     }
 
     &:nth-child(2) {
-      background-color: #6eb0cf;
+      background-color: #6eb0cf !important;
       animation-delay: 0.2s;
     }
 
     &:nth-child(3) {
-      background-color: #96aacc;
+      background-color: #96aacc !important;
       animation-delay: 0.4s;
     }
 
     &:nth-child(4) {
-      background-color: #faaacc;
+      background-color: #faaacc !important;
       animation-delay: 0.6s;
     }
   }
@@ -44,7 +44,7 @@
     transform: scale(1.2);
     opacity: 0.8;
   }
-  75%{
+  75% {
     transform: scale(1.5);
     opacity: 0.6;
   }

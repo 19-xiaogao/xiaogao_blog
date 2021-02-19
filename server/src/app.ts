@@ -12,7 +12,12 @@ const app: express.Application = express();
 const host = process.env.HOST || "127.0.0.1";
 const post = process.env.POST || 3003;
 
-const originList = ['http://localhost:3002'];
+/**
+ * 3002 web_admin
+ * 3000 web
+ * 3003 server
+ */
+const originList = ['http://localhost:3002', 'http://localhost:3000'];
 // 设置跨域
 const corsOptionsDelegate = (req, callback) => {
   let corsOptions;

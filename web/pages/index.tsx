@@ -1,8 +1,13 @@
 import React from 'react';
+import { GetStaticProps } from 'next'
+import Link from 'next/link'
+import marked from 'marked'
 import Parallax from 'parallax-js'
+import moment from 'moment'
 import Styles from '../styles/index/index.module.scss'
 import { getIndexPageData } from '../api'
 import { message, Tooltip } from 'antd'
+import { IBlogList } from '../types/response'
 import {
     SortDescendingOutlined, FontColorsOutlined, MehOutlined, HeartOutlined, AlignRightOutlined, CloseOutlined
 } from '@ant-design/icons'
@@ -19,7 +24,7 @@ interface IAppState {
 }
 
 interface IAppProps {
-    blogList: []
+    blogList: IBlogList[]
 }
 
 class App extends React.Component<IAppProps, IAppState> {
@@ -31,6 +36,7 @@ class App extends React.Component<IAppProps, IAppState> {
     }
 
     componentDidMount() {
+        // console.log(this.props.blogList);
         this.initParallax(this.scene.current)
         window.addEventListener('resize', this.disposeScreen, false)
         this.disposeScreen()
@@ -59,10 +65,8 @@ class App extends React.Component<IAppProps, IAppState> {
         }
     }
     private onSlide = () => {
-        const body = document.querySelector('body')
+        // const body = document.querySelector('body')
         window.scrollTo(0, 0)
-        // console.log(body.scrollTop);
-        
     }
     private renderNav = () => (<div className={Styles.nav} style={!this.state.navHied ? { top: '-100%' } : { top: '0' }} >
         <ul className={Styles.nav_list} >
@@ -76,8 +80,68 @@ class App extends React.Component<IAppProps, IAppState> {
             <span>Everywhere in the world has a similar life.</span>
         </div>
     </div>)
+    private renderBlogList = () => {
+        const { blogList } = this.props
+        return blogList.map(item => (<div className={Styles.post} key={item.id}>
+            <div className={Styles.img_box}>
+                <Link href={'/' + String(item.id)}>
+                    <a>
+                        <img src={item.imgUrl} alt="" />
+                    </a>
+                </Link>
+
+            </div>
+            <div className={Styles.info}>
+                <div className={Styles.time}>{moment(item.createDate).format('YYYY-MM-DD')}</div>
+                <div className={Styles.title}>
+                    <Link href={'/' + String(item.id)}>
+                        <a style={{ color: 'black' }}>
+                            {item.title}
+                        </a>
+                    </Link>
+                </div>
+                <div className={Styles.text} dangerouslySetInnerHTML={{ __html: marked(item.content, { gfm: true, xhtml: false }) as string }}>
+                </div>
+                <div className={Styles.stuff}>
+                    <div>
+                        <Tooltip title='字数' color='#ef6d57' overlayStyle={{ borderRadius: '4px' }}>
+                            <FontColorsOutlined className={Styles.icon} />
+                            <span className={Styles.charts}>{item.number_words}</span>
+                        </Tooltip>
+
+                    </div>
+                    <div>
+                        <Tooltip title='查看' color='#50bcb6' overlayStyle={{ borderRadius: '4px' }}>
+                            <MehOutlined className={Styles.icon} />
+                            <span className={Styles.charts}>{item.viewCount}</span>
+                        </Tooltip>
+                    </div>
+                    <div>
+                        <Tooltip title='点赞' color='#ffa800' overlayStyle={{ borderRadius: '4px' }}>
+                            <HeartOutlined className={Styles.icon} />
+                            <span className={Styles.charts}>{item.likeCount}</span>
+                        </Tooltip>
+                    </div>
+                </div>
+            </div>
+        </div>
+        ))
+    }
+    private renderHomeBlogList = () => {
+        const { blogList } = this.props
+        const item = blogList[blogList.length - 1]
+        return <div className={Styles.info}>
+            <div className={Styles.time}>{moment(item.createDate).format('YYYY-MM-DD')}</div>
+            <div className={Styles.title}>
+                <a href="#">
+                    {item.title}
+                </a> </div>
+            <div className={Styles.text} dangerouslySetInnerHTML={{ __html: marked(item.content, { gfm: true, xhtml: false }) as string }}>
+            </div>
+        </div>
+    }
     render() {
-        return <div className={Styles.container} >
+        return <div className={Styles.container}>
             <div className={Styles.home} >
                 <div ref={this.scene}>
                     <div data-depth="0.4" className={Styles.bg}>
@@ -94,140 +158,18 @@ class App extends React.Component<IAppProps, IAppState> {
                 </div>
                 <div className={Styles.misk}></div>
                 <div className={Styles.post}>
-                    <div className={Styles.info}>
-                        <div className={Styles.time}>2020-2-5</div>
-                        <div className={Styles.title}>
-                            <a href="#">
-                                做个烂人
-                            </a> </div>
-                        <div className={Styles.text}>
-                            未名湖边的桃花开了，我曾经无数次梦想过，花开时湖边折枝的人群里会有自己的身影。那个时候，我的心情和大家一样迫切，目光却比你们更加,
-                            我的心情和大家一样迫切，目光却比你们更加我的心情和大家一样迫切，目光却比你们更加
-                        </div>
-                    </div>
+                    {this.renderHomeBlogList()}
                 </div>
                 {this.renderNav()}
             </div>
             <div className={Styles.content}>
-                <div className={Styles.post}>
-                    <div className={Styles.img_box}>
-                        <img src="/image/bg1.jpg" alt="" />
-                    </div>
-                    <div className={Styles.info}>
-                        <div className={Styles.time}>2020-2-5</div>
-                        <div className={Styles.title}>
-                            做个烂人</div>
-                        <div className={Styles.text}>
-                            未名湖边的桃花开了，我曾经无数次梦想过，花开时湖边折枝的人群里会有自己的身影。那个时候，我的心情和大家一样迫切，目光却比你们更加,
-                            我的心情和大家一样迫切，目光却比你们更加我的心情和大家一样迫切，目光却比你们更加
-
-                        </div>
-                        <div className={Styles.stuff}>
-                            <div>
-                                <Tooltip title='字数' color='#ef6d57' overlayStyle={{ borderRadius: '4px' }}>
-                                    <FontColorsOutlined className={Styles.icon} />
-                                    <span className={Styles.charts}>222</span>
-                                </Tooltip>
-
-                            </div>
-                            <div>
-                                <Tooltip title='查看' color='#50bcb6' overlayStyle={{ borderRadius: '4px' }}>
-
-                                    <MehOutlined className={Styles.icon} />
-                                    <span className={Styles.charts}>222</span>
-                                </Tooltip>
-                            </div>
-                            <div>
-                                <Tooltip title='点赞' color='#ffa800' overlayStyle={{ borderRadius: '4px' }}>
-                                    <HeartOutlined className={Styles.icon} />
-                                    <span className={Styles.charts}>222</span>
-                                </Tooltip>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className={Styles.post}>
-                    <div className={Styles.img_box}>
-                        <img src="/image/bg1.jpg" alt="" />
-                    </div>
-                    <div className={Styles.info}>
-                        <div className={Styles.time}>2020-2-5</div>
-                        <div className={Styles.title}>
-                            做个烂人</div>
-                        <div className={Styles.text}>
-                            未名湖边的桃花开了，我曾经无数次梦想过，花开时湖边折枝的人群里会有自己的身影。那个时候，我的心情和大家一样迫切，目光却比你们更加,
-                            我的心情和大家一样迫切，目光却比你们更加我的心情和大家一样迫切，目光却比你们更加
-
-                        </div>
-                        <div className={Styles.stuff}>
-                            <div>
-                                <Tooltip title='字数' color='#ef6d57' overlayStyle={{ borderRadius: '4px' }}>
-                                    <FontColorsOutlined className={Styles.icon} />
-                                    <span className={Styles.charts}>222</span>
-                                </Tooltip>
-
-                            </div>
-                            <div>
-                                <Tooltip title='查看' color='#50bcb6' overlayStyle={{ borderRadius: '4px' }}>
-
-                                    <MehOutlined className={Styles.icon} />
-                                    <span className={Styles.charts}>222</span>
-                                </Tooltip>
-                            </div>
-                            <div>
-                                <Tooltip title='点赞' color='#ffa800' overlayStyle={{ borderRadius: '4px' }}>
-                                    <HeartOutlined className={Styles.icon} />
-                                    <span className={Styles.charts}>222</span>
-                                </Tooltip>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className={Styles.post}>
-                    <div className={Styles.img_box}>
-                        <img src="/image/bg1.jpg" alt="" />
-                    </div>
-                    <div className={Styles.info}>
-                        <div className={Styles.time}>2020-2-5</div>
-                        <div className={Styles.title}>
-                            做个烂人</div>
-                        <div className={Styles.text}>
-                            未名湖边的桃花开了，我曾经无数次梦想过，花开时湖边折枝的人群里会有自己的身影。那个时候，我的心情和大家一样迫切，目光却比你们更加,
-                            我的心情和大家一样迫切，目光却比你们更加我的心情和大家一样迫切，目光却比你们更加
-
-                        </div>
-                        <div className={Styles.stuff}>
-                            <div>
-                                <Tooltip title='字数' color='#ef6d57' overlayStyle={{ borderRadius: '4px' }}>
-                                    <FontColorsOutlined className={Styles.icon} />
-                                    <span className={Styles.charts}>222</span>
-                                </Tooltip>
-
-                            </div>
-                            <div>
-                                <Tooltip title='查看' color='#50bcb6' overlayStyle={{ borderRadius: '4px' }}>
-
-                                    <MehOutlined className={Styles.icon} />
-                                    <span className={Styles.charts}>222</span>
-                                </Tooltip>
-                            </div>
-                            <div>
-                                <Tooltip title='点赞' color='#ffa800' overlayStyle={{ borderRadius: '4px' }}>
-                                    <HeartOutlined className={Styles.icon} />
-                                    <span className={Styles.charts}>222</span>
-                                </Tooltip>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {this.renderBlogList()}
                 <div className={Styles.more}>
-                    <div>加载更多</div>
+                    {/* TODO:动态获取数据 */}
+                    <div className={Styles.loadingBtn}>加载更多 </div>
+                    <LoadingDom />
                 </div>
             </div>
-            <LoadingDom />
             <div className={Styles.foot}>
                 <a target="_blank">
                     粤ICP备181222222号
@@ -240,21 +182,27 @@ class App extends React.Component<IAppProps, IAppState> {
     }
 }
 
-const getBlogList = async () => {
-    const { data, success } = await getIndexPageData({ pageNo: 1, pageSize: 10 })
-    if (!success) return message.error('请求错误')
-    return data
+export const getBlogList = async () => {
+    try {
+        const { data, success } = await getIndexPageData({ pageNo: 0, pageSize: 10 })
+        if (!success) return message.error('请求错误')
+        return data
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 // 获取数据
-export async function getStaticProps() {
-    const blogList: [] = []
+export const getStaticProps: GetStaticProps = async (context) => {
+    const blogList = await getBlogList()
     return {
         props: {
-            blogList: blogList
-        }
+            blogList: blogList.list
+        },
+        revalidate: 1
     }
 }
+
 
 export default App
 

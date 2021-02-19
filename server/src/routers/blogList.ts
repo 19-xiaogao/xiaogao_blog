@@ -1,7 +1,7 @@
 import express from "express";
 import { ResponseState } from "../types/enum";
 import { writeResult } from "../utils/result";
-import { insertBlog, selectBlog, updateBlog } from "../service/blogService";
+import { insertBlog, selectBlog, updateBlog } from "../service/web_admin/blogService";
 const router = express.Router();
 
 // 创建博客

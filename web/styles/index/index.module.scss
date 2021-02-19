@@ -233,7 +233,7 @@
           margin: 10px 0;
           display: inline-block;
           position: relative;
-          color: black;
+          color: black !important;
         }
         .title::after {
           content: '';
@@ -342,7 +342,7 @@
     .more {
       margin-top: 90px;
       display: inline-block;
-      div {
+      .loadingBtn {
         position: relative;
         border: 1px solid #eaeaea;
         border-radius: 4px;
@@ -352,11 +352,13 @@
         height: 40px;
         line-height: 40px;
         text-align: center;
-        z-index: 9999 !important;
+        background: #fff;
+        z-index: 9 !important;
       }
-      div:hover {
-        background-color: #0084ff;
+      .loadingBtn:hover {
+        background: #0084ff !important;
         color: #fff;
+        transition: all .3s;
       }
     }
   }
@@ -383,6 +385,4 @@
     color: #73aada;
   }
 }
-// body {
-//   scrollbar-width: 10px;
-// }
+

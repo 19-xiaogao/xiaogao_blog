@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios'
 import { IResponse } from '../types/response'
 const http = axios.create({
-    baseURL: '/webDev'
+    baseURL: 'http://localhost:3003/'
 })
 
 http.interceptors.request.use(config => {

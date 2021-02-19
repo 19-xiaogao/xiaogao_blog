@@ -1,5 +1,5 @@
-import createConnection from "../db";
-import { performSql } from "../db/performSql";
+import createConnection from "../../db";
+import { performSql } from "../../db/performSql";
 
 interface InsertBlogOptions {
   title: string; // 标题
