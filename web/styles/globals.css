@@ -10,6 +10,36 @@ body {
 
 }
 
+.globalLoading {
+    height: 3px;
+    border-radius: 20px;
+    width: 200%;
+    position: fixed;
+    top: 0;
+    z-index: 1111111;
+    background-image: linear-gradient(90deg, #f16f5c 0, #f16f5c 12.5%, #5b56dd 0, #5b56dd 25%, #e15ced 0, #e15ced 37.5%, #27e559 0, #27e559 50%, #18c8c9 0, #18c8c9 62.5%, #dc8987 0, #dc8987 75%, #bb83d6 0, #bb83d6 87.5%, #e774bd 0, #e774bd);
+    animation: loadingAnimation 1s linear infinite;
+}
+
+.globalLoadingBox {
+    position: fixed;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(255, 255, 255, .9);
+}
+
+@keyframes loadingAnimation {
+    0% {
+        transform: translateX(-60%);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+
+}
+
 ::-webkit-scrollbar {
     width: 8px;
 }

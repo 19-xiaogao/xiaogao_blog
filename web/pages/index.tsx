@@ -84,7 +84,7 @@ class App extends React.Component<IAppProps, IAppState> {
         const { blogList } = this.props
         return blogList.map(item => (<div className={Styles.post} key={item.id}>
             <div className={Styles.img_box}>
-                <Link href={'/' + String(item.id)}>
+                <Link href={`/[${String(item.id)}]`} as={`/${String(item.id)}`}>
                     <a>
                         <img src={item.imgUrl} alt="" />
                     </a>
@@ -133,9 +133,12 @@ class App extends React.Component<IAppProps, IAppState> {
         return <div className={Styles.info}>
             <div className={Styles.time}>{moment(item.createDate).format('YYYY-MM-DD')}</div>
             <div className={Styles.title}>
-                <a href="#">
-                    {item.title}
-                </a> </div>
+                <Link href={'/' + String(item.id)}>
+                    <a>
+                        {item.title}
+                    </a>
+                </Link>
+            </div>
             <div className={Styles.text} dangerouslySetInnerHTML={{ __html: marked(item.content, { gfm: true, xhtml: false }) as string }}>
             </div>
         </div>
