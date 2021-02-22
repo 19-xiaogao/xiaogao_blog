@@ -73,8 +73,8 @@ class App extends React.Component<IAppProps, IAppState> {
             <li><a href="#">Article</a></li>
             <li><a href="#">Rainy</a></li>
             <li><a href="#">Envelope</a></li>
-            <li><a href="#">Subscribe</a></li>
-            <li><a href="#">About</a></li>
+            <li><Link href="/subscribe"><a>Subscribe</a></Link></li>
+            <li><Link href="/aboutMe"><a>About</a></Link> </li>
         </ul>
         <div className={Styles.word}>
             <span>Everywhere in the world has a similar life.</span>

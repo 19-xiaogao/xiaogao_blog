@@ -6,6 +6,7 @@ import { message } from 'antd'
 import { IBlogList } from '../types/response'
 import { getBlogDetail, getIndexPageData } from '../api'
 import { CaretRightOutlined, PauseOutlined, WechatOutlined, HeartFilled } from '@ant-design/icons'
+import PageHeader from '../components/Header'
 interface IProps {
     blogDetail: IBlogList
 }
@@ -57,9 +58,7 @@ const BlogDetail: React.FC<IProps> = (props) => {
         <h2 className={Styles.comment_title}><span>Comment List</span><span>(7)</span></h2>
     </section>)
     return <div>
-        <header className={Styles.header}>
-            {renderHeader()}
-        </header>
+        <PageHeader />
         <section className={Styles.section}>
             {renderContent()}
         </section>
