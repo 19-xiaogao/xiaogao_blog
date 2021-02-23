@@ -1,7 +1,16 @@
 import React from 'react'
 import Styles from './index.module.css';
-const LoadingUrl: React.FC = () => (
-    <div className={Styles.loading}>
+import classnames from 'classnames'
+interface ILoading {
+    className?: string
+    style?: any
+}
+const LoadingUrl: React.FC<ILoading> = (props) => {
+    const classNames = classnames({
+        [Styles.loading]: true,
+        [props.className]: !!props.className
+    })
+    return (<div className={classNames} style={props.style} >
         <div className={Styles.loading_center}>
             <div className={Styles.loading_absolute}>
                 <div className={`${Styles.object} ${Styles.object_four} `} ></div>
@@ -10,6 +19,6 @@ const LoadingUrl: React.FC = () => (
                 <div className={`${Styles.object} ${Styles.object_one}`} ></div>
             </div>
         </div>
-    </div>
-)
+    </div>)
+}
 export default LoadingUrl

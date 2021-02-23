@@ -51,8 +51,12 @@ const BlogDetail: React.FC<IProps> = (props) => {
             </div>
             <textarea placeholder="说点什么呢..."></textarea>
             <div className={Styles.subBtn}>
-                <button>SUBMIT</button>
-                <div>~认真和用心是一种态度, 感谢支持~</div>
+                <button>
+                   SUBMIT
+                <div className={Styles.mark}>请选择邮箱噢</div>
+                </button>
+                <div className={Styles.charts}>~认真和用心是一种态度, 感谢支持~</div>
+
             </div>
         </div>
         <h2 className={Styles.comment_title}><span>Comment List</span><span>(7)</span></h2>

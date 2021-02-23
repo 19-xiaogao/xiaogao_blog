@@ -6,15 +6,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script src="https://unpkg.com/css-doodle@0.14.2/css-doodle.min.js"></script>
     <style>
-        .body {
+        /* .body {
             width: 100px;
             height: 100px;
             background: white;
             margin: 0 auto;
             padding: 4px;
-            /* border: 10px solid hsla(0, 0%, 100%, .5); */
-            /* box-shadow: 0 0 2px 5px #655,0 0 2px 10px deeppink inset; */
+            border: 10px solid hsla(0, 0%, 100%, .5);
+            box-shadow: 0 0 2px 5px #655,0 0 2px 10px deeppink inset;
             border: 10px solid #655;
             border-radius: 10px;
             outline-offset: 2px;
@@ -34,16 +35,94 @@
             border-radius: .8em;
             box-shadow: 0 0 0 .6em #655;
             outline: .6em solid #655;
+        } */
+        .body {
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 80px;
+            width: 300px;
+            border: 2px solid #666;
+            height: 300px;
+            box-shadow: 1px 1px 3px 4px #eee;
         }
 
-       
+        .body::before {
+            position: absolute;
+            content: "";
+            transform: translateX(-120%);
+            top: 0;
+            background: repeating-linear-gradient(50deg, #F7A37B,
+                    #F7A37B 1em,
+                    #FFDEA8 1em,
+                    #FFDEA8 2em,
+                    #D0E4B0 2em,
+                    #D0E4B0 3em,
+                    #7CC5D0 3em,
+                    #7CC5D0 4em,
+                    #00A2E1 4em,
+                    #00A2E1 5em,
+                    #0085C8 5em,
+                    #0085C8 6em);
+            display: inline-block;
+            height: 300px;
+            width: 300px;
+            animation: move 3s infinite linear;
+        }
+
+        .body::after {
+            position: absolute;
+            content: "";
+            transform: translateX(120%);
+            top: 0;
+            display: inline-block;
+            height: 300px;
+            width: 300px;
+            animation: move 3s infinite linear;
+            mix-blend-mode: lighten;
+            background: repeating-linear-gradient(50deg, #F7A37B,
+                    #F7A37B 1em,
+                    #FFDEA8 1em,
+                    #FFDEA8 2em,
+                    #D0E4B0 2em,
+                    #D0E4B0 3em,
+                    #7CC5D0 3em,
+                    #7CC5D0 4em,
+                    #00A2E1 4em,
+                    #00A2E1 5em,
+                    #0085C8 5em,
+                    #0085C8 6em);
+
+        }
+
+        @keyframes move {
+            30% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(0);
+            }
+        }
+
+        .dodle {
+            margin-left: 100px;
+            width: 100px;
+            height: 100px;
+        }
     </style>
 </head>
 
 <body>
-    <div class="body">111</div>
-    <div class="something">
-    </div>
+    <div class="body"></div>
+    <css-doodle class="dodle">
+        :doodle {
+        @grid: 5 / 8em;
+        }
+        background: #60569e;
+        transform: scale(@rand(.2, .9));
+    </css-doodle>
 </body>
+
 
 </html>

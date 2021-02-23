@@ -6,7 +6,6 @@ function MyApp({ Component, pageProps }) {
   const router = useRouter()
   const [loading, setLoading] = useState<boolean>(false)
   useEffect(() => {
-    // TODO: loading效果加载动画处理
     const handleRouteStartChange = (url) => {
       setLoading(true)
     }
