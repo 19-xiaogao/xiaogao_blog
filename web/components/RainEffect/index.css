@@ -1,0 +1,19 @@
+.videobg {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    pointer-events: none;
+}
+
+.container {
+	height: 100vh;
+    z-index: 1;
+	overflow: hidden;
+	position: relative;
+	background: rgba(146, 137, 183, 0.5);
+}
+
