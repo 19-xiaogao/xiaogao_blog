@@ -13,6 +13,7 @@ import {
 } from '@ant-design/icons'
 import LoadingDom from '../components/loading'
 import RainEffect from '../components/RainEffect'
+import { setInterval } from 'timers';
 interface IAppState {
     fatherBox: {
         [props: string]: any
@@ -29,6 +30,7 @@ interface IAppProps {
 
 class App extends React.Component<IAppProps, IAppState> {
     private scene = React.createRef<any>()
+    private timer: any = null
     state = {
         fatherBox: {},
         imgBoxStyle: {},
@@ -39,7 +41,10 @@ class App extends React.Component<IAppProps, IAppState> {
         // this.initParallax(this.scene.current)
         // window.addEventListener('resize', this.disposeScreen, false)
         // this.disposeScreen()
-        
+        // document.addEventListener('scroll', () => {
+        //     console.log(window.pageYOffset);
+        //     clearInterval(this.timer)
+        // })
     }
     componentWillUnmount() {
         // window.removeEventListener('resize', this.disposeScreen)
@@ -65,8 +70,20 @@ class App extends React.Component<IAppProps, IAppState> {
         }
     }
     private onSlide = () => {
-        // const body = document.querySelector('body')
-        window.scrollTo(0, 0)
+        this.animate(0)
+    }
+    private animate = (targe: number, callback?: () => void) => {
+        //动画公式 (目标值-现在的位置) / 10 
+        let timer = setInterval(() => {
+            let step = (targe - window.pageYOffset) / 10;
+            step = step >= 0 ? Math.ceil(step) : Math.floor(step);
+            if (window.pageYOffset === targe) {
+                console.log(timer);
+                clearInterval(timer._id);
+            }
+            window.scroll(0, window.pageYOffset + step);
+        }, 15)
+
     }
     private renderNav = () => (<div className={Styles.nav} style={!this.state.navHied ? { top: '-100%' } : { top: '0' }} >
         <ul className={Styles.nav_list} >
@@ -145,7 +162,7 @@ class App extends React.Component<IAppProps, IAppState> {
     }
     render() {
         return <div className={Styles.container}>
-            <div className={Styles.home} >
+            <div className={Styles.home} id='home' >
                 {/* <div ref={this.scene}>
                     <div data-depth="0.4" className={Styles.bg}>
                         <img src='/image/bg.png' />
