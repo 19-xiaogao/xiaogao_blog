@@ -1,0 +1,58 @@
+.content {
+    width: 100%;
+    max-width: 800px;
+    margin: auto;
+    padding: 100px 20px 40px;
+}
+
+.h1 {
+    font-size: 26px;
+    font-weight: 700;
+}
+
+.ul {
+    margin-top: 40px;
+
+    li {
+        margin: 20px 0;
+        font-size: 16px;
+
+        &::before {
+            content: "☼";
+            font-size: 18px;
+            position: relative;
+            left: -10px;
+        }
+    }
+}
+
+.icons {
+    margin-top: 50px;
+    display: flex;
+
+    div {
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        background: #eee;
+        font-size: 25px;
+        border-radius: 10px;
+
+    }
+
+
+    div:nth-child(1) {
+        &:hover {
+            background: green;
+
+            span {
+                color: #fff !important;
+            }
+        }
+    }
+
+    div:nth-child(2) {
+        margin: 0 20px;
+    }
+}

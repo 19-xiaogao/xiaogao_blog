@@ -4,8 +4,9 @@ interface IHProps {
     title?: string
     iconHref?: string
 }
-export default (props: IHProps) => (
+const Head = (props: IHProps) => (
     <Helmet>
         <title>{props.title}</title>
         <link rel="canonical" href={props.iconHref} />
     </Helmet>)
+export default Head

@@ -52,7 +52,7 @@ const BlogDetail: React.FC<IProps> = (props) => {
             <textarea placeholder="说点什么呢..."></textarea>
             <div className={Styles.subBtn}>
                 <button>
-                   SUBMIT
+                    SUBMIT
                 <div className={Styles.mark}>请选择邮箱噢</div>
                 </button>
                 <div className={Styles.charts}>~认真和用心是一种态度, 感谢支持~</div>
