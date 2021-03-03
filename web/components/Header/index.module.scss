@@ -1,7 +1,8 @@
 .header {
     position: fixed;
     top: 0;
-    background: hsla(0,0%,100%,.13);
+    // background: hsla(0,0%,100%,.13);
+    background: #fff;
         // border-bottom: 1px solid rgba(246,247,248,.07);
     border-bottom: 1px solid #eee;
     height: 50px;
@@ -37,22 +38,16 @@
       span {
         cursor: pointer;
       }
-      span:nth-child(2) {
+      span:nth-child(1) {
         display: inline-block;
         margin: 0 20px;
       }
       span:hover:nth-child(1) {
-        color: #0cd438;
-      }
-      span:hover:nth-child(2) {
         color: #ef6d57;
       }
       @media screen and (max-width: 780px) {
-        span:nth-child(3) {
-          display: none;
-        }
         span:nth-child(2) {
-          margin: 0 10px;
+          display: none;
         }
       }
       .img {

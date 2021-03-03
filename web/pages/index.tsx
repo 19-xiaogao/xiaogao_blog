@@ -29,8 +29,8 @@ interface IAppProps {
 }
 
 class App extends React.Component<IAppProps, IAppState> {
-    private scene = React.createRef<any>()
-    private timer: any = null
+    private scene = React.createRef<any>();
+    private timer: any = null;
     state = {
         fatherBox: {},
         imgBoxStyle: {},
@@ -45,6 +45,7 @@ class App extends React.Component<IAppProps, IAppState> {
         //     console.log(window.pageYOffset);
         //     clearInterval(this.timer)
         // })
+
     }
     componentWillUnmount() {
         // window.removeEventListener('resize', this.disposeScreen)
@@ -73,13 +74,12 @@ class App extends React.Component<IAppProps, IAppState> {
         this.animate(0)
     }
     private animate = (targe: number, callback?: () => void) => {
-        //动画公式 (目标值-现在的位置) / 10 
-        let timer = setInterval(() => {
+        this.timer = setInterval(() => {
             let step = (targe - window.pageYOffset) / 10;
             step = step >= 0 ? Math.ceil(step) : Math.floor(step);
             if (window.pageYOffset === targe) {
-                console.log(timer);
-                clearInterval(timer._id);
+                clearInterval(this.timer._id);
+                callback && callback()
             }
             window.scroll(0, window.pageYOffset + step);
         }, 15)
