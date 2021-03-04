@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\Temp02\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js
+  C:\Program Files\nodejs\node.exe C:\Users\Temp02\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add @types/nodemailer -S
 
 PATH: 
   C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\Yozosoft\Yozo_Office\Lib\xuggler\bin;C:\Program Files\nodejs\;C:\Program Files\Git\cmd;C:\Users\Temp02\AppData\Roaming\npm;C:\Python;C:\Users\Temp02\AppData\Local\Microsoft\WindowsApps;D:\360Downloads\Microsoft VS Code\bin
