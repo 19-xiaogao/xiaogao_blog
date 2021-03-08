@@ -17,4 +17,3 @@ export interface IBlogList {
     viewCount: number
     [props: string]: any
 }
-// 吐槽一个东西的时候,你是需要真正明白的好处在哪里。他的坏处在哪里。
