@@ -62,7 +62,7 @@ const BlogDetail: React.FC<IProps> = (props) => {
         <h2 className={Styles.comment_title}><span>Comment List</span><span>(7)</span></h2>
     </section>)
     return <div>
-        <PageHeader logo={true} />
+        <PageHeader logo={true} title={blogDetail.title} />
         <section className={Styles.section}>
             {renderContent()}
         </section>
