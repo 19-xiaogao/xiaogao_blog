@@ -14,3 +14,10 @@ export const getIndexPageData = (params?: IPageDate): Response => http.get('/api
 
 // 查找博客详情
 export const getBlogDetail = (params: { id: number }): Response => http.get('/api/web/blog_detail', { params })
+
+interface IGoodLike {
+    id: number
+    like: boolean
+}
+// 喜欢博客 和查看博客
+export const goodLikeBlog = (data: IGoodLike): Response => http.post('/api/web/blog_goodLike', data)

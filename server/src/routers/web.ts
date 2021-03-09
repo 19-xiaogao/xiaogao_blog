@@ -32,7 +32,7 @@ router.get('/blog_detail', (req, res) => {
 router.post('/blog_goodLike', (req, res) => {
     blogGoodLike(req.body, result => {
         res.writeHead(200, { 'Content-Type': ResponseState.ContentType })
-        res.write(writeResult({ success: true, message: ResponseState.success, data: result }))
+        res.write(writeResult({ success: true, message: ResponseState.success, data: '' }))
         res.end()
     }, error => {
         res.write(writeResult({ success: false, message: ResponseState.failed, data: error }))

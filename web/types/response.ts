@@ -15,5 +15,6 @@ export interface IBlogList {
     show_blog: number
     title: string
     viewCount: number
+    id: number
     [props: string]: any
 }

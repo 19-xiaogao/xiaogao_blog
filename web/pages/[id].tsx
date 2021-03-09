@@ -1,34 +1,19 @@
-import React, { useState } from 'react'
+import React, { useEffect } from 'react'
 import Styles from '../styles/blogDetail/index.module.scss'
 import moment from 'moment'
 import marked from 'marked'
 import { message } from 'antd'
 import { IBlogList } from '../types/response'
-import { getBlogDetail, getIndexPageData } from '../api'
-import { CaretRightOutlined, PauseOutlined, WechatOutlined, HeartFilled } from '@ant-design/icons'
+import { getBlogDetail, getIndexPageData, goodLikeBlog } from '../api'
 import PageHeader from '../components/Header'
 interface IProps {
     blogDetail: IBlogList
 }
 const BlogDetail: React.FC<IProps> = (props) => {
-    const [play, setPlay] = useState<boolean>(false)
     const { blogDetail } = props
-
-    const renderHeader = () => (
-        <>
-            <div className={Styles.logo}>
-                <i className="web-font" >小 · 膏</i>
-                {!play ? <CaretRightOutlined onClick={() => setPlay(true)} /> : <PauseOutlined onClick={() => setPlay(false)} />}
-            </div>
-            <div className={Styles.menuIcon}>
-                <WechatOutlined />
-                <HeartFilled />
-                <span className={Styles.img}>
-                    <img src="/image/4.jpg" alt="" />
-                </span>
-            </div>
-        </>
-    )
+    useEffect(() => {
+        goodLikeBlog({ id: blogDetail.id, like: false })
+    }, [])
     const renderContent = () => (<>
         <h1>{blogDetail.title}</h1>
         <div className={Styles.stuff}>
@@ -43,6 +28,7 @@ const BlogDetail: React.FC<IProps> = (props) => {
             </div>
         </div>
     </>)
+    const onOk = () => goodLikeBlog({ id: blogDetail.id, like: true })
     const renderComment = () => (<section className={Styles.comment_section}>
         <div className={Styles.comment_form}>
             <div className={Styles.commentInput}>
@@ -62,7 +48,7 @@ const BlogDetail: React.FC<IProps> = (props) => {
         <h2 className={Styles.comment_title}><span>Comment List</span><span>(7)</span></h2>
     </section>)
     return <div>
-        <PageHeader logo={true} title={blogDetail.title} />
+        <PageHeader logo={true} title={blogDetail.title} onOk={onOk} blogId={blogDetail.id} />
         <section className={Styles.section}>
             {renderContent()}
         </section>
@@ -71,8 +57,6 @@ const BlogDetail: React.FC<IProps> = (props) => {
         </div>
     </div>
 }
-
-
 
 export async function getStaticPaths() {
     const { data, success } = await getIndexPageData()
