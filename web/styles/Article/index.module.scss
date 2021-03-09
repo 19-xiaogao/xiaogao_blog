@@ -1,0 +1,99 @@
+.home {
+  margin: 0 auto;
+  width: 640px;
+  padding: 80px 40px;
+    
+  @media screen and (max-width: 780px) {
+    width: 100%;
+    padding: 40px 10px;
+  }
+
+  .year_list {
+    width: 100%;
+    padding: 10px;
+    @media screen and (max-width: 780px) {
+      padding: 0;
+    }
+    .month_list {
+      .month {
+        font-size: 20px;
+        color: #6e7ab5;
+        margin: 30px 0 10px;
+        font-weight: 400;
+        font-size: 18px;
+        list-style: none;
+        position: relative;
+        margin-bottom: 30px;
+
+        &::before {
+          content: "";
+          width: 12px;
+          height: 12px;
+          display: inline-block;
+          background-color: #dce8ec;
+          border: 3px solid #afcfff;
+          margin-right: 22px;
+          border-radius: 50%;
+          box-sizing: border-box;
+        }
+      }
+
+      .day {
+        padding-left: 30px;
+        border-left: 1px solid #f3fafd;
+        margin-left: 6px;
+        @media screen and (max-width: 780px) {
+          padding-left: 10px;
+          margin-left: 2px;
+        }
+        .day_detail {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+
+          .char {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-left: 20px;
+            @media screen and (max-width: 780px) {
+              padding-left: 10px;
+              h3 {
+                font-size: 13px !important;
+              }
+            }
+            h3 {
+              color: #5b6773;
+              cursor: pointer;
+              font-size: 15px;
+            }
+
+            span {
+              margin-top: 1px;
+              color: #a1a0d6;
+              font-size: 13px;
+              letter-spacing: 0;
+            }
+          }
+
+          .item_r {
+            color: #d2c6a3;
+            font-size: 13px;
+          }
+
+          img {
+            width: 45px;
+            height: 45px;
+            border-radius: 4px;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+}
+
+.page {
+  transition: all 0.5;
+}

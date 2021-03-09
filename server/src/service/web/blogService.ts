@@ -44,3 +44,24 @@ export const selectBlogDetail = async (options: ISelectDetail, success: (res) =>
         error(err);
     }
 }
+interface IBlogGoodLike {
+    id: number
+    like: boolean
+}
+// 给博客点赞
+export const blogGoodLike = async (option: IBlogGoodLike, success: (res) => any, error: (err) => any) => {
+    const likeSqlStr = 'UPDATE blog SET likeCount = likeCount +1 WHERE id = ?;'
+    const viewSqlStr = 'UPDATE blog SET viewCount = viewCount +1 WHERE id = ?;'
+    const params = [option.id];
+    try {
+        if (option.like) {
+            const result = await performSql(likeSqlStr, params)
+            success(result)
+        } else {
+            const result = await performSql(viewSqlStr, params)
+            success(result)
+        }
+    } catch (err) {
+        error(err)
+    }
+}

@@ -14,7 +14,7 @@ const post = process.env.POST || 3003;
 
 /**
  * 3002 web_admin
- * 3000 web
+ * 3001 web
  * 3003 server
  */
 const originList = ['http://localhost:3002', 'http://localhost:3000'];

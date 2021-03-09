@@ -5,9 +5,7 @@ html,
 body {
     padding: 0;
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-        Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-
+    font-family: "YouYuan";
 }
 
 .globalLoading {
@@ -472,7 +470,6 @@ table,
 th,
 td {
     border: none;
-    font-family: "微软雅黑", "黑体", "宋体";
     font-size: 14px;
     margin: 0px;
     padding: 0px;

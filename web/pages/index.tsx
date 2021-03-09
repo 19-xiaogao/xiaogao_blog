@@ -12,7 +12,6 @@ import {
     SortDescendingOutlined, FontColorsOutlined, MehOutlined, HeartOutlined, AlignRightOutlined, CloseOutlined
 } from '@ant-design/icons'
 import LoadingDom from '../components/loading'
-import RainEffect from '../components/RainEffect'
 import { setInterval } from 'timers';
 interface IAppState {
     fatherBox: {
@@ -38,17 +37,17 @@ class App extends React.Component<IAppProps, IAppState> {
     }
 
     componentDidMount() {
-        // this.initParallax(this.scene.current)
-        // window.addEventListener('resize', this.disposeScreen, false)
-        // this.disposeScreen()
-        // document.addEventListener('scroll', () => {
-        //     console.log(window.pageYOffset);
-        //     clearInterval(this.timer)
-        // })
+        this.initParallax(this.scene.current)
+        window.addEventListener('resize', this.disposeScreen, false)
+        this.disposeScreen()
+        document.addEventListener('scroll', () => {
+            console.log(window.pageYOffset);
+            clearInterval(this.timer)
+        })
 
     }
     componentWillUnmount() {
-        // window.removeEventListener('resize', this.disposeScreen)
+        window.removeEventListener('resize', this.disposeScreen)
     }
 
     //TODO:处理图片自适应问题
@@ -87,7 +86,7 @@ class App extends React.Component<IAppProps, IAppState> {
     }
     private renderNav = () => (<div className={Styles.nav} style={!this.state.navHied ? { top: '-100%' } : { top: '0' }} >
         <ul className={Styles.nav_list} >
-            <li><a href="#">Article</a></li>
+            <li><a href="/article">Article</a></li>
             <li><a href="#">Rainy</a></li>
             <li><a href="#">Envelope</a></li>
             <li><Link href="/subscribe"><a>Subscribe</a></Link></li>
@@ -163,11 +162,11 @@ class App extends React.Component<IAppProps, IAppState> {
     render() {
         return <div className={Styles.container}>
             <div className={Styles.home} id='home' >
-                {/* <div ref={this.scene}>
+                <div ref={this.scene}>
                     <div data-depth="0.4" className={Styles.bg}>
                         <img src='/image/bg.png' />
                     </div>
-                </div> */}
+                </div>
                 {/* <RainEffect /> */}
                 <div className={Styles.head}>
                     <div className={Styles.logo} style={!this.state.navHied ? { color: '#fff' } : { color: '#333' }}>
