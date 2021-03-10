@@ -6,14 +6,29 @@ import { message } from 'antd'
 import { IBlogList } from '../types/response'
 import { getBlogDetail, getIndexPageData, goodLikeBlog } from '../api'
 import PageHeader from '../components/Header'
+import nprogress from 'nprogress'
 interface IProps {
     blogDetail: IBlogList
 }
 const BlogDetail: React.FC<IProps> = (props) => {
     const { blogDetail } = props
+    // 调用查看接口
     useEffect(() => {
         goodLikeBlog({ id: blogDetail.id, like: false })
     }, [])
+
+    useEffect(() => {
+        const section = document.getElementById('section')
+        const onScrollPage = () => {
+            nprogress.configure({ showSpinner: false });
+            // nprogress.set(window.scrollY / section.scrollHeight)
+            // nprogress.set(0)
+            nprogress.configure({minimum:window.scrollY / section.scrollHeight});
+        }
+        window.addEventListener('scroll', onScrollPage, false)
+        return () => window.removeEventListener('scroll', onScrollPage, false)
+    }, [])
+
     const renderContent = () => (<>
         <h1>{blogDetail.title}</h1>
         <div className={Styles.stuff}>
@@ -49,7 +64,7 @@ const BlogDetail: React.FC<IProps> = (props) => {
     </section>)
     return <div>
         <PageHeader logo={true} title={blogDetail.title} onOk={onOk} blogId={blogDetail.id} />
-        <section className={Styles.section}>
+        <section className={Styles.section} id="section">
             {renderContent()}
         </section>
         <div className={Styles.comment}>

@@ -1,13 +1,15 @@
 @import '/fontIcon/iconfont.css';
 @import 'antd/dist/antd.css';
-
+@import 'nprogress/nprogress.css';
 html,
 body {
     padding: 0;
     margin: 0;
     font-family: "YouYuan";
 }
-
+boyd{
+    overflow-y: auto;
+}
 .globalLoading {
     height: 3px;
     border-radius: 20px;

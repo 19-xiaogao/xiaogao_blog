@@ -99,8 +99,6 @@ class App extends React.Component<IAppProps, IAppState> {
     private renderNav = () => (<div className={Styles.nav} style={!this.state.navHied ? { top: '-100%' } : { top: '0' }} >
         <ul className={Styles.nav_list} >
             <li><a href="/article">Article</a></li>
-            <li><a href="#">Rainy</a></li>
-            <li><a href="#">Envelope</a></li>
             <li><Link href="/subscribe"><a>Subscribe</a></Link></li>
             <li><Link href="/aboutMe"><a>About</a></Link> </li>
         </ul>

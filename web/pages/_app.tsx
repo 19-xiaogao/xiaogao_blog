@@ -1,14 +1,14 @@
-import {useEffect, useState} from 'react'
-import {useRouter} from 'next/router'
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
 import '../styles/globals.css'
-import Loading from '../components/loadingUrl'
-
-function MyApp({Component, pageProps}) {
+// import Loading from '../components/loadingUrl'
+import NProgress from 'nprogress'
+function MyApp({ Component, pageProps }) {
     const router = useRouter()
-    const [loading, setLoading] = useState<boolean>(false)
+    // const [loading, setLoading] = useState<boolean>(false)
     useEffect(() => {
-        const handleRouteStartChange = (url) => setLoading(true)
-        const handleRouterEndChange = (url) => setLoading(false)
+        const handleRouteStartChange = (url) => NProgress.start()
+        const handleRouterEndChange = (url) => NProgress.done()
         router.events.on('routeChangeStart', handleRouteStartChange)
         router.events.on('routeChangeComplete', handleRouterEndChange)
         return () => {
@@ -17,8 +17,9 @@ function MyApp({Component, pageProps}) {
         }
     }, [])
     return <>
-        <div className='globalLoading' style={loading ? {display: 'block'} : {display: 'none'}}></div>
-        {loading ? <Loading/> : <Component {...pageProps} />}
+        <Component {...pageProps} />
+        {/* <div className='globalLoading' style={loading ? {display: 'block'} : {display: 'none'}}></div> */}
+        {/* {loading ? <Loading/> : <Component {...pageProps} />} */}
     </>
 }
 

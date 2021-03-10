@@ -1,6 +1,7 @@
 .section {
   width: 800px;
   margin: auto;
+  height: 10000px;
   transition: all .3s;
   @media screen and (max-width: 780px) {
     width: 90%;
@@ -40,7 +41,6 @@
 }
 .comment {
   width: 800px;
-  height: 10000px;
   margin: auto;
   transition: all .3s;
   @media screen and (max-width: 780px) {
