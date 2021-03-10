@@ -21,19 +21,27 @@ interface IAppState {
         [props: string]: any
     }
     navHied: boolean
+    loadingMore: boolean
+    blogList: IBlogList[]
 }
 
 interface IAppProps {
     blogList: IBlogList[]
+    total: number
 }
-
+let pageSize = 5
 class App extends React.Component<IAppProps, IAppState> {
     private scene = React.createRef<any>();
     private timer: any = null;
-    state = {
-        fatherBox: {},
-        imgBoxStyle: {},
-        navHied: false
+    constructor(props) {
+        super(props)
+        this.state = {
+            fatherBox: {},
+            imgBoxStyle: {},
+            navHied: false,
+            loadingMore: false,
+            blogList: props.blogList
+        }
     }
 
     componentDidMount() {
@@ -41,7 +49,6 @@ class App extends React.Component<IAppProps, IAppState> {
         window.addEventListener('resize', this.disposeScreen, false)
         this.disposeScreen()
         document.addEventListener('scroll', () => {
-            console.log(window.pageYOffset);
             clearInterval(this.timer)
         })
 
@@ -53,7 +60,12 @@ class App extends React.Component<IAppProps, IAppState> {
     //TODO:处理图片自适应问题
     private disposeScreen = () => {
     }
-
+    private loadMore = async () => {
+        this.setState({ loadingMore: true })
+        pageSize = pageSize + 5
+        const data = await getBlogList({ pageNo: 0, pageSize: pageSize })
+        this.setState({ blogList: data.list, loadingMore: false })
+    }
     private initParallax = (DOMElement: React.ReactNode) => {
         new Parallax(DOMElement, {
             relativeInput: true,
@@ -144,7 +156,7 @@ class App extends React.Component<IAppProps, IAppState> {
         ))
     }
     private renderHomeBlogList = () => {
-        const { blogList } = this.props
+        const { blogList } = this.state
         const item = blogList[blogList.length - 1]
         return <div className={Styles.info}>
             <div className={Styles.time}>{moment(item.createDate).format('YYYY-MM-DD')}</div>
@@ -167,7 +179,6 @@ class App extends React.Component<IAppProps, IAppState> {
                         <img src='/image/bg.png' />
                     </div>
                 </div>
-                {/* <RainEffect /> */}
                 <div className={Styles.head}>
                     <div className={Styles.logo} style={!this.state.navHied ? { color: '#fff' } : { color: '#333' }}>
                         <i className="web-font" >小 · 膏</i>
@@ -184,10 +195,8 @@ class App extends React.Component<IAppProps, IAppState> {
             </div>
             <div className={Styles.content}>
                 {this.renderBlogList()}
-                <div className={Styles.more}>
-                    {/* TODO:动态获取数据 */}
-                    <div className={Styles.loadingBtn}>加载更多 </div>
-                    <LoadingDom />
+                <div className={Styles.more} onClick={this.loadMore}>
+                    {this.props.total === this.props.blogList.length ? <div className={Styles.bottomTest}>到底了</div> : this.state.loadingMore ? <LoadingDom /> : <div className={Styles.loadingBtn}>加载更多 </div>}
                 </div>
             </div>
             <div className={Styles.foot}>
@@ -202,9 +211,9 @@ class App extends React.Component<IAppProps, IAppState> {
     }
 }
 
-export const getBlogList = async () => {
+export const getBlogList = async (params?) => {
     try {
-        const { data, success } = await getIndexPageData({ pageNo: 0, pageSize: 10 })
+        const { data, success } = await getIndexPageData({ pageNo: 0, pageSize: pageSize, ...params })
         if (!success) return message.error('请求错误')
         return data
     } catch (error) {
@@ -217,7 +226,8 @@ export const getStaticProps: GetStaticProps = async (context) => {
     const blogList = await getBlogList()
     return {
         props: {
-            blogList: blogList.list
+            blogList: blogList.list,
+            total: blogList.total
         },
         revalidate: 1
     }

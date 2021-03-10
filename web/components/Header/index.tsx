@@ -19,6 +19,7 @@ const Header: React.FC<IHeaders> = (props) => {
         router.push('/')
     }
     useEffect(() => {
+
         let rememberPageYOffset = window.pageYOffset;
         const onScroll = (e) => {
             if (window.pageYOffset > rememberPageYOffset) {
@@ -31,7 +32,7 @@ const Header: React.FC<IHeaders> = (props) => {
         }
         window.addEventListener('scroll', onScroll)
         return () => window.removeEventListener('scroll', onScroll)
-    }, [])
+    })
 
     useEffect(() => {
         const goodLike = JSON.parse(localStorage.getItem('goodLike')) || [];
@@ -46,13 +47,10 @@ const Header: React.FC<IHeaders> = (props) => {
     const onClickLike = () => {
         if (isGoodLike) return
         const goodLike = JSON.parse(localStorage.getItem('goodLike'))
-        console.log(goodLike);
         localStorage.setItem('goodLike', JSON.stringify(goodLike.content({ id: props.blogId, goodLike: true })))
         props.onOk()
         setIsGoodLike(true)
     }
-
-
     return <header className={Styles.header} style={scrollView ? { display: 'none' } : { display: 'block' }}>
         <div className={Styles.logo}>
             <i className="web-font" onClick={jumpHomePage} >小 · 膏</i>
