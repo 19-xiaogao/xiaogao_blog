@@ -1,11 +1,13 @@
 import React from 'react'
 import Helmet from '../components/Helmet'
 import PageHeader from '../components/Header'
+import Wave from '../components/wave'
 import Styles from '../styles/subscribe/index.module.scss'
+import { headerType } from '../types/response'
 const Subscribe: React.FC = () => {
     return <div className={Styles.content}>
         <Helmet title="He 我是小膏" />
-        <PageHeader />
+        <PageHeader type={headerType.subscribe} />
         <h1 className={Styles.h1}>[ 死亡如风-常伴无声 ]</h1>
         <div className={Styles.beginBox}>
             <h1>嘿，你今天笑了么 ~~</h1>
@@ -19,6 +21,7 @@ const Subscribe: React.FC = () => {
                 <button>subscribe</button>
             </div>
         </div>
+        <Wave />
     </div>
 }
 export default Subscribe

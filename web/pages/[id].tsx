@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react'
 import Styles from '../styles/blogDetail/index.module.scss'
 import moment from 'moment'
+import nprogress from 'nprogress'
 import marked from 'marked'
 import { message } from 'antd'
-import { IBlogList } from '../types/response'
+import { IBlogList, headerType } from '../types/response'
 import { getBlogDetail, getIndexPageData, goodLikeBlog } from '../api'
 import PageHeader from '../components/Header'
-import nprogress from 'nprogress'
 interface IProps {
     blogDetail: IBlogList
 }
@@ -19,11 +19,9 @@ const BlogDetail: React.FC<IProps> = (props) => {
 
     useEffect(() => {
         const section = document.getElementById('section')
+        nprogress.configure({ showSpinner: false });
         const onScrollPage = () => {
-            nprogress.configure({ showSpinner: false });
             // nprogress.set(window.scrollY / section.scrollHeight)
-            // nprogress.set(0)
-            nprogress.configure({minimum:window.scrollY / section.scrollHeight});
         }
         window.addEventListener('scroll', onScrollPage, false)
         return () => window.removeEventListener('scroll', onScrollPage, false)
@@ -63,7 +61,7 @@ const BlogDetail: React.FC<IProps> = (props) => {
         <h2 className={Styles.comment_title}><span>Comment List</span><span>(7)</span></h2>
     </section>)
     return <div>
-        <PageHeader logo={true} title={blogDetail.title} onOk={onOk} blogId={blogDetail.id} />
+        <PageHeader logo={true} title={blogDetail.title} onOk={onOk} blogId={blogDetail.id} type={headerType.blog_detail} />
         <section className={Styles.section} id="section">
             {renderContent()}
         </section>

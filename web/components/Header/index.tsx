@@ -2,11 +2,15 @@ import React, { useState, useEffect } from 'react'
 import Styles from './index.module.scss'
 import { useRouter } from 'next/router'
 import { PauseOutlined, HeartFilled } from '@ant-design/icons'
+import { headerType } from '../../types/response'
+
 interface IHeaders {
     logo?: boolean
     title?: string
     onOk?: () => void
     blogId?: number
+    className?: string
+    type: headerType
 }
 const Header: React.FC<IHeaders> = (props) => {
     const [play, setPlay] = useState<boolean>(false)
@@ -19,7 +23,9 @@ const Header: React.FC<IHeaders> = (props) => {
         router.push('/')
     }
     useEffect(() => {
-
+        if (props.type !== headerType.blog_detail) {
+            return
+        }
         let rememberPageYOffset = window.pageYOffset;
         const onScroll = (e) => {
             if (window.pageYOffset > rememberPageYOffset) {
@@ -29,8 +35,8 @@ const Header: React.FC<IHeaders> = (props) => {
             }
             rememberPageYOffset = window.pageYOffset
             setPageUOffset(window.pageYOffset)
+            window.addEventListener('scroll', onScroll)
         }
-        window.addEventListener('scroll', onScroll)
         return () => window.removeEventListener('scroll', onScroll)
     })
 
@@ -53,7 +59,7 @@ const Header: React.FC<IHeaders> = (props) => {
     }
     return <header className={Styles.header} style={scrollView ? { display: 'none' } : { display: 'block' }}>
         <div className={Styles.logo}>
-            <i className="web-font" onClick={jumpHomePage} >小 · 膏</i>
+            <i className="web-font" onClick={jumpHomePage} style={props.type === headerType.subscribe ? { color: '#fff' } : {}}>小 · 膏</i>
             {!play ? <div className={Styles.triangle} onClick={() => setPlay(true)} /> : <PauseOutlined onClick={() => setPlay(false)} />}
         </div>
         <div className={Styles.title} style={pageUOffset < 20 ? { display: 'none' } : { display: 'block' }}>{props.title}</div>

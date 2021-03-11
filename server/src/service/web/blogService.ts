@@ -5,7 +5,7 @@ interface ISelectBlog {
 }
 
 // 查找博客列表
-export const selectBlog = async (options: ISelectBlog, success: (res) => any, error: (error: any) => void) => {
+export const selectBlog = async (options: ISelectBlog, success: (res) => void, error: (error: any) => void) => {
     options.pageNo = Number(options.pageNo);
     options.pageSize = Number(options.pageSize);
     const sqlTotalStr = 'select COUNT(title) as total from blog WHERE show_blog = 1 ;'
@@ -30,6 +30,16 @@ export const selectBlog = async (options: ISelectBlog, success: (res) => any, er
         }
     }
 };
+// 查找所有列表数据
+export const selectAllBlog = async (success: (res) => void, error: (err) => void) => {
+    const mySql = 'SELECT * from blog ORDER BY UNIX_TIMESTAMP(createDate) DESC;';
+    try {
+        const resList = await performSql(mySql)
+        success(resList)
+    } catch (err) {
+        error(err)
+    }
+}
 // 查找博客详情
 interface ISelectDetail {
     id?: number

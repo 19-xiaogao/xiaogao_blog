@@ -45,13 +45,15 @@ class App extends React.Component<IAppProps, IAppState> {
     }
 
     componentDidMount() {
+        this.setState({
+            blogList: this.props.blogList
+        })
         this.initParallax(this.scene.current)
         window.addEventListener('resize', this.disposeScreen, false)
         this.disposeScreen()
         document.addEventListener('scroll', () => {
             clearInterval(this.timer)
         })
-
     }
     componentWillUnmount() {
         window.removeEventListener('resize', this.disposeScreen)

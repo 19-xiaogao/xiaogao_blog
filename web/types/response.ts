@@ -18,3 +18,8 @@ export interface IBlogList {
     id: number
     [props: string]: any
 }
+// 处理header 头部类型
+export enum headerType {
+    "blog_detail" = "blog_detail",
+    "subscribe" = "subscribe"
+}

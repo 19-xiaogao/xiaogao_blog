@@ -1,11 +1,17 @@
 import React from 'react'
 import Header from '../components/Header'
 import Styles from '../styles/Article/index.module.scss'
+import { getAllBlog } from '../api/index'
+import { GetStaticProps } from 'next'
+import { IBlogList, headerType } from '../types/response'
+interface IArticle {
+    blogALl: IBlogList[]
+}
 // 文章列表
-const Article: React.FC = () => {
+const Article: React.FC<IArticle> = (props) => {
 
     return <div className={Styles.page}>
-        <Header />
+        <Header type={headerType.subscribe} />
         <section className={Styles.home}>
             <div className={Styles.year_list}>
                 <ul className={Styles.month_list}>
@@ -26,3 +32,13 @@ const Article: React.FC = () => {
     </div>
 }
 export default Article
+
+export const getStaticProps: GetStaticProps = async () => {
+    const { data, success } = await getAllBlog()
+    if (!success) return
+    return {
+        props: {
+            blogAll: data
+        }
+    }
+}
