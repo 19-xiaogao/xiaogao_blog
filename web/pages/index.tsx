@@ -132,7 +132,7 @@ class App extends React.Component<IAppProps, IAppState> {
                 </div>
                 <div className={Styles.stuff}>
                     <div>
-                        <Tooltip title='字数' color='#ef6d57' overlayStyle={{ borderRadius: '4px' }}>
+                        <Tooltip title='字符' color='#ef6d57' overlayStyle={{ borderRadius: '4px' }}>
                             <FontColorsOutlined className={Styles.icon} />
                             <span className={Styles.charts}>{item.number_words}</span>
                         </Tooltip>

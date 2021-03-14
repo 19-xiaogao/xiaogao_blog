@@ -3,27 +3,33 @@
   margin: auto;
   height: 10000px;
   transition: all .3s;
+
   @media screen and (max-width: 780px) {
     width: 90%;
   }
+
   h1 {
     font-size: 30px;
     padding: 90px 0 15px;
     color: #333;
     font-weight: 600;
+
     @media screen and(max-width:780px) {
       font-size: 20px;
     }
   }
+
   .stuff {
     color: #6a737d;
     line-height: 22px;
     position: relative;
+
     span {
       font-size: 13px;
       margin-right: 10px;
       display: inline-block;
     }
+
     &::after {
       content: '';
       position: absolute;
@@ -35,19 +41,24 @@
       border-bottom: 1px solid #eaeaea;
     }
   }
+
   .content {
     padding: 60px 0;
   }
 }
+
 .comment {
   width: 800px;
   margin: auto;
   transition: all .3s;
+
   @media screen and (max-width: 780px) {
     width: 90%;
   }
+
   .comment_section {
     transition: all 0.3s ease 0s;
+
     .comment_form {
       padding: 10px;
       border: 1px solid #eee;
@@ -55,8 +66,10 @@
       border-radius: 6px;
       padding: 15px 12px;
       transition: all .3s;
+
       .commentInput {
         display: flex;
+
         input {
           border: none;
           padding-left: 10px;
@@ -66,11 +79,13 @@
           height: 38px;
           font-size: 13px;
           border-bottom: 1px dashed #f0f0f0;
+
           &:focus {
             border-bottom: 1px dashed #b9b9b9;
           }
         }
       }
+
       textarea {
         width: 100%;
         height: 200px;
@@ -84,13 +99,16 @@
         font-size: 13px;
         transition: all .3s;
         background: url('/image/commentGg.png') no-repeat 100% 100%;
+
         &:focus {
           border: 1px dashed #b9b9b9;
         }
       }
+
       .subBtn {
         display: flex;
         align-items: center;
+
         button {
           position: relative;
           height: 34px;
@@ -105,6 +123,7 @@
           border: none;
           transition: all .3s;
           margin-right: 15px;
+
           .mark {
             position: absolute;
             top: -90px;
@@ -120,6 +139,7 @@
             transition: top .3s;
             // animation: jump 2s infinite;
           }
+
           .mark::before {
             position: absolute;
             top: 80px;
@@ -134,6 +154,7 @@
             border-right-color: transparent;
           }
         }
+
         .charts {
           font-size: 12px;
           color: #909090;
@@ -141,6 +162,7 @@
       }
     }
   }
+
   .comment_title {
     transition: all .3s;
 
@@ -149,6 +171,7 @@
     margin-bottom: 20px;
     font-style: oblique;
     display: inline-block;
+
     span:nth-child(1) {
       font-size: 18px;
       margin-right: 8px;
@@ -163,20 +186,34 @@
     top: 0px;
     opacity: 0;
   }
+
   40% {
     opacity: 1;
     top: -100px;
   }
+
   60% {
     opacity: 1;
     top: -150px;
   }
+
   80% {
     opacity: 1;
     top: -120px;
   }
+
   100% {
     opacity: 1;
     top: -90px;
   }
+}
+
+.scrollbar {
+  position: fixed;
+  top: 0;
+  width: 10%;
+  height: 2px;
+  background: #50bcb6;
+  z-index: 999;
+  animation: width .5s ease;
 }

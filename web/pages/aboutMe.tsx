@@ -3,6 +3,7 @@ import Helmet from '../components/Helmet'
 import PageHeader from '../components/Header'
 import Styles from '../styles/aboutMe/index.module.scss'
 import { Popover } from 'antd'
+import { headerType } from '../types/response'
 import {
     WechatOutlined,
     MailOutlined,
@@ -15,7 +16,7 @@ const AboutMe: React.FC = () => {
 
     return <div>
         <Helmet title="He 我是小膏" />
-        <PageHeader />
+        <PageHeader type={headerType.blog_detail} />
         <div className={Styles.content}>
             <h1 className={Styles.h1}>你好,我是小膏！</h1>
             <ul className={Styles.ul}>

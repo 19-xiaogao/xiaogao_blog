@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Styles from './index.module.scss'
 import { useRouter } from 'next/router'
-import { PauseOutlined, HeartFilled } from '@ant-design/icons'
+import { HeartFilled } from '@ant-design/icons'
 import { headerType } from '../../types/response'
 
 interface IHeaders {
@@ -11,12 +11,11 @@ interface IHeaders {
     blogId?: number
     className?: string
     type: headerType
+    likeTody?: boolean
 }
 const Header: React.FC<IHeaders> = (props) => {
-    const [play, setPlay] = useState<boolean>(false)
     const [scrollView, setScrollView] = useState<boolean>(false)
     const [pageUOffset, setPageUOffset] = useState<number>(0)
-    const [isGoodLike, setIsGoodLike] = useState<boolean>(false)
     const router = useRouter()
     const jumpHomePage = (e) => {
         e.preventDefault()
@@ -24,7 +23,7 @@ const Header: React.FC<IHeaders> = (props) => {
     }
     useEffect(() => {
         if (props.type !== headerType.blog_detail) {
-            return
+            return () => ({})
         }
         let rememberPageYOffset = window.pageYOffset;
         const onScroll = (e) => {
@@ -35,36 +34,18 @@ const Header: React.FC<IHeaders> = (props) => {
             }
             rememberPageYOffset = window.pageYOffset
             setPageUOffset(window.pageYOffset)
-            window.addEventListener('scroll', onScroll)
         }
-        return () => window.removeEventListener('scroll', onScroll)
+        window.addEventListener('scroll', onScroll, false)
+        return () => window.removeEventListener('scroll', onScroll, false)
     })
-
-    useEffect(() => {
-        const goodLike = JSON.parse(localStorage.getItem('goodLike')) || [];
-        const findResult = goodLike.find(item => item.id === props.blogId);
-        if (!findResult) {
-            setIsGoodLike(false)
-        } else {
-            setIsGoodLike(true)
-        }
-    }, [])
-
-    const onClickLike = () => {
-        if (isGoodLike) return
-        const goodLike = JSON.parse(localStorage.getItem('goodLike'))
-        localStorage.setItem('goodLike', JSON.stringify(goodLike.content({ id: props.blogId, goodLike: true })))
-        props.onOk()
-        setIsGoodLike(true)
-    }
+    const onClickLike = () => props.onOk()
     return <header className={Styles.header} style={scrollView ? { display: 'none' } : { display: 'block' }}>
         <div className={Styles.logo}>
-            <i className="web-font" onClick={jumpHomePage} style={props.type === headerType.subscribe ? { color: '#fff' } : {}}>小 · 膏</i>
-            {!play ? <div className={Styles.triangle} onClick={() => setPlay(true)} /> : <PauseOutlined onClick={() => setPlay(false)} />}
+            <i className="web-font" onClick={jumpHomePage} style={props.type === headerType.subscribe ? { color: '#fff' } : { color: "black" }}>小 · 膏</i>
         </div>
         <div className={Styles.title} style={pageUOffset < 20 ? { display: 'none' } : { display: 'block' }}>{props.title}</div>
         <div className={Styles.menuIcon}>
-            {props.logo ? <HeartFilled onClick={onClickLike} className={isGoodLike ? Styles.like : ''} /> : null}
+            {props.logo ? <HeartFilled onClick={onClickLike} className={props.likeTody ? Styles.like : ''} /> : null}
             <span className={Styles.img} >
                 <img src="/image/4.jpg" alt="" />
             </span>
