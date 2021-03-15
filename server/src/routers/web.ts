@@ -67,9 +67,7 @@ router.post('/blog_createComment', (req, res) => {
         res.send()
     })
 })
-
-export default router
-
+// 测试发送邮箱,接口成功
 router.post('/test_email', (req, res) => {
     const { type, data, info } = req.body
     email(1, { email: 'sure_k@qq.com', url: "http://www.baidu.com", name: 'only love' }, {
@@ -85,3 +83,7 @@ router.post('/test_email', (req, res) => {
         res.send()
     })
 })
+
+
+export default router
+

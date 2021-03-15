@@ -15,10 +15,11 @@ import LoadingDom from '../components/loading'
 import { setInterval } from 'timers';
 interface IAppState {
     fatherBox: {
-        [props: string]: any
+        [props: string]: string
     }
+    serccenHeight: number
     imgBoxStyle: {
-        [props: string]: any
+        [props: string]: string
     }
     navHied: boolean
     loadingMore: boolean
@@ -33,6 +34,7 @@ let pageSize = 5
 class App extends React.Component<IAppProps, IAppState> {
     private scene = React.createRef<any>();
     private timer: any = null;
+
     constructor(props) {
         super(props)
         this.state = {
@@ -40,6 +42,7 @@ class App extends React.Component<IAppProps, IAppState> {
             imgBoxStyle: {},
             navHied: false,
             loadingMore: false,
+            serccenHeight:0,
             blogList: props.blogList
         }
     }
@@ -59,8 +62,49 @@ class App extends React.Component<IAppProps, IAppState> {
         window.removeEventListener('resize', this.disposeScreen)
     }
 
-    //TODO:处理图片自适应问题
     private disposeScreen = () => {
+        const width = document.body.clientWidth;
+        const height = document.body.clientHeight;
+        const { featherBox, imgBoxStyle } = this.calculateFatherBox(width, height)
+        this.setState({ fatherBox: featherBox, serccenHeight: height, imgBoxStyle: imgBoxStyle })
+    }
+    private calculateFatherBox(w, h) {
+        let _w = parseInt(w),
+            _h = parseInt(h),
+            x, y, i,
+            e = (_w >= 1000 || _h >= 1000) ? 1000 : 500;
+        if (_w >= _h) {
+            i = _w / e * 50;
+            y = i;
+            x = i * _w / _h;
+        } else {
+            i = _h / e * 50;
+            x = i;
+            y = i * _h / _w;
+        }
+        const featherBox = {
+            width: _w + x + 'px',
+            height: _h + y + 'px',
+            marginLeft: - 0.5 * x + 'px',
+            marginTop: - 0.5 * y + 'px'
+        }
+        const imgBoxStyle = this.claculateBox(_w + x, _h + y)
+        return { featherBox, imgBoxStyle }
+    }
+    private claculateBox(w, h) {
+        const width = parseInt(w),
+            height = parseInt(h),
+            ratio = 1080 / 1920,
+            style: any = {};
+
+        const compute = height / width > ratio;
+
+        style['width'] = compute ? (height / ratio + 'px') : `${width}px`;
+        style['height'] = compute ? `${height}px` : (width * ratio + 'px');
+
+        style['left'] = (width - parseInt(style.width)) / 2 + 'px';
+        style['top'] = (height - parseInt(style.height)) / 2 + 'px';
+        return style
     }
     private loadMore = async () => {
         this.setState({ loadingMore: true })
@@ -101,8 +145,9 @@ class App extends React.Component<IAppProps, IAppState> {
     private renderNav = () => (<div className={Styles.nav} style={!this.state.navHied ? { top: '-100%' } : { top: '0' }} >
         <ul className={Styles.nav_list} >
             <li><a href="/article">Article</a></li>
+            <li><a href="/messageBoard">Message Board</a></li>
             <li><Link href="/subscribe"><a>Subscribe</a></Link></li>
-            <li><Link href="/aboutMe"><a>About</a></Link> </li>
+            <li><Link href="/aboutMe"><a>About me</a></Link> </li>
         </ul>
         <div className={Styles.word}>
             <span>Everywhere in the world has a similar life.</span>
@@ -172,11 +217,12 @@ class App extends React.Component<IAppProps, IAppState> {
         </div>
     }
     render() {
+
         return <div className={Styles.container}>
-            <div className={Styles.home} id='home' >
-                <div ref={this.scene}>
-                    <div data-depth="0.4" className={Styles.bg}>
-                        <img src='/image/bg.png' />
+            <div className={Styles.home} id='home'  >
+                <div ref={this.scene} className={Styles.scene} style={{ height: this.state.serccenHeight + 'px' }} >
+                    <div data-depth="0.4" className={Styles.bg} style={this.state.fatherBox} >
+                        <img src='/image/bg.png' style={this.state.imgBoxStyle} />
                     </div>
                 </div>
                 <div className={Styles.head}>

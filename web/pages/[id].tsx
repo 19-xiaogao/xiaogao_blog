@@ -62,7 +62,7 @@ const BlogDetail: React.FC<IProps> = (props) => {
             return message.warn('你今天已经点过赞了')
         }
         currentLike.push({ id, todyLike: true })
-        setLikeTody(true)
+        setLikeTody(true) 
         localStorage.setItem('currentLike', JSON.stringify(currentLike))
         goodLikeBlog({ id: blogDetail.id, like: true })
         message.success('谢谢您的赞赏。')

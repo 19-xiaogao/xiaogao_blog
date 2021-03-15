@@ -11,7 +11,7 @@ interface IArticle {
 const Article: React.FC<IArticle> = (props) => {
 
     return <div className={Styles.page}>
-        <Header type={headerType.subscribe} />
+        <Header type={headerType.blog_detail} />
         <section className={Styles.home}>
             <div className={Styles.year_list}>
                 <ul className={Styles.month_list}>
