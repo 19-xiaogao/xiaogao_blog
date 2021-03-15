@@ -3,6 +3,8 @@ import { ResponseState } from "../types/enum";
 import { writeResult } from "../utils/result";
 import { selectBlog, selectBlogDetail, blogGoodLike, selectAllBlog } from "../service/web/blogService";
 import { createComment } from '../service/web/comment'
+import email from '../utils/nodemailer'
+import { info } from "node:console";
 const router = express.Router();
 // 获取博客列表
 router.get('/list_blog', (req, res) => {
@@ -67,3 +69,19 @@ router.post('/blog_createComment', (req, res) => {
 })
 
 export default router
+
+router.post('/test_email', (req, res) => {
+    const { type, data, info } = req.body
+    email(1, { email: 'sure_k@qq.com', url: "http://www.baidu.com", name: 'only love' }, {
+        name: '小膏',
+        email_user: 'longjiuwei999@163.com',
+        email_pass: 'AQVGRABRVTQZDHFO'
+    }, (res) => {
+        res.writeHead(200, { 'Content-Type': ResponseState.ContentType })
+        res.write(writeResult({ success: true, message: ResponseState.success, data: res }))
+        res.end()
+    }, err => {
+        res.write(writeResult({ success: false, message: ResponseState.failed, data: err }))
+        res.send()
+    })
+})
