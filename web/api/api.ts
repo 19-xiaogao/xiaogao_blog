@@ -15,8 +15,6 @@ export const getIndexPageData = (params?: IPageDate): Response => http.get('/api
 // 查找博客详情
 export const getBlogDetail = (params: { id: number }): Response => http.get('/api/web/blog_detail', { params })
 
-// 查找所有博客列表
-export const getAllBlog = (): Response => http.get('/api/web/blog_all')
 
 
 interface IGoodLike {
@@ -25,3 +23,9 @@ interface IGoodLike {
 }
 // 喜欢博客 和查看博客
 export const goodLikeBlog = (data: IGoodLike): Response => http.post('/api/web/blog_goodLike', data)
+
+interface IBlogCategorize {
+    pageNo: number
+    pageSize: number
+}
+export const blogCategorize = (params: IBlogCategorize): Response => http.get('/api/web/blog_categorize', { params })

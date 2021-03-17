@@ -5,7 +5,7 @@ import marked from 'marked'
 import Parallax from 'parallax-js'
 import moment from 'moment'
 import Styles from '../styles/index/index.module.scss'
-import { getIndexPageData } from '../api'
+import { getIndexPageData } from '../api/api'
 import { message, Tooltip } from 'antd'
 import { IBlogList } from '../types/response'
 import {
