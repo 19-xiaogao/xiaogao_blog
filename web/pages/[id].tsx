@@ -11,19 +11,19 @@ interface IProps {
 }
 
 const BlogDetail: React.FC<IProps> = (props) => {
+    let section = null
     const [likeTody, setLikeTody] = useState<boolean>(false)
     const [scrollWidth, setScollWidth] = useState<string>('0%')
     const { blogDetail } = props
     useEffect(() => {
+        section = document.getElementById('section')
         goodLikeBlog({ id: blogDetail.id, like: false })
         disposeLikeTody()
-        const section = document.getElementById('section')
-        window.addEventListener('scroll', () => scrollBar(section), false)
-
-        return () => window.addEventListener('scroll', () => scrollBar(section), false)
+        window.addEventListener('scroll', scrollBar, false)
+        return () => window.addEventListener('scroll', scrollBar, false)
     }, [])
 
-    const scrollBar = (section: any) => {
+    const scrollBar = () => {
         const absolutely = (window.scrollY / section.scrollHeight) * 100
         setScollWidth(absolutely.toFixed(2) + '%')
     }
@@ -62,7 +62,7 @@ const BlogDetail: React.FC<IProps> = (props) => {
             return message.warn('你已经点过赞了')
         }
         currentLike.push({ id, todyLike: true })
-        setLikeTody(true) 
+        setLikeTody(true)
         localStorage.setItem('currentLike', JSON.stringify(currentLike))
         goodLikeBlog({ id: blogDetail.id, like: true })
         message.success('good.')

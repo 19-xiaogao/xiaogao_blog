@@ -4,11 +4,13 @@
   left: 50%;
   transform: translate(-50%, -50%);
   width: 500px;
+
   @media screen and (max-width: 500px) {
     width: 90% !important;
     margin: 0;
     padding: 30px 20px 22px;
   }
+
   // background: red;
   background: hsla(0, 0%, 100%, .8);
   border-radius: 10px;
@@ -31,8 +33,19 @@
   .inputBox {
     width: 100%;
     display: flex;
+    position: relative;
     height: 35px;
     margin-bottom: 20px;
+
+    .warnText {
+      position: absolute;
+      left: 30%;
+      transform: translateX(-50%);
+      top: 110%;
+      font-size: 15px;
+      color: red;
+    }
+
     input {
       border-radius: 50px;
       flex: 1;
@@ -55,6 +68,7 @@
       cursor: pointer;
       color: #fff;
       background: #0084ff;
+
       &:hover {
         opacity: .8;
       }
@@ -70,10 +84,12 @@
   left: 50%;
   transform: translateX(-50%);
   letter-spacing: 10px;
+
   @media screen and (max-width: 500px) {
     letter-spacing: 5px;
-  
+
   }
+
   font-size: 20px;
   font-weight: 700;
   color: #fff;
@@ -85,6 +101,7 @@
   height: 100%;
   background: url('/image/subscribeBg.png') no-repeat 100% 100%;
   background-size: cover;
+
   @media screen and (max-width: 500px) {
     background-position: 50%;
   }
