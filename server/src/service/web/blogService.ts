@@ -30,16 +30,7 @@ export const selectBlog = async (options: ISelectBlog, success: (res) => void, e
         }
     }
 };
-// 查找所有列表数据
-export const selectAllBlog = async (success: (res) => void, error: (err) => void) => {
-    const mySql = 'SELECT * from blog ORDER BY UNIX_TIMESTAMP(createDate) DESC;';
-    try {
-        const resList = await performSql(mySql)
-        success(resList)
-    } catch (err) {
-        error(err)
-    }
-}
+
 // 查找博客详情
 interface ISelectDetail {
     id?: number
@@ -71,6 +62,21 @@ export const blogGoodLike = async (option: IBlogGoodLike, success: (res) => any,
             const result = await performSql(viewSqlStr, params)
             success(result)
         }
+    } catch (err) {
+        error(err)
+    }
+}
+
+// 获取博客,按年份分类
+export const blogCategorize = async (options: ISelectBlog, success: (res) => void, error: (err) => void) => {
+    const sqlStr = 'SELECT * FROM  blog  ORDER BY YEAR(createDate), MONTH(createDate) LIMIT ?, ?;';
+    const sqlTotalStr = 'select COUNT(title) as total from blog WHERE show_blog = 1 ;'
+
+    const params = [Number(options.pageNo), Number(options.pageSize)];
+    try {
+        const result = await performSql(sqlStr, params) as [any]
+        const resTotal: any = await performSql(sqlTotalStr);
+        success({ list: result.reverse(), total: resTotal[0].total })
     } catch (err) {
         error(err)
     }

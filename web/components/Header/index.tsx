@@ -47,7 +47,7 @@ const Header: React.FC<IHeaders> = (props) => {
         <div className={Styles.menuIcon}>
             {props.logo ? <HeartFilled onClick={onClickLike} className={props.likeTody ? Styles.like : ''} /> : null}
             <span className={Styles.img} >
-                <img src="/image/4.jpg" alt="" />
+                <img src="/image/4.jpg" alt="" onClick={() => router.push('/aboutMe')} />
             </span>
         </div>
     </header>

@@ -41,7 +41,7 @@ const email = (type: EmailType, data: Data, info: Info, success: (res) => void, 
             `
         }
     ]
-    transport.sendMail(options[type - 1], (err, res) => err ? console.log(err) : console.log(res.response))
+    transport.sendMail(options[type - 1], (err, res) => err ? error(err) : success(res.response))
 }
 export default email
 

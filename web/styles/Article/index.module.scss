@@ -2,7 +2,20 @@
   margin: 0 auto;
   width: 640px;
   padding: 80px 40px;
-    
+
+  .bottom {
+    margin-top: 20px;
+    height: 34px;
+    line-height: 36px;
+    padding: 0 36px;
+    color: #909090;
+    background: #fff;
+    z-index: 9;
+    text-align: center;
+    letter-spacing: 2px;
+    transition: all .3s;
+    border-radius: 4px;
+  }
   @media screen and (max-width: 780px) {
     width: 100%;
     padding: 40px 10px;
@@ -50,7 +63,10 @@
           display: flex;
           align-items: center;
           justify-content: space-between;
-
+          margin-top: 20px;
+          &:nth-child(1) {
+            margin-top: 0px;
+          }
           .char {
             flex: 1;
             display: flex;
@@ -66,9 +82,8 @@
             h3 {
               color: #5b6773;
               cursor: pointer;
-              font-size: 15px;
+              font-size: 15px !important;
             }
-
             span {
               margin-top: 1px;
               color: #a1a0d6;
@@ -76,24 +91,26 @@
               letter-spacing: 0;
             }
           }
-
           .item_r {
             color: #d2c6a3;
             font-size: 13px;
           }
-
-          img {
+          .img {
             width: 45px;
             height: 45px;
-            border-radius: 4px;
             cursor: pointer;
+            img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+              border-radius: 4px;
+            }
           }
         }
       }
     }
   }
 }
-
 .page {
   transition: all 0.5;
 }

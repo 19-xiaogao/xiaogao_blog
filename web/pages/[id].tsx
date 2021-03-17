@@ -4,7 +4,7 @@ import moment from 'moment'
 import marked from 'marked'
 import { message } from 'antd'
 import { IBlogList, headerType } from '../types/response'
-import { getBlogDetail, getIndexPageData, goodLikeBlog } from '../api'
+import { getBlogDetail, getIndexPageData, goodLikeBlog } from '../api/api'
 import PageHeader from '../components/Header'
 interface IProps {
     blogDetail: IBlogList
@@ -59,13 +59,13 @@ const BlogDetail: React.FC<IProps> = (props) => {
         const currentLike = JSON.parse(localStorage.getItem('currentLike'));
         if (currentLike.find(item => item.id === id)) {
             setLikeTody(true)
-            return message.warn('你今天已经点过赞了')
+            return message.warn('你已经点过赞了')
         }
         currentLike.push({ id, todyLike: true })
         setLikeTody(true) 
         localStorage.setItem('currentLike', JSON.stringify(currentLike))
         goodLikeBlog({ id: blogDetail.id, like: true })
-        message.success('谢谢您的赞赏。')
+        message.success('good.')
     }
     const renderComment = () => (<section className={Styles.comment_section}>
         <div className={Styles.comment_form}>
