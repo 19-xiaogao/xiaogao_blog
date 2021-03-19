@@ -1,12 +1,15 @@
 import express from "express";
 import { ResponseState } from "../types/enum";
 import { writeResult } from "../utils/result";
-import { createComment } from '../service/web/comment'
-import { IUserData } from '../types/index'
-import email from '../utils/nodemailer'
+import { createComment } from '../service/web/commentService'
+import { subscribeBlog } from '../types/index'
+import nodeEmail from '../utils/nodemailer'
 import { personalInformation } from '../auth/index'
 import { selectBlog, selectBlogDetail, blogGoodLike, blogCategorize } from "../service/web/blogService";
-
+import { selectSubscribeBlog } from '../service/web/subscribeBlogService'
+import { InsertVerifyCode } from '../service/web/verifyService'
+import { createSixNumber } from '../utils/util'
+import { v4 as uuidv4 } from 'uuid'
 const router = express.Router();
 
 // 获取博客列表
@@ -70,24 +73,50 @@ router.get('/blog_categorize', (req, res) => {
 })
 
 // 订阅邮箱
-router.post('/subscribe', (req, res) => {
+router.post('/subscribe', async (req, res) => {
 
-    const { userData, type } = req.body as IUserData
+    const { email, type } = req.body
 
-    email(type, userData, personalInformation, (res) => {
+    try {
+        const subscribeResponse = await selectSubscribeBlog(email) as subscribeBlog[]
 
-        res.writeHead(200, { 'Content-Type': ResponseState.ContentType })
+        if (subscribeResponse.length > 0) {
 
-        res.write(writeResult({ success: true, message: '邮箱发送成功.', data: [] }))
+            res.writeHead(200, { 'Content-Type': ResponseState.ContentType })
+            res.write(writeResult({ success: false, message: ResponseState.success, data: '你已经订阅过了' }))
+            res.send()
 
-        res.end()
+        }
 
-    }, (err) => {
+        const randomNumber = createSixNumber();
 
-        res.write(writeResult({ success: false, message: ResponseState.failed, data: err }))
+        const url = `http://www.baidu.com`;
 
+        const id = uuidv4();
+
+
+        const emailResponse = await nodeEmail(type, { email, url, authNumber: randomNumber, id }, personalInformation)
+
+
+        const verifyCodeResponse = await InsertVerifyCode({ authNumber: randomNumber, email: email, id })
+
+
+        if (verifyCodeResponse && emailResponse) {
+
+            res.writeHead(200, { 'Content-Type': ResponseState.ContentType })
+            res.write(writeResult({ success: true, message: ResponseState.success, data: '邮箱发送成功' }))
+            res.end()
+
+        } else {
+
+            res.write(writeResult({ success: false, message: ResponseState.failed, data: '失败.' }))
+            res.send()
+        }
+    } catch (error) {
+        res.write(writeResult({ success: false, message: ResponseState.failed, data: '服务器错误.' }))
         res.send()
-    })
+    }
+
 
 })
 

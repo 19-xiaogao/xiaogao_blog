@@ -7,7 +7,7 @@ export const performSql = (sql, params?) =>
         connection.query(
             sql,
             params,
-            (err, res) => (!err ? resolve(res) : reject(err))
+            (err, res) => (!err ? resolve(res) : reject(false))
         );
         connection.end();
     });

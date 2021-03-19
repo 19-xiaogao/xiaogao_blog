@@ -17,10 +17,16 @@ export interface IUser {
   url?: string,
   title?: string
   name?: string
+  authNumber?: string
+  id: string
 }
 
 // 涉及邮箱发送 用户的信息
 export interface IUserData {
   userData: IUser
   type: EmailType
+}
+
+export interface subscribeBlog {
+  email: string
 }
