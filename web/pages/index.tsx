@@ -207,9 +207,7 @@ class App extends React.Component<IAppProps, IAppState> {
             <div className={Styles.time}>{moment(item.createDate).format('YYYY-MM-DD')}</div>
             <div className={Styles.title}>
                 <Link href={'/' + String(item.id)}>
-                    <a>
-                        {item.title}
-                    </a>
+                    <a>{item.title}</a>
                 </Link>
             </div>
             <div className={Styles.text} dangerouslySetInnerHTML={{ __html: marked(item.content, { gfm: true, xhtml: false }) as string }}>
@@ -267,7 +265,6 @@ export const getBlogList = async (params?) => {
     }
 }
 
-// 获取数据
 export const getStaticProps: GetStaticProps = async (context) => {
     const blogList = await getBlogList()
     return {

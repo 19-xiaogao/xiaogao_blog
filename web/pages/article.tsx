@@ -69,33 +69,45 @@ const Article: React.FC<IArticle> = (props) => {
     }
 
     const renderMonth = (blog: [IArticleList]) =>
+
         blog.map((item, index) => (<div className={Styles.year_list} key={index + '1'}>
+            
             <ul className={Styles.month_list}>
+
                 <li className={Styles.month}>{item.month}</li>
+
                 <ul className={Styles.day}>
                     {renderListBlog(item.data)}
                 </ul>
             </ul>
+
         </div>))
 
     const renderListBlog = (blog: IBlogList[]) =>
         blog.map(item => (<li className={Styles.day_detail} key={item.id}>
+
             <div className={Styles.img}>
                 <img src={item.imgUrl} alt="" onClick={() => jumpPage(item.id)} />
             </div>
+
             <div className={Styles.char}>
                 <h3 onClick={() => jumpPage(item.id)}>{item.title}</h3>
                 <span>{item.likeCount} LIKE / {item.viewCount} READ</span>
             </div>
+
             <span className={Styles.item_r}>{item.day}Day</span>
         </li>))
 
 
     return <div className={Styles.page}>
+
         <Header type={headerType.blog_detail} />
+
         <section className={Styles.home}>
+
             {renderMonth(blogList)}
             {bottomChar ? <div className={Styles.bottom} >呜呜,已经被掏空了</div> : null}
+            
         </section>
     </div>
 }
@@ -104,7 +116,12 @@ export default Article
 const disposeBlogFiled = (list: IBlogList[]): [IArticleList] => {
 
     const mapAddMouth = list.map(item =>
-        ({ ...item, day: moment(item.createDate).format('DD'), createDate: moment(item.createDate).format('YYYY-MM-DD'), month: moment(item.createDate).format('YYYY-MM') }))
+    ({
+        ...item,
+        day: moment(item.createDate).format('DD'),
+        createDate: moment(item.createDate).format('YYYY-MM-DD'),
+        month: moment(item.createDate).format('YYYY-MM')
+    }))
 
     const classify = mapAddMouth.reduce((last, item) => {
         if (last[item.month]) {
@@ -137,7 +154,7 @@ interface IBlogCategorize {
 export const getStaticProps: GetStaticProps = async () => {
 
     const { data, success }: IBlogCategorize = await blogCategorize({ pageNo: 0, pageSize: pageSize })
-    
+
     if (!success) return
 
     return {

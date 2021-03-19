@@ -1,15 +1,25 @@
-@import '/fontIcon/iconfont.css';
+@import url('http://at.alicdn.com/t/font_2366192_ghruwpqqgqd.css');
 @import 'antd/dist/antd.css';
 @import 'nprogress/nprogress.css';
+
 html,
 body {
     padding: 0;
     margin: 0;
-    font-family: "YouYuan";
+    font-family: "icon-ziti4" !important;
+    font-size: 16px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
-boyd{
+
+/* i {
+    
+} */
+boyd {
     overflow-y: auto;
 }
+
 .globalLoading {
     height: 3px;
     border-radius: 20px;

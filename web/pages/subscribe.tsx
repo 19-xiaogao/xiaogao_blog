@@ -25,6 +25,7 @@ const Subscribe: React.FC = () => {
         }
         setWarnTextTow('')
         setWarnTextNo('')
+        // 订阅
     }
     return <div className={Styles.content}>
         <Helmet title="He 我是小膏" />

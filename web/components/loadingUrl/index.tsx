@@ -1,6 +1,6 @@
 import React from 'react'
 import Styles from './index.module.css';
-import classnames from 'classnames'
+import classnames from 'classnames';
 interface ILoading {
     className?: string
     style?: any

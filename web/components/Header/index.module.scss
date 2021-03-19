@@ -65,7 +65,8 @@
   .menuIcon {
     position: absolute;
     right: 10px;
-    top: 15px;
+    top: 50%;
+    transform: translateY(-50%);
     display: inline-block !important;
     display: flex !important;
     justify-content: space-around;
@@ -88,8 +89,8 @@
       }
     }
     .img {
-      width: 20px;
-      height: 20px;
+      width: 35px;
+      height: 35px;
       line-height: 10px;
       border-radius: 50%;
       cursor: pointer;

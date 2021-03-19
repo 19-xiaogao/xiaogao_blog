@@ -1,0 +1,11 @@
+.err404 {
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  text-align: center;
+  background: #94af5d;
+  position: relative;
+  @media screen and (max-width: 780px) {
+    width: 100%;
+  }
+}

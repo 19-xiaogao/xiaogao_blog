@@ -21,6 +21,7 @@ interface IGoodLike {
     id: number
     like: boolean
 }
+
 // 喜欢博客 和查看博客
 export const goodLikeBlog = (data: IGoodLike): Response => http.post('/api/web/blog_goodLike', data)
 

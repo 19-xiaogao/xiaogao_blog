@@ -1,19 +1,13 @@
+/*邮箱功能：分为3类
+- 1. 邮箱订阅验证。用户在web端填写邮箱信息。后台发送一个邮箱给用户。用户点击订阅验证。以后接受我写的博客了。
+- 2. 邮箱订阅通知。通知订阅的所有邮箱用户。文章发布了。
+- 3. 评论通知。一般的评论是不需要评论通知。但是有人@某人的时候就需要邮件通知了。
+*/
 import nodemailer from 'nodemailer'
 import { EmailType } from '../types/enum'
-// 用户信息 用户
-interface Data {
-    email: string,
-    url?: string,
-    title?: string
-    name?: string
-}
-// 订阅邮箱的基本信息 我的
-interface Info {
-    name: string
-    email_user: string
-    email_pass: string
-}
-const email = (type: EmailType, data: Data, info: Info, success: (res) => void, error: (err) => void) => {
+import { personal, IUser } from '../types/index'
+
+const email = (type: EmailType, data: IUser, info: personal, success: (res) => void, error: (err) => void) => {
     // smtp专属的运输通道
     const transport = nodemailer.createTransport({
         host: 'smtp.163.com',
@@ -45,8 +39,3 @@ const email = (type: EmailType, data: Data, info: Info, success: (res) => void, 
 }
 export default email
 
-/*邮箱功能：分为3类
-- 1. 邮箱订阅验证。用户在web端填写邮箱信息。后台发送一个邮箱给用户。用户点击订阅验证。以后接受我写的博客了。
-- 2. 邮箱订阅通知。通知订阅的所有邮箱用户。文章发布了。
-- 3. 评论通知。一般的评论是不需要评论通知。但是有人@某人的时候就需要邮件通知了。
-*/

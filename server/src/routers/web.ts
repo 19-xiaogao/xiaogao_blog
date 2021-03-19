@@ -1,10 +1,14 @@
 import express from "express";
 import { ResponseState } from "../types/enum";
 import { writeResult } from "../utils/result";
-import { selectBlog, selectBlogDetail, blogGoodLike, blogCategorize } from "../service/web/blogService";
 import { createComment } from '../service/web/comment'
+import { IUserData } from '../types/index'
 import email from '../utils/nodemailer'
+import { personalInformation } from '../auth/index'
+import { selectBlog, selectBlogDetail, blogGoodLike, blogCategorize } from "../service/web/blogService";
+
 const router = express.Router();
+
 // 获取博客列表
 router.get('/list_blog', (req, res) => {
     selectBlog(req.query, (result) => {
@@ -64,21 +68,27 @@ router.get('/blog_categorize', (req, res) => {
         res.send()
     })
 })
-// 测试发送邮箱,接口成功
-router.post('/test_email', (req, res) => {
-    const { type, data, info } = req.body
-    email(1, { email: 'sure_k@qq.com', url: "http://www.baidu.com", name: 'only love' }, {
-        name: '小膏',
-        email_user: 'longjiuwei999@163.com',
-        email_pass: 'AQVGRABRVTQZDHFO'
-    }, (res) => {
+
+// 订阅邮箱
+router.post('/subscribe', (req, res) => {
+
+    const { userData, type } = req.body as IUserData
+
+    email(type, userData, personalInformation, (res) => {
+
         res.writeHead(200, { 'Content-Type': ResponseState.ContentType })
-        res.write(writeResult({ success: true, message: ResponseState.success, data: res }))
+
+        res.write(writeResult({ success: true, message: '邮箱发送成功.', data: [] }))
+
         res.end()
-    }, err => {
+
+    }, (err) => {
+
         res.write(writeResult({ success: false, message: ResponseState.failed, data: err }))
+
         res.send()
     })
+
 })
 
 
