@@ -32,7 +32,7 @@ const email = (type: number, data: IUser, info: personal) => {
                     <div style="margin:20px 20px;"> 验证码:<span style="font-size:24px;"><strong>${data.authNumber}</strong></span></div>
                     <div
                         style="background: #eff5fb;border-left: 4px solid #c2e1ff;padding: 14px;margin-top: 30px;border-radius: 9px;font-size: 0.85rem;color: #7d7f7f;line-height: 24px;">
-                        如果我们没有机会见面，那我在这儿提前预祝你早安、午安以及晚安～～<br>愿所有的美好如约而至，愿所有的黑暗都能看到希望，我们微笑前行～～<br>人生没有完美，也许有些遗憾才美～～永远相信美好的事情即将发生～～
+                        If we don't have a chance to meet, then I'm here to wish you good morning, good afternoon and good night in advance～～<br>愿所有的美好如约而至，愿所有的黑暗都能看到希望，我们微笑前行～～<br>人生没有完美，也许有些遗憾才美～～永远相信美好的事情即将发生～～
                     </div>
                 </div>
             `

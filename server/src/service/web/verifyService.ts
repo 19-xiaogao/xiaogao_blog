@@ -12,7 +12,7 @@ export const InsertVerifyCode = (params: IOptions) => {
 }
 
 export const VerifyServer = (params: IVerify) => {
-    const sqlStr = 'SELECT * from verify WHERE VerificationCode = ?, id = ? ,email =?;';
+    const sqlStr = 'SELECT * from verify WHERE VerificationCode = ? and id = ? and email =?;';
     const options = [params.VerificationCode, params.id, params.email]
     return performSql(sqlStr, options);
 }

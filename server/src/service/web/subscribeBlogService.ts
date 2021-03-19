@@ -7,7 +7,7 @@ export const selectSubscribeBlog = (email: string) => {
     return performSql(sqlStr, options)
 }
 export const insetSubscribe = (email: string) => {
-    const sqlStr = 'INSET INTO subscribeBlog email values(?);'
+    const sqlStr = 'INSERT INTO subscribeBlog (email) VALUES (?);'
 
     const options = [email];
 

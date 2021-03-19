@@ -29,4 +29,22 @@ interface IBlogCategorize {
     pageNo: number
     pageSize: number
 }
-export const blogCategorize = (params: IBlogCategorize): Response => http.get('/api/web/blog_categorize', { params })
+// 获取博客 按年份分类
+export const blogCategorize = (params: IBlogCategorize): Response => http.get('/api/web/blog_categorize', { params });
+
+
+interface ISEmail {
+    type: number
+    email: string
+}
+// 邮箱订阅
+export const subscribe_email = (params: ISEmail): Response => http.post('/api/web/subscribe_email', params)
+
+
+interface IVerify {
+    VerificationCode: string
+    email: string
+    id: string
+}
+// 邮箱验证
+export const subscribe_verify = (params:IVerify): Response => http.post('/api/web/subscribe_verify', params)

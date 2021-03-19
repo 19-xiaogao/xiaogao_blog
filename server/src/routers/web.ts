@@ -10,6 +10,7 @@ import { selectSubscribeBlog, insetSubscribe } from '../service/web/subscribeBlo
 import { InsertVerifyCode, VerifyServer } from '../service/web/verifyService'
 import { createSixNumber } from '../utils/util'
 import { v4 as uuidv4 } from 'uuid'
+
 const router = express.Router();
 
 // 获取博客列表
@@ -60,6 +61,7 @@ router.post('/blog_createComment', (req, res) => {
         res.send()
     })
 })
+
 // 获取博客文章 按年份分类
 router.get('/blog_categorize', (req, res) => {
     blogCategorize(req.query, (result) => {
@@ -76,13 +78,12 @@ router.get('/blog_categorize', (req, res) => {
 router.post('/subscribe_email', async (req, res) => {
 
     const { email, type } = req.body
-
+    res.writeHead(200, { 'Content-Type': ResponseState.ContentType })
     try {
         const subscribeResponse = await selectSubscribeBlog(email) as subscribeBlog[]
 
         if (subscribeResponse.length > 0) {
 
-            res.writeHead(200, { 'Content-Type': ResponseState.ContentType })
             res.write(writeResult({ success: false, message: ResponseState.success, data: '你已经订阅过了' }))
             res.send()
 
@@ -103,7 +104,7 @@ router.post('/subscribe_email', async (req, res) => {
 
         if (verifyCodeResponse && emailResponse) {
 
-            res.writeHead(200, { 'Content-Type': ResponseState.ContentType })
+
             res.write(writeResult({ success: true, message: ResponseState.success, data: '邮箱发送成功' }))
             res.end()
 
@@ -121,10 +122,20 @@ router.post('/subscribe_email', async (req, res) => {
 })
 
 
-// 订阅邮箱
+// 邮箱验证
 router.post('/subscribe_verify', async (req, res) => {
+    
     const { VerificationCode, id, email } = req.body as IVerify
+
+    console.log(VerificationCode);
+    console.log(id);
+    console.log(email);
+    
+
+    res.writeHead(200, { 'Content-Type': ResponseState.ContentType })
+
     const verifyResponse = await VerifyServer({ VerificationCode, id, email }) as IVerify[]
+
 
     if (verifyResponse.length === 0) {
         res.write(writeResult({ success: false, message: ResponseState.failed, data: '验证码错误' }))
@@ -133,9 +144,10 @@ router.post('/subscribe_verify', async (req, res) => {
     }
     const insetResponse = await insetSubscribe(email)
 
+
+
     if (insetResponse) {
 
-        res.writeHead(200, { 'Content-Type': ResponseState.ContentType })
         res.write(writeResult({ success: true, message: ResponseState.success, data: '订阅成功' }))
         res.end()
     } else {

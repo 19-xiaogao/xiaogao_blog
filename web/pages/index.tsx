@@ -42,12 +42,13 @@ class App extends React.Component<IAppProps, IAppState> {
             imgBoxStyle: {},
             navHied: false,
             loadingMore: false,
-            serccenHeight:0,
+            serccenHeight: 0,
             blogList: props.blogList
         }
     }
 
     componentDidMount() {
+        console.log('1');
         this.setState({
             blogList: this.props.blogList
         })
