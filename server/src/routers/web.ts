@@ -2,12 +2,12 @@ import express from "express";
 import { ResponseState } from "../types/enum";
 import { writeResult } from "../utils/result";
 import { createComment } from '../service/web/commentService'
-import { subscribeBlog } from '../types/index'
+import { subscribeBlog, IVerify } from '../types/index'
 import nodeEmail from '../utils/nodemailer'
 import { personalInformation } from '../auth/index'
 import { selectBlog, selectBlogDetail, blogGoodLike, blogCategorize } from "../service/web/blogService";
-import { selectSubscribeBlog } from '../service/web/subscribeBlogService'
-import { InsertVerifyCode } from '../service/web/verifyService'
+import { selectSubscribeBlog, insetSubscribe } from '../service/web/subscribeBlogService'
+import { InsertVerifyCode, VerifyServer } from '../service/web/verifyService'
 import { createSixNumber } from '../utils/util'
 import { v4 as uuidv4 } from 'uuid'
 const router = express.Router();
@@ -72,8 +72,8 @@ router.get('/blog_categorize', (req, res) => {
     })
 })
 
-// 订阅邮箱
-router.post('/subscribe', async (req, res) => {
+// 发送订阅邮箱
+router.post('/subscribe_email', async (req, res) => {
 
     const { email, type } = req.body
 
@@ -90,7 +90,7 @@ router.post('/subscribe', async (req, res) => {
 
         const randomNumber = createSixNumber();
 
-        const url = `http://www.baidu.com`;
+        const url = 'http://localhost:3001/validation';
 
         const id = uuidv4();
 
@@ -120,6 +120,30 @@ router.post('/subscribe', async (req, res) => {
 
 })
 
+
+// 订阅邮箱
+router.post('/subscribe_verify', async (req, res) => {
+    const { VerificationCode, id, email } = req.body as IVerify
+    const verifyResponse = await VerifyServer({ VerificationCode, id, email }) as IVerify[]
+
+    if (verifyResponse.length === 0) {
+        res.write(writeResult({ success: false, message: ResponseState.failed, data: '验证码错误' }))
+        res.send()
+        return
+    }
+    const insetResponse = await insetSubscribe(email)
+
+    if (insetResponse) {
+
+        res.writeHead(200, { 'Content-Type': ResponseState.ContentType })
+        res.write(writeResult({ success: true, message: ResponseState.success, data: '订阅成功' }))
+        res.end()
+    } else {
+        res.write(writeResult({ success: false, message: ResponseState.failed, data: '验证失败' }))
+        res.send()
+    }
+
+})
 
 export default router
 

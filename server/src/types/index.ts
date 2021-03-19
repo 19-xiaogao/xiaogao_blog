@@ -30,3 +30,9 @@ export interface IUserData {
 export interface subscribeBlog {
   email: string
 }
+
+export interface IVerify {
+  VerificationCode: number
+  id: string
+  email: string
+}

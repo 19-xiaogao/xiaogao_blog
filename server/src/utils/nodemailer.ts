@@ -4,7 +4,6 @@
 - 3. 评论通知。一般的评论是不需要评论通知。但是有人@某人的时候就需要邮件通知了。
 */
 import nodemailer from 'nodemailer'
-import { EmailType } from '../types/enum'
 import { personal, IUser } from '../types/index'
 
 const email = (type: number, data: IUser, info: personal) => {
@@ -21,7 +20,7 @@ const email = (type: number, data: IUser, info: personal) => {
         })
         const options = [
             {
-                from: ` ${info.name}👻 <${info.email_user}>`,
+                from: ` ${info.name} <${info.email_user}>`,
                 to: data.email,
                 subject: `小膏来邮箱订阅的验证~~`,
                 html:
