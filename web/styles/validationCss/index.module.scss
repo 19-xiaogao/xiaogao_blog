@@ -3,6 +3,7 @@
   width: 100%;
   height: 100%;
   background: #ffffff;
+
   .validation {
     position: relative;
     top: 40%;
@@ -10,9 +11,11 @@
     transform: translate(-50%, -50%);
     width: 500px;
     height: 300px;
+
     @media screen and (max-width: 780px) {
       width: 100%;
     }
+
     display: flex;
     flex-direction: column;
     h2 {
@@ -22,14 +25,18 @@
       font-size: 20px;
       color: #4d4d53;
     }
-    div {
+
+    .entryBox {
       margin-top: 40px;
+
       @media screen and (max-width: 780px) {
-       margin-left: 20px;
-       margin-right: 20px;
+        margin-left: 20px;
+        margin-right: 20px;
       }
+
       display: flex;
       align-items: center;
+
       input {
         flex: 1;
         border: none;
@@ -38,6 +45,7 @@
         padding-left: 4px;
         border-bottom: 1px solid #d9d9d9;
       }
+
       button {
         width: 80px;
         height: 40px;
@@ -52,6 +60,11 @@
         border-radius: 3px;
         cursor: pointer;
       }
+    }
+    .rules{
+      margin-left: 20px;
+      font-size: 15px;
+      color: #be2929;
     }
   }
 }

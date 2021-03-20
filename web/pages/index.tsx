@@ -69,6 +69,7 @@ class App extends React.Component<IAppProps, IAppState> {
         const { featherBox, imgBoxStyle } = this.calculateFatherBox(width, height)
         this.setState({ fatherBox: featherBox, serccenHeight: height, imgBoxStyle: imgBoxStyle })
     }
+
     private calculateFatherBox(w, h) {
         let _w = parseInt(w),
             _h = parseInt(h),
@@ -143,17 +144,19 @@ class App extends React.Component<IAppProps, IAppState> {
         }, 15)
 
     }
+
     private renderNav = () => (<div className={Styles.nav} style={!this.state.navHied ? { top: '-100%' } : { top: '0' }} >
         <ul className={Styles.nav_list} >
             <li><a href="/article">Article</a></li>
-            <li><a href="/messageBoard">Message Board</a></li>
+            <li><a href="/messageBoard">MessageBoard</a></li>
             <li><Link href="/subscribe"><a>Subscribe</a></Link></li>
-            <li><Link href="/aboutMe"><a>About me</a></Link> </li>
+            <li><Link href="/aboutMe"><a>AboutMe</a></Link> </li>
         </ul>
         <div className={Styles.word}>
             <span>Everywhere in the world has a similar life.</span>
         </div>
     </div>)
+
     private renderBlogList = () => {
         const { blogList } = this.props
         return blogList.map(item => (<div className={Styles.post} key={item.id}>

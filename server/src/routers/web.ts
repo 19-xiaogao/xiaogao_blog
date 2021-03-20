@@ -1,15 +1,19 @@
 import express from "express";
-import { ResponseState } from "../types/enum";
-import { writeResult } from "../utils/result";
+import { v4 as uuidv4 } from 'uuid'
+
 import { createComment } from '../service/web/commentService'
-import { subscribeBlog, IVerify } from '../types/index'
-import nodeEmail from '../utils/nodemailer'
-import { personalInformation } from '../auth/index'
+import { InsertVerifyCode, VerifyServer } from '../service/web/verifyService'
 import { selectBlog, selectBlogDetail, blogGoodLike, blogCategorize } from "../service/web/blogService";
 import { selectSubscribeBlog, insetSubscribe } from '../service/web/subscribeBlogService'
-import { InsertVerifyCode, VerifyServer } from '../service/web/verifyService'
+
+import { personalInformation } from '../auth/index'
+
+import nodeEmail from '../utils/nodemailer'
 import { createSixNumber } from '../utils/util'
-import { v4 as uuidv4 } from 'uuid'
+import { writeResult } from "../utils/result";
+
+import { subscribeBlog, IVerify } from '../types/index'
+import { ResponseState } from "../types/enum";
 
 const router = express.Router();
 
@@ -127,10 +131,6 @@ router.post('/subscribe_verify', async (req, res) => {
     
     const { VerificationCode, id, email } = req.body as IVerify
 
-    console.log(VerificationCode);
-    console.log(id);
-    console.log(email);
-    
 
     res.writeHead(200, { 'Content-Type': ResponseState.ContentType })
 
@@ -142,6 +142,7 @@ router.post('/subscribe_verify', async (req, res) => {
         res.send()
         return
     }
+    
     const insetResponse = await insetSubscribe(email)
 
 

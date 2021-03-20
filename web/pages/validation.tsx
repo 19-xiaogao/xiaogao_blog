@@ -1,5 +1,8 @@
 import React, { useState } from 'react'
 import { useRouter } from 'next/router'
+import Texty from 'rc-texty';
+import 'rc-texty/assets/index.css';
+
 import Styles from '../styles/validationCss/index.module.scss'
 
 import { subscribe_verify } from '../api/api'
@@ -10,6 +13,7 @@ const Validation: React.FC = () => {
     const router = useRouter()
 
     const [verifyCode, setVerifyCode] = useState<string>('')
+    const [warnMessage, setWarnMessage] = useState<string>('')
 
     const onVerifyCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setVerifyCode(e.target.value)
@@ -31,7 +35,7 @@ const Validation: React.FC = () => {
 
     const sumbitVerify = async () => {
         if (verifyCode.trim().length !== 6) {
-            return message.warn('请输入6位数')
+            return setWarnMessage('请输入6位数')
         }
         const { email, id } = urlParams()
 
@@ -45,10 +49,11 @@ const Validation: React.FC = () => {
     return <div className={Styles.bigBox}>
         <div className={Styles.validation}>
             <h2>订阅邮箱验证</h2>
-            <div>
+            <div className={Styles.entryBox}>
                 <input type="text" placeholder="输入验证码" onChange={onVerifyCodeChange} />
                 <button onClick={sumbitVerify}>提交</button>
             </div>
+            <Texty className={Styles.rules}>{warnMessage}</Texty>
         </div>
     </div>
 }

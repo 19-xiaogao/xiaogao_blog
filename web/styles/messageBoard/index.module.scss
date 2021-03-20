@@ -1,0 +1,64 @@
+.bigBox {
+    width: 100%;
+    height: 100%;
+
+    .section {
+        padding-top: 50px;
+        width: 800px;
+        margin: auto;
+
+        .warnMeeage {
+            margin: auto;
+            position: relative;
+            width: 600px;
+            height: 200px;
+            border-radius: 8px;
+            background-color: #474c55;
+            padding: 40px;
+            // display: none;
+            // transform: display .3s ;
+            // animation: hidetip 2s 1;
+
+            @keyframes hidetip {
+                from {
+                    opacity: 1;
+                }
+
+                to {
+                    opacity: 0;
+                }
+            }
+
+            .xx {
+                display: inline-block;
+                position: absolute;
+                color: #a3896a;
+                font-size: 30px;
+                right: 10px;
+                top: -10px;
+                cursor: pointer;
+                pointer-events: auto;
+            }
+
+            p {
+                margin: 5px 0;
+                display: flex;
+                align-items: center;
+
+                svg {
+                    width: 25px !important;
+                    height: 25px !important;
+
+                }
+
+                span {
+                    margin-left: 10px;
+                    height: 25px;
+                    display: inline-block;
+                    color: #e06053;
+                }
+            }
+
+        }
+    }
+}
