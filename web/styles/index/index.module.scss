@@ -11,11 +11,13 @@
     .scene {
       position: relative;
       overflow: hidden;
+
       .bg {
         position: relative !important;
         display: block;
         top: 0;
         left: 0;
+
         img {
           position: absolute !important;
           max-width: none;
@@ -50,6 +52,10 @@
         @media screen and (max-width: 780px) {
           font-size: 30px;
         }
+      }
+
+      @media screen and (max-width: 780px) {
+        padding: 0 10px;
       }
 
       .menu {
@@ -107,11 +113,13 @@
         align-items: center;
         justify-content: center;
         margin-top: -100px;
+
         @media screen and (max-width: 780px) {
           flex-direction: column;
           align-items: center;
           justify-content: center;
         }
+
         li {
           list-style: none;
           margin: 0 20px 20px;
@@ -236,6 +244,11 @@
         border-radius: 6px;
         border: 1px solid #f3fafd;
         transition: all .3s;
+
+        &:hover {
+          
+          transition: all .3s;
+        }
 
         img {
           width: 100%;

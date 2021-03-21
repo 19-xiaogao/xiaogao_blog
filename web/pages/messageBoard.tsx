@@ -38,7 +38,10 @@ const MessageBoard: React.FC = () => {
                     <span>留下你的留言</span>
                 </p>
             </div>
-
+            <div className={Styles.boaard}>
+                <textarea placeholder="说点什么呢..."></textarea>
+                <button> <span>提交留言</span></button>
+            </div>
         </section>
 
     </div>
