@@ -4,7 +4,7 @@ import moment from 'moment'
 import marked from 'marked'
 import { message } from 'antd'
 import { IBlogList, headerType } from '../types/response'
-import { getBlogDetail, getIndexPageData, goodLikeBlog } from '../api/api'
+import { getBlogDetail, getIndexPageData, goodLikeBlog, blog_createComment } from '../api/api'
 import PageHeader from '../components/Header'
 interface IProps {
     blogDetail: IBlogList
@@ -17,6 +17,12 @@ const BlogDetail: React.FC<IProps> = (props) => {
     const [likeTody, setLikeTody] = useState<boolean>(false)
 
     const [scrollWidth, setScollWidth] = useState<string>('0%')
+
+    const [commentName, setCommentName] = useState<string>('')
+
+    const [commentEmail, setCommentEmail] = useState<string>('')
+
+    const [context, setContext] = useState<string>('')
 
     const { blogDetail } = props
 
@@ -101,41 +107,100 @@ const BlogDetail: React.FC<IProps> = (props) => {
         message.success('good.')
     }
 
+    const submitComment = () => {
 
-    const renderComment = () => (<section className={Styles.comment_section}>
-        
-        <div className={Styles.comment_form}>
+    }
 
-            <div className={Styles.commentInput}>
-                <input type="text" placeholder="Name" />
-                <input type="text" placeholder="Email" />
+    const inputContext = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const name = e.target.name
+        const value = e.target.value
+        if (name == 'name') {
+            setCommentName(value)
+        } else if (name == 'email') {
+            setCommentEmail(value)
+        } else if (name == 'context') {
+            setContext(value)
+        }
+    }
+
+
+    const renderComment = () =>
+    (<div className={Styles.comment_user}>
+        <div className={Styles.comment_user_list}>
+            <div className={Styles.describe}>
+                <div className={Styles.describe_left}>
+                    <img src="/image/4.jpg" alt="" />
+                </div>
+                <div className={Styles.describe_right}>
+                    <span>
+                        我是你爹
+                    </span>
+                    <span>
+                        2020-2-29
+                    </span>
+                </div>
             </div>
-            <textarea placeholder="说点什么呢..."></textarea>
-
-            <div className={Styles.subBtn}>
-                <button>
-                    SUBMIT
-                <div className={Styles.mark}>请选择邮箱噢</div>
-                </button>
-                <div className={Styles.charts}>~认真和用心是一种态度, 感谢支持~</div>
-
+            <div className={Styles.content}>
+                hello 我是你爹
             </div>
         </div>
+        <div className={Styles.comment_user_list}>
+            <div className={Styles.describe}>
+                <div className={Styles.describe_left}>
+                    <img src="/image/4.jpg" alt="" />
+                </div>
+                <div className={Styles.describe_right}>
+                    <span>
+                        我是你爹
+                    </span>
+                    <span>
+                        2020-2-29
+                    </span>
+                </div>
+            </div>
+            <div className={Styles.content}>
+                hello 我是你爹
+            </div>
+        </div>
+    </div>)
 
-        <h2 className={Styles.comment_title}><span>Comment List</span><span>(7)</span></h2>
-    </section>)
+
+
     return <div>
 
         <div className={Styles.scrollbar} style={{ width: scrollWidth }}></div>
 
         <PageHeader logo={true} title={blogDetail.title} likeTody={likeTody} onOk={onOk} blogId={blogDetail.id} type={headerType.blog_detail} />
-        
+
         <section className={Styles.section} id="section">
             {renderContent()}
         </section>
-        
+
         <div className={Styles.comment}>
-            {renderComment()}
+            <section className={Styles.comment_section}>
+
+                <div className={Styles.comment_form}>
+
+                    <div className={Styles.commentInput}>
+                        <input type="text" placeholder="Name" name='name' onChange={inputContext} />
+                        <input type="text" placeholder="Email" name='email' onChange={inputContext} />
+                    </div>
+                    <textarea placeholder="说点什么呢..." name="context" onChange={inputContext}></textarea>
+
+                    <div className={Styles.subBtn}>
+                        <button onClick={submitComment}>
+                            SUBMIT
+                        <div className={Styles.mark}>请选择邮箱噢</div>
+                        </button>
+                        <div className={Styles.charts}>~认真和用心是一种态度, 感谢支持~</div>
+
+                    </div>
+                </div>
+
+                <h2 className={Styles.comment_title}><span>Comment List</span><span>(7)</span></h2>
+                {renderComment()}
+            </section>
+
         </div>
 
     </div>
@@ -161,7 +226,7 @@ export async function getStaticProps({ params }) {
     const { success, data } = await getBlogDetail({ id: params.id })
 
     if (!success) return message.warn('请求错误---getStaticProps')
-    
+
     return {
         props: {
             blogDetail: data[0]

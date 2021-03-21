@@ -47,4 +47,13 @@ interface IVerify {
     id: string
 }
 // 邮箱验证
-export const subscribe_verify = (params:IVerify): Response => http.post('/api/web/subscribe_verify', params)
+export const subscribe_verify = (params: IVerify): Response => http.post('/api/web/subscribe_verify', params)
+
+interface ICreateComment {
+    articleId: number
+    commentName: string
+    commentEmail: string
+    createTime: string
+    context: string
+}
+export const blog_createComment = (params: ICreateComment): Response => http.post('/api/web/blog_createComment', params)

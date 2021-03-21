@@ -137,7 +137,6 @@
             border-radius: 10px;
             opacity: 0;
             transition: top .3s;
-            // animation: jump 2s infinite;
           }
 
           .mark::before {
@@ -170,7 +169,6 @@
     font-weight: 400;
     margin-bottom: 20px;
     font-style: oblique;
-    display: inline-block;
 
     span:nth-child(1) {
       font-size: 18px;
@@ -216,4 +214,68 @@
   background: #50bcb6;
   z-index: 999;
   animation: width .5s ease;
+}
+
+.comment_user {
+  margin: 20px auto;
+
+  .comment_user_list {
+    width: 100%;
+    border-bottom: 1px solid #f6f7f8;
+    padding-bottom: 20px;
+    .describe {
+      width: 100%;
+      display: flex;
+      align-items: center;
+     
+      .describe_left {
+        width: 40px;
+        height: 40px;
+        @media screen and(max-width:780px) {
+          width: 35px;
+          height: 35px;
+        }
+        img {
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+        }
+      }
+
+      .describe_right {
+        margin-left: 20px;
+        flex: 1;
+        display: flex;
+        justify-content: space-between;
+
+        @media screen and(max-width:780px) {
+          // flex-direction: column;
+
+          span:first-child {
+            font-size: 13px !important;
+          }
+
+          span:first-child {
+            font-size: 12px;
+          }
+        }
+
+        span:first-child {
+          color: #ef6d57;
+          font-weight: 400;
+          font-size: 16px;
+        }
+
+        span:last-child {
+          color: #999;
+          font-size: 13px;
+          letter-spacing: 0;
+        }
+      }
+    }
+
+    .content {
+      margin-left: 60px;
+    }
+  }
 }
