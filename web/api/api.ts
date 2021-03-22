@@ -57,3 +57,6 @@ interface ICreateComment {
     context: string
 }
 export const blog_createComment = (params: ICreateComment): Response => http.post('/api/web/blog_createComment', params)
+
+// 获取博客评论
+export const get_blogComment = (params: { id: number }): Response => http.get('/api/web/blog_comment', { params })

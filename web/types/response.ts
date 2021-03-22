@@ -18,6 +18,15 @@ export interface IBlogList {
     id: number
     [props: string]: any
 }
+export interface IComment {
+    id: number
+    articleId: number
+    commentName: string
+    commentEmail: string
+    createTime: string
+    context: string
+}
+
 // 处理header 头部类型
 export enum headerType {
     "blog_detail" = "blog_detail",

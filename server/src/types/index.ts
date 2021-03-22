@@ -36,3 +36,13 @@ export interface IVerify {
   id: string
   email: string
 }
+
+//comment interface
+export interface IComment {
+  id: number
+  articleId: number
+  commentName: string
+  commentEmail: string
+  createTime: string
+  context: string
+}

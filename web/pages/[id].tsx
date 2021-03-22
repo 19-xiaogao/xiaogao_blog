@@ -3,11 +3,17 @@ import Styles from '../styles/blogDetail/index.module.scss'
 import moment from 'moment'
 import marked from 'marked'
 import { message } from 'antd'
-import { IBlogList, headerType } from '../types/response'
-import { getBlogDetail, getIndexPageData, goodLikeBlog, blog_createComment } from '../api/api'
+
 import PageHeader from '../components/Header'
+
+import { getBlogDetail, getIndexPageData, goodLikeBlog, blog_createComment, get_blogComment } from '../api/api'
+
+import { IBlogList, headerType, IComment } from '../types/response'
+import { Email } from '../util/RegExp'
+
 interface IProps {
     blogDetail: IBlogList
+    commentData: IComment[]
 }
 
 const BlogDetail: React.FC<IProps> = (props) => {
@@ -27,6 +33,8 @@ const BlogDetail: React.FC<IProps> = (props) => {
     const { blogDetail } = props
 
     useEffect(() => {
+
+        console.log(props.commentData);
 
         section = document.getElementById('section')
 
@@ -107,8 +115,30 @@ const BlogDetail: React.FC<IProps> = (props) => {
         message.success('good.')
     }
 
-    const submitComment = () => {
+    const submitComment = async () => {
+        console.log('1');
 
+        if (commentName.trim() === '') {
+            return message.warn('请输入名称')
+        }
+
+        if (!Email.test(commentEmail.trim())) {
+            return message.warn('请输入正确的邮箱')
+        }
+
+        if (context.trim() === '') {
+            return message.warn('请输入评论')
+        }
+
+        const { data, success } = await blog_createComment({
+            articleId: props.blogDetail.id,
+            commentName,
+            commentEmail,
+            createTime: moment(new Date()).format('YYYY-MM-DD HH:MM'),
+            context
+        })
+        if (!success) return
+        console.log(data);
     }
 
     const inputContext = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -118,50 +148,37 @@ const BlogDetail: React.FC<IProps> = (props) => {
             setCommentName(value)
         } else if (name == 'email') {
             setCommentEmail(value)
-        } else if (name == 'context') {
-            setContext(value)
         }
+    }
+    const textareaInputContext = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setContext(e.target.value)
     }
 
 
     const renderComment = () =>
     (<div className={Styles.comment_user}>
-        <div className={Styles.comment_user_list}>
-            <div className={Styles.describe}>
-                <div className={Styles.describe_left}>
-                    <img src="/image/4.jpg" alt="" />
+        {props.commentData.map(item => (
+            <div className={Styles.comment_user_list} key={item.id}>
+                <div className={Styles.describe}>
+                    <div className={Styles.describe_left}>
+                        <img src="/image/4.jpg" alt="" />
+                    </div>
+                    <div className={Styles.describe_right}>
+                        <span>
+                            {item.commentName}
+                        </span>
+                        <span>
+                            {moment(item.createTime).format('YYYY-MM-DD HH:MM')}
+                        </span>
+                    </div>
                 </div>
-                <div className={Styles.describe_right}>
-                    <span>
-                        我是你爹
-                    </span>
-                    <span>
-                        2020-2-29
-                    </span>
-                </div>
-            </div>
-            <div className={Styles.content}>
-                hello 我是你爹
-            </div>
-        </div>
-        <div className={Styles.comment_user_list}>
-            <div className={Styles.describe}>
-                <div className={Styles.describe_left}>
-                    <img src="/image/4.jpg" alt="" />
-                </div>
-                <div className={Styles.describe_right}>
-                    <span>
-                        我是你爹
-                    </span>
-                    <span>
-                        2020-2-29
-                    </span>
+                <div className={Styles.content}>
+                    {item.context}
                 </div>
             </div>
-            <div className={Styles.content}>
-                hello 我是你爹
-            </div>
-        </div>
+        ))}
+
+
     </div>)
 
 
@@ -185,12 +202,11 @@ const BlogDetail: React.FC<IProps> = (props) => {
                         <input type="text" placeholder="Name" name='name' onChange={inputContext} />
                         <input type="text" placeholder="Email" name='email' onChange={inputContext} />
                     </div>
-                    <textarea placeholder="说点什么呢..." name="context" onChange={inputContext}></textarea>
+                    <textarea placeholder="说点什么呢..." name="context" onChange={textareaInputContext}></textarea>
 
                     <div className={Styles.subBtn}>
                         <button onClick={submitComment}>
                             SUBMIT
-                        <div className={Styles.mark}>请选择邮箱噢</div>
                         </button>
                         <div className={Styles.charts}>~认真和用心是一种态度, 感谢支持~</div>
 
@@ -227,9 +243,16 @@ export async function getStaticProps({ params }) {
 
     if (!success) return message.warn('请求错误---getStaticProps')
 
+    const { success: commentSuccess, data: commentData } = await get_blogComment({ id: params.id })
+
+    if (!commentSuccess) return message.warn('请求错误---getStaticProps')
+
+
+
     return {
         props: {
-            blogDetail: data[0]
+            blogDetail: data[0],
+            commentData: commentData
         }
     }
 }

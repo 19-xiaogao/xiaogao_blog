@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid'
 
 import { createComment } from '../service/web/commentService'
 import { InsertVerifyCode, VerifyServer } from '../service/web/verifyService'
-import { selectBlog, selectBlogDetail, blogGoodLike, blogCategorize } from "../service/web/blogService";
+import { selectBlog, selectBlogDetail, blogGoodLike, blogCategorize, getBlogComment } from "../service/web/blogService";
 import { selectSubscribeBlog, insetSubscribe } from '../service/web/subscribeBlogService'
 
 import { personalInformation } from '../auth/index'
@@ -12,7 +12,7 @@ import nodeEmail from '../utils/nodemailer'
 import { createSixNumber } from '../utils/util'
 import { writeResult } from "../utils/result";
 
-import { subscribeBlog, IVerify } from '../types/index'
+import { subscribeBlog, IVerify,IComment } from '../types/index'
 import { ResponseState } from "../types/enum";
 
 const router = express.Router();
@@ -58,7 +58,7 @@ router.post('/blog_goodLike', (req, res) => {
 router.post('/blog_createComment', (req, res) => {
     createComment(req.body, (result) => {
         res.writeHead(200, { 'Content-Type': ResponseState.ContentType })
-        res.write(writeResult({ success: true, message: ResponseState.success, data: result }))
+        res.write(writeResult({ success: true, message: ResponseState.success, data: '' }))
         res.end()
     }, error => {
         res.write(writeResult({ success: false, message: ResponseState.failed, data: error }))
@@ -82,7 +82,9 @@ router.get('/blog_categorize', (req, res) => {
 router.post('/subscribe_email', async (req, res) => {
 
     const { email, type } = req.body
+
     res.writeHead(200, { 'Content-Type': ResponseState.ContentType })
+
     try {
         const subscribeResponse = await selectSubscribeBlog(email) as subscribeBlog[]
 
@@ -128,7 +130,7 @@ router.post('/subscribe_email', async (req, res) => {
 
 // 邮箱验证
 router.post('/subscribe_verify', async (req, res) => {
-    
+
     const { VerificationCode, id, email } = req.body as IVerify
 
 
@@ -142,7 +144,7 @@ router.post('/subscribe_verify', async (req, res) => {
         res.send()
         return
     }
-    
+
     const insetResponse = await insetSubscribe(email)
 
 
@@ -156,6 +158,14 @@ router.post('/subscribe_verify', async (req, res) => {
         res.send()
     }
 
+})
+
+router.get('/blog_comment', async (req, res) => {
+    const { id }: { id: number } = req.query as any
+    const response = await getBlogComment({ id }) as IComment[]
+    res.writeHead(200, { 'Content-Type': ResponseState.ContentType })
+    res.write(writeResult({ success: true, message: ResponseState.success, data: response }))
+    res.send()
 })
 
 export default router

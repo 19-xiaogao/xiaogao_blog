@@ -108,12 +108,14 @@ class App extends React.Component<IAppProps, IAppState> {
         style['top'] = (height - parseInt(style.height)) / 2 + 'px';
         return style
     }
+    
     private loadMore = async () => {
         this.setState({ loadingMore: true })
         pageSize = pageSize + 5
         const data = await getBlogList({ pageNo: 0, pageSize: pageSize })
         this.setState({ blogList: data.list, loadingMore: false })
     }
+
     private initParallax = (DOMElement: React.ReactNode) => {
         new Parallax(DOMElement, {
             relativeInput: true,

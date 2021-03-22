@@ -5,7 +5,6 @@ interface ISelectComment {
     pageSize: number
 }
 
-// 查找评论
 export const selectComment = async (options: ISelectComment, success: (res) => any, error: (err: any) => any) => {
     const mysqlStr = 'Select * from comment limit ? , ?;';
     const sqlTotalStr = 'select COUNT(id) as total from blog;'
