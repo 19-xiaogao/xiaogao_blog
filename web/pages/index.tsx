@@ -23,7 +23,6 @@ interface IAppState {
     }
     navHied: boolean
     loadingMore: boolean
-    blogList: IBlogList[]
 }
 
 interface IAppProps {
@@ -43,15 +42,10 @@ class App extends React.Component<IAppProps, IAppState> {
             navHied: false,
             loadingMore: false,
             serccenHeight: 0,
-            blogList: props.blogList
         }
     }
 
     componentDidMount() {
-        console.log('1');
-        this.setState({
-            blogList: this.props.blogList
-        })
         this.initParallax(this.scene.current)
         window.addEventListener('resize', this.disposeScreen, false)
         this.disposeScreen()
@@ -108,12 +102,13 @@ class App extends React.Component<IAppProps, IAppState> {
         style['top'] = (height - parseInt(style.height)) / 2 + 'px';
         return style
     }
-    
+
     private loadMore = async () => {
         this.setState({ loadingMore: true })
         pageSize = pageSize + 5
         const data = await getBlogList({ pageNo: 0, pageSize: pageSize })
-        this.setState({ blogList: data.list, loadingMore: false })
+        // TODO: 动态加载数据
+        // this.setState({ blogList: data.list, loadingMore: false })
     }
 
     private initParallax = (DOMElement: React.ReactNode) => {
@@ -207,7 +202,7 @@ class App extends React.Component<IAppProps, IAppState> {
         ))
     }
     private renderHomeBlogList = () => {
-        const { blogList } = this.state
+        const { blogList } = this.props
         const item = blogList[blogList.length - 1]
         return <div className={Styles.info}>
             <div className={Styles.time}>{moment(item.createDate).format('YYYY-MM-DD')}</div>

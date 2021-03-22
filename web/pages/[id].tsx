@@ -5,6 +5,7 @@ import marked from 'marked'
 import { message } from 'antd'
 
 import PageHeader from '../components/Header'
+import PuzzleVerify from '../components/puzzleVerify'
 
 import { getBlogDetail, getIndexPageData, goodLikeBlog, blog_createComment, get_blogComment } from '../api/api'
 
@@ -29,6 +30,8 @@ const BlogDetail: React.FC<IProps> = (props) => {
     const [commentEmail, setCommentEmail] = useState<string>('')
 
     const [context, setContext] = useState<string>('')
+
+    const [errorInfo, setErrorInfo] = useState<string>('~认真和用心是一种态度, 感谢支持~')
 
     const { blogDetail } = props
 
@@ -116,18 +119,17 @@ const BlogDetail: React.FC<IProps> = (props) => {
     }
 
     const submitComment = async () => {
-        console.log('1');
 
         if (commentName.trim() === '') {
-            return message.warn('请输入名称')
+            return setErrorInfo('×请留下你的大名.')
         }
 
         if (!Email.test(commentEmail.trim())) {
-            return message.warn('请输入正确的邮箱')
+            return setErrorInfo('×请输入正确的邮箱.')
         }
 
         if (context.trim() === '') {
-            return message.warn('请输入评论')
+            return setErrorInfo('×0分作文')
         }
 
         const { data, success } = await blog_createComment({
@@ -138,6 +140,9 @@ const BlogDetail: React.FC<IProps> = (props) => {
             context
         })
         if (!success) return
+
+        setErrorInfo('~认真和用心是一种态度, 感谢支持~')
+
         console.log(data);
     }
 
@@ -150,6 +155,7 @@ const BlogDetail: React.FC<IProps> = (props) => {
             setCommentEmail(value)
         }
     }
+
     const textareaInputContext = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setContext(e.target.value)
     }
@@ -208,7 +214,7 @@ const BlogDetail: React.FC<IProps> = (props) => {
                         <button onClick={submitComment}>
                             SUBMIT
                         </button>
-                        <div className={Styles.charts}>~认真和用心是一种态度, 感谢支持~</div>
+                        <div className={Styles.charts} style={errorInfo.length <= 17 ? { color: "red" } : { color: '#909090' }} >{errorInfo}</div>
 
                     </div>
                 </div>
@@ -218,7 +224,7 @@ const BlogDetail: React.FC<IProps> = (props) => {
             </section>
 
         </div>
-
+        <PuzzleVerify />
     </div>
 }
 
