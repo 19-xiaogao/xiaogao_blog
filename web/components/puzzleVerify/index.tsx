@@ -1,6 +1,45 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Styles from './index.module.scss'
+let sliderBtn = null
 const PuzzleVerify: React.FC = () => {
+
+    let moveStart = 0;
+
+    useEffect(() => {
+        sliderBtn = document.querySelector('#sliderBtn')
+        console.log(sliderBtn.style.left, '111');
+    }, [])
+    const startMove = (e) => {
+        e = e || window.event;
+        moveStart = e.pageX || e.targetTouches[0].pageX
+        addMouseMoveListener()
+    }
+
+    const moving = (e) => {
+        e = e || window.event;
+        const moveX = e.pageX || e.targetTouches[0].pageX;
+        sliderBtn.style.left = moveX - moveStart + 'px'
+        sliderBtn.style.transition = 'inherit'
+    }
+
+    const endMove = (e) => {
+        sliderBtn.style.left = 0 + 'px'
+        sliderBtn.style.transition = 'left .5s'
+        removeMouseMoveListener()
+    }
+
+    const addMouseMoveListener = () => {
+        document.addEventListener("mousemove", moving);
+        document.addEventListener("touchmove", moving);
+        document.addEventListener("mouseup", endMove);
+        document.addEventListener("touchend", endMove);
+    }
+    const removeMouseMoveListener = () => {
+        document.removeEventListener("mousemove", moving);
+        document.removeEventListener("touchmove", moving);
+        document.removeEventListener("mouseup", endMove);
+        document.removeEventListener("touchend", endMove);
+    }
 
     return <div className={Styles.container}>
         <div className={Styles.header}>
@@ -18,7 +57,7 @@ const PuzzleVerify: React.FC = () => {
         </div>
         <div className={Styles.slider}>
             <div className={Styles.bar}></div>
-            <div className={Styles.btn}>
+            <div className={Styles.btn} onMouseDown={startMove} onTouchStart={startMove} id="sliderBtn">
                 <span></span>
                 <span></span>
                 <span></span>
