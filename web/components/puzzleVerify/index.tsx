@@ -1,6 +1,25 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Styles from './index.module.scss'
+
 const PuzzleVerify: React.FC = () => {
+
+    useEffect(() => {
+
+    }, [])
+
+    const btnMouseDown = (e) => {
+        console.log('鼠标按下');
+        console.log(e);
+        
+    }
+    const btnMove = (e) => {
+        console.log(e);
+        console.log('鼠标移动');
+    }
+
+    const mouseUp = () => {
+        console.log('鼠标弹起');
+    }
 
     return <div className={Styles.container}>
         <div className={Styles.header}>
@@ -18,7 +37,7 @@ const PuzzleVerify: React.FC = () => {
         </div>
         <div className={Styles.slider}>
             <div className={Styles.bar}></div>
-            <div className={Styles.btn}>
+            <div className={Styles.btn} onMouseDown={btnMouseDown} onMouseMove={btnMove} onMouseUp={mouseUp}  >
                 <span></span>
                 <span></span>
                 <span></span>
