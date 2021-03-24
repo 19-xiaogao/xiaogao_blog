@@ -9,7 +9,7 @@ const PuzzleVerify: React.FC = () => {
         sliderBtn = document.querySelector('#sliderBtn')
         console.log(sliderBtn.style.left, '111');
     }, [])
-    // 计算宽度 最大宽度
+    // TODO:计算宽度 最大宽度
     const startMove = (e) => {
         e = e || window.event;
         moveStart = e.pageX || e.targetTouches[0].pageX
