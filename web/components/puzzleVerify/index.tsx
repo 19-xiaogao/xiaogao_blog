@@ -1,24 +1,72 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Styles from './index.module.scss'
 
 const PuzzleVerify: React.FC = () => {
+    const [sliderBtn, setSliderBtn] = useState<any>(null)
+    const [sliderBar, setSliderBar] = useState<any>(null)
+    const [puzzleCanvas, setPuzzleCanvas] = useState<any>(null)
+    let moveStart = 0;
 
     useEffect(() => {
-
+        setSliderBtn(document.querySelector('#sliderBtn'))
+        setSliderBar(document.querySelector('#sliderBar'))
+        // setPuzzleCanvas(document.querySelector('#puzzle_box'))
+        initCanvas(document.querySelector('#puzzle_box'))
     }, [])
 
-    const btnMouseDown = (e) => {
-        console.log('鼠标按下');
-        console.log(e);
-        
-    }
-    const btnMove = (e) => {
-        console.log(e);
-        console.log('鼠标移动');
+
+    const startMove = (e) => {
+
+        e = e || window.event;
+        moveStart = e.pageX || e.targetTouches[0].pageX
+        addMouseMoveListener()
     }
 
-    const mouseUp = () => {
-        console.log('鼠标弹起');
+    const moving = (e) => {
+
+        e = e || window.event;
+        const moveX = e.pageX || e.targetTouches[0].pageX;
+        // 线的总长度
+        const sliderClientWidth = sliderBar.clientWidth;
+        // 移动的距离
+        const moveDistance = moveX - moveStart;
+
+        if (moveDistance >= sliderClientWidth - 40 || moveDistance < 0) {
+            return
+        }
+
+        sliderBtn.style.left = moveDistance + 'px'
+        sliderBtn.style.transition = 'inherit'
+    }
+
+    const endMove = (e) => {
+
+        sliderBtn.style.left = 0 + 'px'
+        sliderBtn.style.transition = 'left .5s'
+        removeMouseMoveListener()
+    }
+
+    const initCanvas = (canvas) => {
+        const ctx = canvas.getContext('2d');
+        console.log(ctx);
+        let img = new Image()
+        img.src = '/image/bg.png'
+        img.onload = function () {
+            ctx.drawImage(img, 0, 0, 260, 160)
+        }
+    }
+
+    const addMouseMoveListener = () => {
+        document.addEventListener("mousemove", moving);
+        document.addEventListener("touchmove", moving);
+        document.addEventListener("mouseup", endMove);
+        document.addEventListener("touchend", endMove);
+    }
+    const removeMouseMoveListener = () => {
+        document.removeEventListener("mousemove", moving);
+        document.removeEventListener("touchmove", moving);
+        document.removeEventListener("mouseup", endMove);
+        document.removeEventListener("touchend", endMove);
     }
 
     return <div className={Styles.container}>
@@ -31,13 +79,13 @@ const PuzzleVerify: React.FC = () => {
         </div>
         <div className={Styles.verify}>
             <div className={Styles.negative}>
-                <img src="/image/bg.png" alt="" />
-                <canvas width="260" height="160"></canvas>
+                {/* <img src="/image/bg.png" alt="" /> */}
+                <canvas width="260" height="160" id="puzzle_box"></canvas>
             </div>
         </div>
         <div className={Styles.slider}>
-            <div className={Styles.bar}></div>
-            <div className={Styles.btn} onMouseDown={btnMouseDown} onMouseMove={btnMove} onMouseUp={mouseUp}  >
+            <div className={Styles.bar} id='sliderBar'></div>
+            <div className={Styles.btn} onMouseDown={startMove} onTouchStart={startMove} id="sliderBtn">
                 <span></span>
                 <span></span>
                 <span></span>

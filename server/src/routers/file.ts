@@ -11,12 +11,12 @@ const storage = multer.diskStorage({
         cb(null, './src/images')
     },
     filename: function (req, file, cb) {
-        cb(null, file.originalname + '-' + Date.now())
+        cb(null, file.originalname)
     }
 })
 const upload = multer({ storage });
 router.post('/update_img', upload.single('file'), (req: any, res) => {
-    const imgUrl = `http://${req.headers.host}/images/${req.file.originalname}`
+    const imgUrl = `http://${req.headers.host}/images/${Date.now() + req.file.originalname}`
     res.writeHead(200, { 'Content-Type': ResponseState.ContentType });
     res.write(writeResult({ success: true, message: ResponseState.success, data: imgUrl }))
     res.end();

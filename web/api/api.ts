@@ -56,6 +56,7 @@ interface ICreateComment {
     createTime: string
     context: string
 }
+//创建博客
 export const blog_createComment = (params: ICreateComment): Response => http.post('/api/web/blog_createComment', params)
 
 // 获取博客评论
