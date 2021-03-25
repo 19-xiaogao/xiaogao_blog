@@ -33,6 +33,8 @@ const BlogDetail: React.FC<IProps> = (props) => {
 
     const [errorInfo, setErrorInfo] = useState<string>('~认真和用心是一种态度, 感谢支持~')
 
+    const [openValidation, setValidation] = useState<boolean>(false)
+
     const { blogDetail } = props
 
     useEffect(() => {
@@ -132,18 +134,7 @@ const BlogDetail: React.FC<IProps> = (props) => {
             return setErrorInfo('×0分作文')
         }
 
-        const { data, success } = await blog_createComment({
-            articleId: props.blogDetail.id,
-            commentName,
-            commentEmail,
-            createTime: moment(new Date()).format('YYYY-MM-DD HH:MM'),
-            context
-        })
-        if (!success) return
-
-        setErrorInfo('~认真和用心是一种态度, 感谢支持~')
-
-        console.log(data);
+        setValidation(true)
     }
 
     const inputContext = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -187,9 +178,28 @@ const BlogDetail: React.FC<IProps> = (props) => {
 
     </div>)
 
+    const verifyResponse = async (flg: boolean) => {
+        if (!flg) return
+        setValidation(true)
+        const { data, success } = await blog_createComment({
+            articleId: props.blogDetail.id,
+            commentName,
+            commentEmail,
+            createTime: moment(new Date()).format('YYYY-MM-DD HH:MM'),
+            context
+        })
+        if (!success) return
+
+        setErrorInfo('~认真和用心是一种态度, 感谢支持~')
+
+    }
+    const closeVerify = () => {
+
+        setValidation(false)
+    }
 
 
-    return <div>
+    return <div className={Styles.bigBox}>
 
         <div className={Styles.scrollbar} style={{ width: scrollWidth }}></div>
 
@@ -224,7 +234,7 @@ const BlogDetail: React.FC<IProps> = (props) => {
             </section>
 
         </div>
-        <PuzzleVerify />
+        {openValidation ? <PuzzleVerify verifyResponse={verifyResponse} close={closeVerify} /> : null}
     </div>
 }
 

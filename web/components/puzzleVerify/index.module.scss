@@ -1,103 +1,138 @@
 .container {
-    position: fixed;
+  position: absolute;
+  background: #fff;
+  box-shadow: 0 0 10px #dbdbdb;
+  border-radius: 12px;
+  top: calc(50% - 35px);
+  left: 50%;
+  transform: translate(-50%, -50%) ;
+  padding: 15px 15px 28px;
+  display: inline-block;
+  animation: fadeInDown 0.6s both;
+  @keyframes fadeInDown {
+    from {
+      opacity: 1;
+      visibility: visible;
+      transform: translate(-50%, -20%) 
+    }
+    to {
+      opacity: 1;
+      visibility: visible;
+      transform: translate(-50%, -50%);
+    }
+  }
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+
+    .char {
+      color: #333;
+    }
+
+    .icon {
+      cursor: pointer;
+      color: #999;
+      font-size: 16px;
+
+      i:first-child:hover {
+        color: #7bca54;
+      }
+
+      i:last-child {
+        margin-left: 10px;
+
+        &:hover {
+          color: #f56f6f;
+        }
+      }
+    }
+  }
+
+  .verify {
+    width: 260px;
+    position: relative;
+
+    .negative {
+      position: relative;
+      top: 0;
+      right: 0;
+      width: 260px;
+      height: 160px;
+      img {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+      }
+      canvas {
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 11;
+      }
+    }
+    .puzzle_lost_box {
+      position: absolute;
+      width: 260px;
+      height: 160px;
+      top: 0;
+      left: -130px;
+      z-index: 1111;
+    }
+    .ver_tips {
+      position: absolute;
+      width: 100%;
+      left: 0;
+      bottom: -40px;
+      background: hsla(0, 0%, 100%, .9);
+      height: 28px;
+      line-height: 30px;
+      font-size: 13px;
+      text-align: left;
+      padding: 0 8px;
+      transition: all .4s;
+      color: red;
+    }
+  }
+
+  .slider {
+    width: 260px;
+    position: relative;
+    margin: 15px auto 0;
     background: #fff;
-    box-shadow: 0 0 10px #dbdbdb;
-    border-radius: 12px;
-    top: calc(50% - 105px);
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 15px 15px 28px;
-    display: inline-block;
-
-    .header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 10px;
-
-        .char {
-            color: #333;
-        }
-
-        .icon {
-            cursor: pointer;
-            color: #999;
-            font-size: 16px;
-
-            i:first-child:hover {
-                color: #7bca54;
-            }
-
-            i:last-child {
-                margin-left: 10px;
-
-                &:hover {
-                    color: #f56f6f;
-
-                }
-            }
-        }
+    .bar {
+      position: absolute;
+      width: 100%;
+      height: 10px;
+      background: #efefef;
+      border: 1px solid #e9e9e9;
+      border-radius: 5px;
+      box-shadow: inset 0 1px 1px #f8fcff;
+      top: 7px;
     }
 
-    .verify {
-        width: 260px;
-        position: relative;
+    .btn {
+      position: relative;
+      width: 46px;
+      height: 26px;
+      top: 0px;
+      z-index: 12;
+      cursor: pointer;
+      border-radius: 36px;
+      box-shadow: 0 0 2px #0081ff;
+      background: #0084ff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
-        .negative {
-            position: relative;
-            width: 260px;
-            height: 160px;
-            img{
-                position: absolute;
-                width: 100%;
-                height: 100%;
-            }
-            canvas{
-                position: absolute;
-                left: 0;
-                top: 0;
-                z-index: 11;
-            }
-        }
+      span {
+        width: 2px;
+        height: 12px;
+        background: #fff;
+        display: inline-block;
+        margin: 2.5px;
+      }
     }
-
-    .slider {
-        width: 260px;
-        position: relative;
-        margin: 20px auto 0;
-
-        .bar {
-            position: absolute;
-            width: 100%;
-            height: 10px;
-            background: #efefef;
-            border: 1px solid #e9e9e9;
-            border-radius: 5px;
-            box-shadow: inset 0 1px 1px #f8fcff;
-            top: 7px;
-        }
-
-        .btn {
-            position: relative;
-            width: 46px;
-            height: 26px;
-            top: 0px;
-            z-index: 12;
-            cursor: pointer;
-            border-radius: 36px;
-            box-shadow: 0 0 2px #0081ff;
-            background: #0084ff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            span {
-                width: 2px;
-                height: 12px;
-                background: #fff;
-                display: inline-block;
-                margin: 2.5px;
-            }
-        }
-    }
+  }
 }
