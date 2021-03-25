@@ -179,9 +179,12 @@ const BlogDetail: React.FC<IProps> = (props) => {
     </div>)
 
     const verifyResponse = async (flg: boolean) => {
+
         if (!flg) return
-        setValidation(true)
-        const { data, success } = await blog_createComment({
+
+        setTimeout(() => setValidation(false), 600);
+
+        const { success } = await blog_createComment({
             articleId: props.blogDetail.id,
             commentName,
             commentEmail,
@@ -191,6 +194,9 @@ const BlogDetail: React.FC<IProps> = (props) => {
         if (!success) return
 
         setErrorInfo('~认真和用心是一种态度, 感谢支持~')
+        setCommentName('')
+        setCommentEmail('')
+        setContext('')
 
     }
     const closeVerify = () => {
@@ -234,7 +240,9 @@ const BlogDetail: React.FC<IProps> = (props) => {
             </section>
 
         </div>
-        {openValidation ? <PuzzleVerify verifyResponse={verifyResponse} close={closeVerify} /> : null}
+        {openValidation ? <div className={Styles.mask}>
+            <PuzzleVerify verifyResponse={verifyResponse} close={closeVerify} />
+        </div> : null}
     </div>
 }
 

@@ -82,9 +82,4 @@ export const blogCategorize = async (options: ISelectBlog, success: (res) => voi
     }
 }
 
-//获取文章对应的评论
-export const getBlogComment = (options: { id: number }) => {
-    const strSql = 'SELECT * FROM `comment` WHERE articleId = ?;';
-    const params = [options.id]
-    return performSql(strSql, params)
-}
+

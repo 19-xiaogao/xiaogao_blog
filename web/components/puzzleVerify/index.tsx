@@ -68,18 +68,15 @@ const PuzzleVerify: React.FC<IVerify> = (props) => {
 
         const left = puzzle_lost_box.current.style.left.substr(0, 1)
         verTips.current.style.bottom = '0px';
-
         if (left == 0) {
             setVerifyStatus(true)
             props.verifyResponse(true)
         } else {
             setVerifyStatus(false)
             props.verifyResponse(false)
-
         }
         removeMouseMoveListener()
         setTimeout(() => {
-
             sliderBtn.current.style.left = 0 + 'px'
             sliderBtn.current.style.transition = 'left .5s'
             puzzle_lost_box.current.style.transition = 'left .5s'
@@ -118,7 +115,7 @@ const PuzzleVerify: React.FC<IVerify> = (props) => {
         if (type.id === 'puzzle_box') {
             canvas.globalCompositeOperation = "xor"
             canvas.fillStyle = "#fff"
-        } 
+        }
         canvas.beginPath()
 
         canvas.moveTo(x, y);

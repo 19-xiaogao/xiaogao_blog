@@ -1,9 +1,9 @@
 import express from "express";
 import { v4 as uuidv4 } from 'uuid'
 
-import { createComment } from '../service/web/commentService'
+import { createComment, getBlogComment } from '../service/web/commentService'
 import { InsertVerifyCode, VerifyServer } from '../service/web/verifyService'
-import { selectBlog, selectBlogDetail, blogGoodLike, blogCategorize, getBlogComment } from "../service/web/blogService";
+import { selectBlog, selectBlogDetail, blogGoodLike, blogCategorize } from "../service/web/blogService";
 import { selectSubscribeBlog, insetSubscribe } from '../service/web/subscribeBlogService'
 
 import { personalInformation } from '../auth/index'
@@ -12,7 +12,7 @@ import nodeEmail from '../utils/nodemailer'
 import { createSixNumber } from '../utils/util'
 import { writeResult } from "../utils/result";
 
-import { subscribeBlog, IVerify,IComment } from '../types/index'
+import { subscribeBlog, IVerify, IComment } from '../types/index'
 import { ResponseState } from "../types/enum";
 
 const router = express.Router();
@@ -164,7 +164,7 @@ router.get('/blog_comment', async (req, res) => {
     const { id }: { id: number } = req.query as any
     const response = await getBlogComment({ id }) as IComment[]
     res.writeHead(200, { 'Content-Type': ResponseState.ContentType })
-    res.write(writeResult({ success: true, message: ResponseState.success, data: response }))
+    res.write(writeResult({ success: true, message: ResponseState.success, data: response.reverse() }))
     res.send()
 })
 
