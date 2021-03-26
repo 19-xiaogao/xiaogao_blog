@@ -82,7 +82,7 @@ export default class BlogList extends React.Component<{}, IBlogListState> {
     }
   ];
   state = {
-    pageNo: 0,
+    pageNo: 1,
     pageSize: 10,
     blogData: [],
     loading: false,
@@ -122,6 +122,8 @@ export default class BlogList extends React.Component<{}, IBlogListState> {
     this.setState(() => ({ loading: true }))
     const { data, success } = await httpGetSelectBlog({ pageNo, pageSize, title })
     if (!success) { return message.error('请求错误') }
+    console.log(data);
+
     this.setState({ blogData: this.disposeBlogData(data.list), loading: false, total: data.total })
   }
   private disposeBlogData(data: BlogData[]) {
@@ -145,8 +147,9 @@ export default class BlogList extends React.Component<{}, IBlogListState> {
       <Button type="primary" onClick={this.selectBlog}>查询</Button>
     </>
   }
-  private pagInactionChange = (page: number, pageSize: number | undefined) => {
-    this.getInitData(page - 1, pageSize === undefined ? 10 : pageSize)
+  private pagInactionChange = (page: number) => {
+    this.setState({ pageNo: page })
+    this.getInitData(page, 10, this.state.title)
   }
   // 渲染table
   private renderTable = () => {
@@ -160,7 +163,7 @@ export default class BlogList extends React.Component<{}, IBlogListState> {
       </div>
       <div className="BlogList_table">
         {this.renderTable()}
-        <Pagination current={this.state.pageNo + 1} className="pagination" total={this.state.total} onChange={this.pagInactionChange} />
+        <Pagination current={this.state.pageNo} className="pagination" showTotal={total => `Total ${total} items`} total={this.state.total} onChange={this.pagInactionChange} />
       </div>
       <Drawer title="博客内容" visible={this.state.blogDetailVisible} context={this.state.temporaryText} onClose={this.oncloseDrawer} />
       {this.state.visibleModal ? <Modal visible={this.state.visibleModal} onOK={this.onOk} onCancel={this.onOk} data={this.state.ModalData} /> : null}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Upload, message, Modal } from 'antd'
 import { UploadChangeParam, RcFile } from 'antd/lib/upload'
 import { PlusOutlined } from '@ant-design/icons';
@@ -6,6 +6,7 @@ interface UpdateImageProps {
     className?: string
     onUpdateImage: (value: any) => void
     imgUrl?: string
+    isClear: boolean
 }
 const UpdateImage: React.FC<UpdateImageProps> = (props) => {
     const file = props.imgUrl ? [{
@@ -19,6 +20,18 @@ const UpdateImage: React.FC<UpdateImageProps> = (props) => {
     const [previewTitle, setPreviewTitle] = useState<string>('')
     const [fileList, setFileList] = useState<any[]>(file)
     const actionUrl = '/devApi/api/webAdmin/image/update_img'
+
+    useEffect(() => {
+        if (props.isClear) {
+            setPreviewImage('')
+            setFileList([{
+                uid: '-1',
+                name: 'image.png',
+                status: 'done',
+                url: props.imgUrl,
+            }])
+        }
+    }, [props.imgUrl, props.isClear])
 
     function getBase64(file: any) {
         return new Promise((resolve, reject) => {
@@ -40,6 +53,7 @@ const UpdateImage: React.FC<UpdateImageProps> = (props) => {
         setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1))
     };
 
+
     const beforeUpload = (file: RcFile) => {
         const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
         if (!isJpgOrPng) {
@@ -54,7 +68,6 @@ const UpdateImage: React.FC<UpdateImageProps> = (props) => {
 
     const handleChange = (info: UploadChangeParam) => {
         setFileList(info.fileList);
-        console.log(info.fileList)
         if (info.file.response && info.file.response.success) {
             props.onUpdateImage(info.file.response.data)
         }

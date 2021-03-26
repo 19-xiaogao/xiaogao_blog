@@ -146,7 +146,7 @@ class App extends React.Component<IAppProps, IAppState> {
 
     }
 
-    private renderNav = () => (<div className={Styles.nav} style={!this.state.navHied ? { top: '-100%' } : { top: '0' }} >
+    private renderNav = () => (<div className={Styles.nav} style={!this.state.navHied ? { top: '-100%' } : { top: '0' }}>
         <ul className={Styles.nav_list} >
             <li><a href="/article">Article</a></li>
             <li><a href="/messageBoard">MessageBoard</a></li>
@@ -168,7 +168,6 @@ class App extends React.Component<IAppProps, IAppState> {
                         <img src={item.imgUrl} alt="" />
                     </a>
                 </Link>
-
             </div>
             <div className={Styles.info}>
                 <div className={Styles.time}>{moment(item.createDate).format('YYYY-MM-DD')}</div>
@@ -224,7 +223,7 @@ class App extends React.Component<IAppProps, IAppState> {
 
         return <div className={Styles.container}>
             <Helmet title=" home | 小膏" />
-            <div className={Styles.home} id='home'  >
+            <div className={Styles.home} >
                 <div ref={this.scene} className={Styles.scene} style={{ height: this.state.serccenHeight + 'px' }} >
                     <div data-depth="0.4" className={Styles.bg} style={this.state.fatherBox} >
                         <img src='/image/bg.png' style={this.state.imgBoxStyle} />

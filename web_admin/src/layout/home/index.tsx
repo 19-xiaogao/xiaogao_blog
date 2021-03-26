@@ -7,7 +7,7 @@ import HeaderTiTile from "../../views/Header";
 import { Helmet } from "react-helmet";
 
 import Body from "../body";
-import image from "../../assets/image/bg.jpg";
+import image from "../../assets/image/bg.png";
 
 export default class Home extends React.Component<RouteComponentProps, {}> {
 

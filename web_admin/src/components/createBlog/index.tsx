@@ -3,7 +3,6 @@ import Styles from './index.module.scss'
 import { Row, Col, Input, Button, message, DatePicker, Space } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import moment, { Moment } from 'moment';
-import { SaveIcon } from '../../styles/icon'
 import { httpPostInsertBlog, httpPostUpdateBlog } from '../../api/api'
 import MarkDowns from '../MdEditor'
 import UpdateImage from '../updateImage'
@@ -20,6 +19,7 @@ interface ICreateArticleState {
     createTime: Moment | undefined | string
     imgUrl: string | undefined
     title: string | undefined
+    clearImage: boolean
 }
 const dateFormat = 'YYYY-MM-DD mm:ss';
 class CreateBlog extends React.PureComponent<ICreateBlogProps, ICreateArticleState> {
@@ -28,7 +28,8 @@ class CreateBlog extends React.PureComponent<ICreateBlogProps, ICreateArticleSta
         updateContext: this.props.content,
         createTime: moment(this.props.createTime),
         imgUrl: this.props.imgUrl,
-        title: this.props.title
+        title: this.props.title,
+        clearImage: false
     }
     private titleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         this.setState({ title: e.target.value })
@@ -61,15 +62,18 @@ class CreateBlog extends React.PureComponent<ICreateBlogProps, ICreateArticleSta
             if (!success) { return message.error('创建失败') }
             message.success('创建成功')
         } else {
+            console.log(this.props.WhetherToCreate);
+
             const { success: successful } = await httpPostUpdateBlog({ title, content: updateContext, imgUrl, id: this.props.id ? this.props.id : 0 })
             if (!successful) { return message.error('修改失败') }
             message.success('修改成功')
         }
         this.setState({
             updateContext: '',
-            createTime: undefined,
+            createTime: '',
             imgUrl: '',
-            title: ''
+            title: '',
+            clearImage: true
         })
     }
     public componentWillUnmount() {
@@ -109,7 +113,8 @@ class CreateBlog extends React.PureComponent<ICreateBlogProps, ICreateArticleSta
                     </Space>
                 </Col>
                 <Col className={Styles.gutter_row} span={6}>
-                    <Button size="large" type="text" icon={<SaveIcon className="icon" />} onClick={this.updateBlog}>
+                    <Button size='middle' type='primary' onClick={this.updateBlog}>
+                        提交
                     </Button>
                 </Col>
             </Row>
@@ -120,7 +125,7 @@ class CreateBlog extends React.PureComponent<ICreateBlogProps, ICreateArticleSta
             <div className={Styles.creatArticle_header} >{this.renderInput()}</div>
             <div className="markDownUpdate">
                 <div className="markDown"><MarkDowns context={this.state.updateContext ? this.state.updateContext : ''} onchange={this.handleEditorChange} /></div>
-                <UpdateImage className={'updateImg'} onUpdateImage={this.onUpdateImage} imgUrl={this.state.imgUrl} />
+                <UpdateImage className={'updateImg'} onUpdateImage={this.onUpdateImage} isClear={this.state.clearImage} imgUrl={this.state.imgUrl} />
             </div>
         </>
     }

@@ -124,10 +124,18 @@ body,
 }
 
 input {
+    /*去除阴影*/
+    box-shadow: none;
+    /*聚焦input的蓝色边框*/
     outline: none;
-    background: transparent;
+    /*textarea 禁止拖拽*/
+    resize: none;
+    /*去除边框*/
     border: none;
-    outline: medium;
+    /*常用于IOS下移除原生样式*/
+    -webkit-appearance: none;
+    /*点击高亮的颜色*/
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 button {

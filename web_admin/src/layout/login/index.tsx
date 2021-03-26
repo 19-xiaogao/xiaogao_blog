@@ -3,7 +3,7 @@ import { RouteComponentProps, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { setToken } from '../../redux/action'
 import { message } from 'antd'
-import Styles from "./index.module.css";
+import Styles from "./index.module.scss";
 import { httpPostLogin } from '../../api/api'
 
 interface ILoginProps extends RouteComponentProps {
@@ -36,7 +36,7 @@ class Login extends Component<ILoginProps, {}> {
         <div className={Styles.login_box}>
           <input type="text" name="username" placeholder="username" onChange={this.inputChange} />
           <input type="password" name='password' placeholder="Password" onChange={this.inputChange} />
-          <button onClick={this.btnLogin}>LOGIN</button>
+          <button onClick={this.btnLogin}><span>SIGN IN</span></button>
         </div>
       </div>
     );

@@ -8,7 +8,7 @@ interface ISelectComment {
 export const selectComment = async (options: ISelectComment, success: (res) => any, error: (err: any) => any) => {
     const mysqlStr = 'Select * from comment limit ? , ?;';
     const sqlTotalStr = 'select COUNT(id) as total from blog;'
-    const params = [options.pageNo, options.pageSize];
+    const params = [(options.pageNo - 1) * options.pageSize, options.pageSize];
     try {
         const resList = await performSql(mysqlStr, params);
         const resTotal: any = await performSql(sqlTotalStr);
@@ -17,4 +17,3 @@ export const selectComment = async (options: ISelectComment, success: (res) => a
         error(err)
     }
 }
-
