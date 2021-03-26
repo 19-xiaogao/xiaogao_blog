@@ -1,21 +1,45 @@
 import React from 'react'
 
-import { Card, Row, Col, Input, Button, Switch } from 'antd'
+import { Card, Row, Col, Input, Button, Switch, message, Table } from 'antd'
 
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons'
 
 import './index.scss'
 
+import moment from 'moment'
+
+import { httpGetGetComment } from '../../api/api'
+
+
+interface Comment {
+    id: number
+    articleId: number
+    commentName: string
+    commentEmail: string
+    context: string
+    createTime: string
+    show: number
+    key: number
+}
+
 interface ICommentProps { }
 
 interface ICommentState {
     loading: boolean
+    pageNo: number
+    pageSize: number
+    commentList: Comment[]
+    total: number
 }
 
 class Comment extends React.Component<ICommentProps, ICommentState> {
 
     state = {
-        loading: false
+        loading: false,
+        pageNo: 1,
+        pageSize: 10,
+        commentList: [],
+        total: 0
     }
 
     private columns = [
@@ -34,17 +58,19 @@ class Comment extends React.Component<ICommentProps, ICommentState> {
             dataIndex: 'createTime',
             key: 'createTime',
         },
-        {
-            title: "关联博客",
-        },
+        // TODO:
+        // {
+        //     title: "关联博客",
+        // },
         {
             title: '吐槽干货',
-            dataIndex: 'createTime',
-            key: 'createTime',
+            dataIndex: 'context',
+            key: 'context',
         },
         {
             title: "是否屏蔽",
             dataIndex: 'show',
+            key: 'show',
             render: (text: any, row: any) => <Switch
                 checkedChildren={<CheckOutlined />}
                 unCheckedChildren={<CloseOutlined />}
@@ -57,7 +83,31 @@ class Comment extends React.Component<ICommentProps, ICommentState> {
 
     }
 
-    componentDidMount() { }
+    private async initComment(pageNo: number, pageSize: number, params?: any) {
+
+        const { data, success } = await httpGetGetComment({ pageNo, pageSize, ...params })
+
+        if (!success) return message.error('博客列表服务报错')
+
+        this.setState({ commentList: this.disposeCommentData(data.list), total: data.total })
+        
+    }
+
+    private disposeCommentData(data: Comment[]) {
+
+        data.forEach((item) => {
+            item.key = item.id
+            item.createTime = moment(item.createTime).format('YYYY-MM-DD HH:MM:SS')
+        })
+
+        return data
+    }
+
+    componentDidMount() {
+
+        this.initComment(this.state.pageNo, this.state.pageSize)
+
+    }
 
     render() {
 
@@ -77,6 +127,9 @@ class Comment extends React.Component<ICommentProps, ICommentState> {
                         <Button type='primary' style={{ marginLeft: '10px' }}>重置</Button>
                     </Col>
                 </Row>
+            </Card>
+            <Card className="comment_table">
+                <Table dataSource={this.state.commentList} bordered columns={this.columns} />
             </Card>
         </div>
 

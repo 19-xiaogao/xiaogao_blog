@@ -10,9 +10,11 @@ interface ISelectComment {
 // 
 export const selectComment = async (options: ISelectComment, success: (res) => any, error: (err: any) => any) => {
 
-    const mysqlStr = 'Select * from comment limit ? , ?;';
+    options.pageNo = Number(options.pageNo)
+    options.pageSize = Number(options.pageSize)
+    const mysqlStr = 'select * from comment limit ?, ?;';
 
-    const sqlTotalStr = 'select COUNT(id) as total from blog;'
+    const sqlTotalStr = 'select COUNT(id) as total from comment;'
 
     const params = [(options.pageNo - 1) * options.pageSize, options.pageSize];
 
@@ -22,8 +24,19 @@ export const selectComment = async (options: ISelectComment, success: (res) => a
         success({ list: resList, total: resTotal[0].total });
 
     } catch (err) {
-
         error(err)
-
+    }
+}
+interface IDeleteComment {
+    id: number
+}
+// 删除评论
+export const deleteComment = async (options: IDeleteComment) => {
+    const sqlStr = 'DELETE from comment id = ?;';
+    const params = [options.id]
+    try {
+        return await performSql(sqlStr, params)
+    } catch (error) {
+        return error
     }
 }

@@ -39,8 +39,10 @@ export const httpPostUpdateBlog = (data: IUpdateBlog): AxiosResponse => axios.po
 
 
 interface ISearchComment {
-    keyword: string
-    blogName: string
+    keyword?: string
+    blogName?: string
+    pageNo: number
+    pageSize: number
 }
 // 查询评论
 export const httpGetGetComment = (params: ISearchComment): AxiosResponse => axios.get('/api/webAdmin/comment/list', { params })
