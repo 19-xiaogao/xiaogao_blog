@@ -13,6 +13,8 @@ import {
 } from '@ant-design/icons'
 import LoadingDom from '../components/loading'
 import { setInterval } from 'timers';
+import Helmet from '../components/Helmet'
+
 interface IAppState {
     fatherBox: {
         [props: string]: string
@@ -23,6 +25,7 @@ interface IAppState {
     }
     navHied: boolean
     loadingMore: boolean
+    blogList: IBlogList[] | any[]
 }
 
 interface IAppProps {
@@ -42,6 +45,7 @@ class App extends React.Component<IAppProps, IAppState> {
             navHied: false,
             loadingMore: false,
             serccenHeight: 0,
+            blogList: []
         }
     }
 
@@ -53,6 +57,7 @@ class App extends React.Component<IAppProps, IAppState> {
             clearInterval(this.timer)
         })
     }
+
     componentWillUnmount() {
         window.removeEventListener('resize', this.disposeScreen)
     }
@@ -107,8 +112,7 @@ class App extends React.Component<IAppProps, IAppState> {
         this.setState({ loadingMore: true })
         pageSize = pageSize + 5
         const data = await getBlogList({ pageNo: 0, pageSize: pageSize })
-        // TODO: 动态加载数据
-        // this.setState({ blogList: data.list, loadingMore: false })
+        this.setState({ blogList: data.list, loadingMore: false })
     }
 
     private initParallax = (DOMElement: React.ReactNode) => {
@@ -156,7 +160,8 @@ class App extends React.Component<IAppProps, IAppState> {
 
     private renderBlogList = () => {
         const { blogList } = this.props
-        return blogList.map(item => (<div className={Styles.post} key={item.id}>
+        const concatBlogList = this.state.blogList.concat(blogList)
+        return concatBlogList.map(item => (<div className={Styles.post} key={item.id}>
             <div className={Styles.img_box}>
                 <Link href={`/[${String(item.id)}]`} as={`/${String(item.id)}`}>
                     <a>
@@ -218,6 +223,7 @@ class App extends React.Component<IAppProps, IAppState> {
     render() {
 
         return <div className={Styles.container}>
+            <Helmet title=" home | 小膏" />
             <div className={Styles.home} id='home'  >
                 <div ref={this.scene} className={Styles.scene} style={{ height: this.state.serccenHeight + 'px' }} >
                     <div data-depth="0.4" className={Styles.bg} style={this.state.fatherBox} >

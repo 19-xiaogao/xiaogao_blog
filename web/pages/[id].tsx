@@ -3,7 +3,6 @@ import Styles from '../styles/blogDetail/index.module.scss'
 import moment from 'moment'
 import marked from 'marked'
 import { message } from 'antd'
-
 import PageHeader from '../components/Header'
 import PuzzleVerify from '../components/puzzleVerify'
 
@@ -15,11 +14,16 @@ import { Email } from '../util/RegExp'
 interface IProps {
     blogDetail: IBlogList
     commentData: IComment[]
+
 }
+
+
 
 const BlogDetail: React.FC<IProps> = (props) => {
 
     let section = null
+
+    const [comment, setComment] = useState<IComment[]>(props.commentData)
 
     const [likeTody, setLikeTody] = useState<boolean>(false)
 
@@ -37,9 +41,9 @@ const BlogDetail: React.FC<IProps> = (props) => {
 
     const { blogDetail } = props
 
-    useEffect(() => {
 
-        console.log(props.commentData);
+
+    useEffect(() => {
 
         section = document.getElementById('section')
 
@@ -49,7 +53,7 @@ const BlogDetail: React.FC<IProps> = (props) => {
 
         window.addEventListener('scroll', scrollBar, false)
 
-        return () => window.addEventListener('scroll', scrollBar, false)
+        return () => window.removeEventListener('scroll', scrollBar, false)
     }, [])
 
     const scrollBar = () => {
@@ -154,7 +158,7 @@ const BlogDetail: React.FC<IProps> = (props) => {
 
     const renderComment = () =>
     (<div className={Styles.comment_user}>
-        {props.commentData.map(item => (
+        {comment.map(item => (
             <div className={Styles.comment_user_list} key={item.id}>
                 <div className={Styles.describe}>
                     <div className={Styles.describe_left}>
@@ -165,7 +169,7 @@ const BlogDetail: React.FC<IProps> = (props) => {
                             {item.commentName}
                         </span>
                         <span>
-                            {moment(item.createTime).format('YYYY-MM-DD HH:MM')}
+                            {moment(item.createTime).format('HH:MM YYYY-MM-DD')}
                         </span>
                     </div>
                 </div>
@@ -197,6 +201,9 @@ const BlogDetail: React.FC<IProps> = (props) => {
         setCommentName('')
         setCommentEmail('')
         setContext('')
+        const { success: commentSuccess, data } = await get_blogComment({ id: props.blogDetail.id })
+        if (!commentSuccess) return
+        setComment(data)
 
     }
     const closeVerify = () => {
@@ -221,10 +228,10 @@ const BlogDetail: React.FC<IProps> = (props) => {
                 <div className={Styles.comment_form}>
 
                     <div className={Styles.commentInput}>
-                        <input type="text" placeholder="Name" name='name' onChange={inputContext} />
-                        <input type="text" placeholder="Email" name='email' onChange={inputContext} />
+                        <input type="text" placeholder="Name" value={commentName} name='name' onChange={inputContext} />
+                        <input type="text" placeholder="Email" value={commentEmail} name='email' onChange={inputContext} />
                     </div>
-                    <textarea placeholder="说点什么呢..." name="context" onChange={textareaInputContext}></textarea>
+                    <textarea placeholder="说点什么呢..." name="context" value={context} onChange={textareaInputContext}></textarea>
 
                     <div className={Styles.subBtn}>
                         <button onClick={submitComment}>
@@ -235,7 +242,7 @@ const BlogDetail: React.FC<IProps> = (props) => {
                     </div>
                 </div>
 
-                <h2 className={Styles.comment_title}><span>Comment List</span><span>(7)</span></h2>
+                <h2 className={Styles.comment_title}><span>Comment List</span><span>({comment.length})</span></h2>
                 {renderComment()}
             </section>
 
@@ -276,7 +283,7 @@ export async function getStaticProps({ params }) {
     return {
         props: {
             blogDetail: data[0],
-            commentData: commentData
+            commentData: commentData,
         }
     }
 }

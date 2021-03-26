@@ -6,6 +6,7 @@ import 'rc-texty/assets/index.css';
 import Styles from '../styles/validationCss/index.module.scss'
 
 import { subscribe_verify } from '../api/api'
+import Helmet from '../components/Helmet'
 import { message } from 'antd'
 
 const Validation: React.FC = () => {
@@ -47,6 +48,7 @@ const Validation: React.FC = () => {
     }
 
     return <div className={Styles.bigBox}>
+        <Helmet title='验证 | 小膏' />
         <div className={Styles.validation}>
             <h2>订阅邮箱验证</h2>
             <div className={Styles.entryBox}>
