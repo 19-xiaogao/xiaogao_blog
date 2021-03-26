@@ -44,4 +44,8 @@ router.post('/update_blog', (req, res) => {
   })
 })
 
+router.post('/delete', (req, res) => { 
+  
+})
+
 export default router;

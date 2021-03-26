@@ -100,3 +100,12 @@ export const updateBlog = async (options: IUpdateBlog, success: (res) => void, e
     }
   }
 }
+
+interface IDeleteBlog { }
+
+// 需要同步删除博客,博客的图片,博客对应的评论
+export const deleteBlog = (options: IDBDatabase) => {
+  const sqlStr = 'delete '
+}
+
+// 订阅
