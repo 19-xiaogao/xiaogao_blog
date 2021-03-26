@@ -49,7 +49,7 @@ const BlogDetail: React.FC<IProps> = (props) => {
 
         window.addEventListener('scroll', scrollBar, false)
 
-        return () => window.addEventListener('scroll', scrollBar, false)
+        return () => window.removeEventListener('scroll', scrollBar, false)
     }, [])
 
     const scrollBar = () => {
