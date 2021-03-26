@@ -1,10 +1,19 @@
 import React from "react";
+
 import { Input, Button, message, Table, Image, Pagination, Switch } from 'antd'
+
+import { ColumnsType } from 'antd/es/table';
+
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons'
+
 import Drawer from './components/Drawer'
+
 import Modal from './components/modal'
+
 import { httpGetSelectBlog, httpPostUpdateBlog } from '../../api/api'
+
 import moment from 'moment'
+
 import './index.scss';
 
 export interface BlogData {
@@ -32,40 +41,47 @@ interface IBlogListState {
 }
 
 export default class BlogList extends React.Component<{}, IBlogListState> {
-  private columns = [
+  private columns: ColumnsType<BlogData> = [
     {
       title: '标题',
+      align: 'center',
       dataIndex: 'title',
       key: 'title',
     },
     {
       title: '创建时间',
+      align: 'center',
       dataIndex: 'createDate',
       key: 'createDate',
     },
     {
       title: '被喜欢次数',
+      align: 'center',
       key: 'likeCount',
       dataIndex: 'likeCount',
     },
     {
       title: '被查看的次数',
+      align: 'center',
       key: 'viewCount',
       dataIndex: 'viewCount',
     },
     {
       title: '是否展示',
       key: 'show_blog',
+      align: 'center',
       dataIndex: 'show_blog',
       render: (text: any, row: BlogData) => <Switch checkedChildren={<CheckOutlined />}
         unCheckedChildren={<CloseOutlined />} defaultChecked={text === 1 ? true : false} loading={this.state.loading} onClick={(checked) => this.switchClick(checked, row)} />
     },
     {
       title: '字数',
+      align: 'center',
       key: 'number_words',
       dataIndex: 'number_words'
     },
     {
+      align: 'center',
       title: "封面图",
       key: 'imgUrl',
       dataIndex: 'imgUrl',
@@ -73,6 +89,7 @@ export default class BlogList extends React.Component<{}, IBlogListState> {
     },
     {
       title: "操作",
+      align: 'center',
       key: "context",
       dataIndex: 'content',
       render: (text: any, row: BlogData) => <div>

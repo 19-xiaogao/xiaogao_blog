@@ -2,6 +2,9 @@ import React from 'react'
 
 import { Card, Row, Col, Input, Button, Switch, message, Table } from 'antd'
 
+import { ColumnsType } from 'antd/es/table';
+import { TableRowSelection } from 'antd/es/table/interface'
+
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons'
 
 import './index.scss'
@@ -41,21 +44,34 @@ class Comment extends React.Component<ICommentProps, ICommentState> {
         commentList: [],
         total: 0
     }
-
-    private columns = [
+    protected rowSelection: TableRowSelection<Comment> = {
+        onChange: (selectedRowKeys, selectedRows) => {
+            console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+        },
+        onSelect: (record, selected, selectedRows) => {
+            console.log(record, selected, selectedRows);
+        },
+        onSelectAll: (selected, selectedRows, changeRows) => {
+            console.log(selected, selectedRows, changeRows);
+        },
+    };
+    private columns: ColumnsType<Comment> = [
         {
+            align: 'center',
             title: '刁民',
             dataIndex: 'commentName',
             key: 'commentName',
         },
         {
             title: '联系方式(email)',
+            align: 'center',
             dataIndex: 'commentEmail',
             key: 'commentEmail',
         },
         {
             title: '某时某刻',
             dataIndex: 'createTime',
+            align: 'center',
             key: 'createTime',
         },
         // TODO:
@@ -64,19 +80,29 @@ class Comment extends React.Component<ICommentProps, ICommentState> {
         // },
         {
             title: '吐槽干货',
+            align: 'center',
             dataIndex: 'context',
             key: 'context',
         },
         {
             title: "是否屏蔽",
             dataIndex: 'show',
+            align: 'center',
             key: 'show',
             render: (text: any, row: any) => <Switch
                 checkedChildren={<CheckOutlined />}
                 unCheckedChildren={<CloseOutlined />}
                 defaultChecked={text === 1 ? true : false} loading={this.state.loading}
                 onClick={(checked) => this.switchClick(checked, row)} />
-        }
+        },
+        // {
+        //     title: "操作",
+        //     key: "options",
+        //     align: 'center',
+        //     render: (text: any, row: Comment) => <div>
+        //         <Button type="link">删除</Button>
+        //     </div>
+        // }
     ];
 
     private switchClick(checked: boolean, row: any) {
@@ -90,7 +116,7 @@ class Comment extends React.Component<ICommentProps, ICommentState> {
         if (!success) return message.error('博客列表服务报错')
 
         this.setState({ commentList: this.disposeCommentData(data.list), total: data.total })
-        
+
     }
 
     private disposeCommentData(data: Comment[]) {
@@ -124,12 +150,13 @@ class Comment extends React.Component<ICommentProps, ICommentState> {
                     </Col>
                     <Col span={6} className='flex'>
                         <Button type='primary'>查询</Button>
-                        <Button type='primary' style={{ marginLeft: '10px' }}>重置</Button>
+                        <Button type='primary' style={{ margin: ' 0 10px' }}>重置</Button>
+                        <Button type='primary'>删除</Button>
                     </Col>
                 </Row>
             </Card>
             <Card className="comment_table">
-                <Table dataSource={this.state.commentList} bordered columns={this.columns} />
+                <Table dataSource={this.state.commentList} rowSelection={{ ...this.rowSelection }} bordered columns={this.columns} />
             </Card>
         </div>
 
