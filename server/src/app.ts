@@ -1,11 +1,16 @@
 import express from "express";
 import cors from 'cors'
-import blogRouter from "./routers/blogList";
-import fileRouter from './routers/file'
-import loginRouter from './routers/login'
-import webRouter from './routers/web'
+
+import blogRouter from "./routers/web_admin/blogList";
+import fileRouter from './routers/web_admin/updateFile'
+import loginRouter from './routers/web_admin/login'
+import commentRouter from './routers/web_admin/comment'
+
+import webRouter from './routers/web/web'
+
 import { SSHKEY } from './auth/index'
 import JWTverify from './auth/jwt'
+
 import { writeResult } from "./utils/result";
 
 const app: express.Application = express();
@@ -67,5 +72,6 @@ app.all('/api/webAdmin/*', (req, res, next) => {
   }
 })
 app.use("/api/webAdmin/blog", blogRouter);
+app.use('/api/webAdmin/comment',commentRouter)
 
 app.listen(post, () => console.log(`runling ${host}:${post}`));

@@ -1,9 +1,9 @@
 import express from "express";
 import JWT from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import { hash, SSHKEY } from "../auth";
-import { writeResult } from "../utils/result";
-import { ResponseState } from '../types/enum'
+import { hash, SSHKEY } from "../../auth";
+import { writeResult } from "../../utils/result";
+import { ResponseState } from '../../types/enum'
 const router = express.Router();
 
 router.post("/login", (req, res) => {

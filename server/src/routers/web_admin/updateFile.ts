@@ -1,7 +1,7 @@
 import express from 'express'
 import multer from 'multer'
-import { writeResult } from '../utils/result'
-import { ResponseState } from "../types/enum";
+import { writeResult } from '../../utils/result'
+import { ResponseState } from "../../types/enum";
 
 const router = express.Router();
 

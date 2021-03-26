@@ -101,13 +101,13 @@ class CreateBlog extends React.PureComponent<ICreateBlogProps, ICreateArticleSta
                     <span>文章标题:</span>
                     <Input placeholder="请输入文章标题" value={this.state.title} onChange={this.titleChange} />
                 </Col>
-                <Col className={Styles.gutter_row} span={6}>
+                <Col className={Styles.gutter_row} span={3}>
                     <Button icon={<UploadOutlined />} className={Styles.updateBtn}>
                         上传博客
                     <input type="file" value="" onChange={this.updateFile} />
                     </Button>
                 </Col>
-                <Col className={Styles.gutter_row} span={6}>
+                <Col className={Styles.gutter_row} span={4}>
                     <Space direction="vertical" size={12}>
                         <DatePicker showTime onOk={this.onSelectTimeOk} placeholder="请选择日期时间" value={this.props.id ? this.state.createTime : undefined} onChange={this.onSelectTimeOk} />
                     </Space>
