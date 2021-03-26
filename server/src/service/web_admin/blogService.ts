@@ -44,10 +44,12 @@ interface ISelectBlog {
 export const selectBlog = async (options: ISelectBlog, success: (res) => any, error: (error: any) => void) => {
   options.pageNo = Number(options.pageNo);
   options.pageSize = Number(options.pageSize);
-  const sqlTotalStr = 'select COUNT(title) as total from blog;'
+
   if (!options.title) {
     const sqlStr = "select * from blog limit ?, ? ;";
-    const params = [options.pageNo, options.pageSize];
+    const params = [(options.pageNo - 1) * options.pageSize, options.pageSize];
+    const sqlTotalStr = 'select COUNT(title) as total from blog;'
+
     try {
       const resList = await performSql(sqlStr, params);
       const resTotal: any = await performSql(sqlTotalStr);
@@ -57,10 +59,11 @@ export const selectBlog = async (options: ISelectBlog, success: (res) => any, er
     }
   } else {
     const sqlStr = `SELECT * FROM blog WHERE title = ? ORDER BY createDate DESC limit ?,? ;`
-    const params = [options.title, options.pageNo, options.pageSize];
+    const params = [options.title, (options.pageNo - 1) * options.pageSize, options.pageSize];
+    const sqlTotalStr = 'select COUNT(title) as total from blog WHERE title = ?;'
     try {
       const result = await performSql(sqlStr, params);
-      const resTotal: any = await performSql(sqlTotalStr);
+      const resTotal: any = await performSql(sqlTotalStr, [options.title]);
       success({ list: result, total: resTotal[0].total });
     } catch (err) {
       error(err);
@@ -97,3 +100,12 @@ export const updateBlog = async (options: IUpdateBlog, success: (res) => void, e
     }
   }
 }
+
+interface IDeleteBlog { }
+
+// 需要同步删除博客,博客的图片,博客对应的评论
+export const deleteBlog = (options: IDBDatabase) => {
+  const sqlStr = 'delete '
+}
+
+// 订阅

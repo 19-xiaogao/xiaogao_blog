@@ -14,6 +14,8 @@ import Wave from '../components/wave'
 import { subscribe_email } from '../api/api'
 import { message } from 'antd';
 
+
+
 const Subscribe: React.FC = () => {
 
     const [email, setUserEmail] = useState<string>('')
@@ -47,7 +49,7 @@ const Subscribe: React.FC = () => {
     }
     return <div className={Styles.content}>
 
-        <Helmet title="He 我是小膏" />
+        <Helmet title="subscribe| 小膏" />
 
         <PageHeader type={headerType.subscribe} />
 

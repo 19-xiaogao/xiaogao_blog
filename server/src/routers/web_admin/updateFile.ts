@@ -1,7 +1,7 @@
 import express from 'express'
 import multer from 'multer'
-import { writeResult } from '../utils/result'
-import { ResponseState } from "../types/enum";
+import { writeResult } from '../../utils/result'
+import { ResponseState } from "../../types/enum";
 
 const router = express.Router();
 
@@ -11,12 +11,13 @@ const storage = multer.diskStorage({
         cb(null, './src/images')
     },
     filename: function (req, file, cb) {
-        cb(null, file.originalname)
+        file.name = Date.now() + file.originalname;
+        cb(null, file.name)
     }
 })
 const upload = multer({ storage });
 router.post('/update_img', upload.single('file'), (req: any, res) => {
-    const imgUrl = `http://${req.headers.host}/images/${Date.now() + req.file.originalname}`
+    const imgUrl = `http://${req.headers.host}/images/${req.file.name}`
     res.writeHead(200, { 'Content-Type': ResponseState.ContentType });
     res.write(writeResult({ success: true, message: ResponseState.success, data: imgUrl }))
     res.end();

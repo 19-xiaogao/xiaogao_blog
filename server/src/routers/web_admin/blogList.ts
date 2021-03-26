@@ -1,7 +1,7 @@
 import express from "express";
-import { ResponseState } from "../types/enum";
-import { writeResult } from "../utils/result";
-import { insertBlog, selectBlog, updateBlog } from "../service/web_admin/blogService";
+import { ResponseState } from "../../types/enum";
+import { writeResult } from "../../utils/result";
+import { insertBlog, selectBlog, updateBlog } from "../../service/web_admin/blogService";
 const router = express.Router();
 
 // 创建博客
@@ -42,6 +42,10 @@ router.post('/update_blog', (req, res) => {
     res.write(writeResult({ success: false, message: ResponseState.failed, data: err }))
     res.send()
   })
+})
+
+router.post('/delete', (req, res) => { 
+  
 })
 
 export default router;

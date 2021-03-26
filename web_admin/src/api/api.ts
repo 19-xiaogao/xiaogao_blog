@@ -36,3 +36,11 @@ interface IUpdateBlog {
 }
 // 更新blog
 export const httpPostUpdateBlog = (data: IUpdateBlog): AxiosResponse => axios.post('/api/webAdmin/blog/update_blog', data)
+
+
+interface ISearchComment {
+    keyword: string
+    blogName: string
+}
+// 查询评论
+export const httpGetGetComment = (params: ISearchComment): AxiosResponse => axios.get('/api/webAdmin/comment/list', { params })

@@ -1,19 +1,19 @@
 import express from "express";
 import { v4 as uuidv4 } from 'uuid'
 
-import { createComment, getBlogComment } from '../service/web/commentService'
-import { InsertVerifyCode, VerifyServer } from '../service/web/verifyService'
-import { selectBlog, selectBlogDetail, blogGoodLike, blogCategorize } from "../service/web/blogService";
-import { selectSubscribeBlog, insetSubscribe } from '../service/web/subscribeBlogService'
+import { createComment, getBlogComment } from '../../service/web/commentService'
+import { InsertVerifyCode, VerifyServer } from '../../service/web/verifyService'
+import { selectBlog, selectBlogDetail, blogGoodLike, blogCategorize } from "../../service/web/blogService";
+import { selectSubscribeBlog, insetSubscribe } from '../../service/web/subscribeBlogService'
 
-import { personalInformation } from '../auth/index'
+import { personalInformation } from '../../auth/index'
 
-import nodeEmail from '../utils/nodemailer'
-import { createSixNumber } from '../utils/util'
-import { writeResult } from "../utils/result";
+import nodeEmail from '../../utils/nodemailer'
+import { createSixNumber } from '../../utils/util'
+import { writeResult } from "../../utils/result";
 
-import { subscribeBlog, IVerify, IComment } from '../types/index'
-import { ResponseState } from "../types/enum";
+import { subscribeBlog, IVerify, IComment } from '../../types/index'
+import { ResponseState } from "../../types/enum";
 
 const router = express.Router();
 
