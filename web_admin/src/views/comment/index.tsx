@@ -4,6 +4,7 @@ import { Card, Row, Col, Input, Button, Switch, message, Table } from 'antd'
 
 import { ColumnsType } from 'antd/es/table';
 import { TableRowSelection } from 'antd/es/table/interface'
+import { PaginationProps } from 'antd/es/pagination/Pagination'
 
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons'
 
@@ -11,7 +12,7 @@ import './index.scss'
 
 import moment from 'moment'
 
-import { httpGetGetComment } from '../../api/api'
+import { httpGetGetComment, httpDeleteComment, httpshieldingComment } from '../../api/api'
 
 
 interface Comment {
@@ -25,35 +26,30 @@ interface Comment {
     key: number
 }
 
-interface ICommentProps { }
-
 interface ICommentState {
     loading: boolean
     pageNo: number
     pageSize: number
     commentList: Comment[]
     total: number
+    selectRowKeys: React.Key[] | number[]
 }
 
-class Comment extends React.Component<ICommentProps, ICommentState> {
+class Comment extends React.Component<{}, ICommentState> {
 
     state = {
         loading: false,
         pageNo: 1,
         pageSize: 10,
         commentList: [],
-        total: 0
+        total: 0,
+        selectRowKeys: [],
     }
     protected rowSelection: TableRowSelection<Comment> = {
-        onChange: (selectedRowKeys, selectedRows) => {
-            console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+        onChange: (selectedRowKeys) => {
+            this.setState({ selectRowKeys: selectedRowKeys })
         },
-        onSelect: (record, selected, selectedRows) => {
-            console.log(record, selected, selectedRows);
-        },
-        onSelectAll: (selected, selectedRows, changeRows) => {
-            console.log(selected, selectedRows, changeRows);
-        },
+
     };
     private columns: ColumnsType<Comment> = [
         {
@@ -92,37 +88,63 @@ class Comment extends React.Component<ICommentProps, ICommentState> {
             render: (text: any, row: any) => <Switch
                 checkedChildren={<CheckOutlined />}
                 unCheckedChildren={<CloseOutlined />}
-                defaultChecked={text === 1 ? true : false} loading={this.state.loading}
+                defaultChecked={text === '0' ? true : false} loading={this.state.loading}
                 onClick={(checked) => this.switchClick(checked, row)} />
         },
-        // {
-        //     title: "操作",
-        //     key: "options",
-        //     align: 'center',
-        //     render: (text: any, row: Comment) => <div>
-        //         <Button type="link">删除</Button>
-        //     </div>
-        // }
     ];
+    private pagination = (): PaginationProps => ({
+        current: this.state.pageNo,
+        total: this.state.total,
+        onChange: (page: number) => {
+            this.setState({ pageNo: page })
+            this.initComment(page, 10)
+        },
+        showTotal: (total) => <span>共{total}条</span>
+    })
 
-    private switchClick(checked: boolean, row: any) {
+    private switchClick = async (checked: boolean, row: any) => {
+        this.setState({ loading: true })
+        const { success } = await httpshieldingComment({ id: row.key, show: checked ? '0' : '1' })
+        if (!success) return message.error('服务器错误')
+        this.setState({ loading: false })
+        this.initComment(this.state.pageNo, this.state.pageSize)
+    }
+
+    private onDelteComment = async () => {
+
+        this.setState({ loading: true })
+
+        const { success } = await httpDeleteComment({ id: [...this.state.selectRowKeys] })
+        if (!success) return
+
+        this.setState({ loading: false })
+
+        message.success('删除成功')
+
+        this.initComment(this.state.pageNo, this.state.pageSize)
 
     }
 
+
     private async initComment(pageNo: number, pageSize: number, params?: any) {
 
-        const { data, success } = await httpGetGetComment({ pageNo, pageSize, ...params })
+        this.setState({ loading: true })
 
+        const { data, success } = await httpGetGetComment({ pageNo, pageSize, ...params })
         if (!success) return message.error('博客列表服务报错')
 
+        this.setState({ loading: false })
+
         this.setState({ commentList: this.disposeCommentData(data.list), total: data.total })
+
+
 
     }
 
     private disposeCommentData(data: Comment[]) {
 
         data.forEach((item) => {
-            item.key = item.id
+            item.key = Number(item.id)
             item.createTime = moment(item.createTime).format('YYYY-MM-DD HH:MM:SS')
         })
 
@@ -137,6 +159,7 @@ class Comment extends React.Component<ICommentProps, ICommentState> {
 
     render() {
 
+        const { selectRowKeys, loading } = this.state
         return <div className='comment_box'>
             <Card className='comment_header'>
                 <Row>
@@ -151,12 +174,12 @@ class Comment extends React.Component<ICommentProps, ICommentState> {
                     <Col span={6} className='flex'>
                         <Button type='primary'>查询</Button>
                         <Button type='primary' style={{ margin: ' 0 10px' }}>重置</Button>
-                        <Button type='primary'>删除</Button>
+                        <Button type='primary' disabled={selectRowKeys.length === 0} onClick={this.onDelteComment}>删除</Button>
                     </Col>
                 </Row>
             </Card>
             <Card className="comment_table">
-                <Table dataSource={this.state.commentList} rowSelection={{ ...this.rowSelection }} bordered columns={this.columns} />
+                <Table dataSource={this.state.commentList} loading={loading} pagination={this.pagination()} rowSelection={{ ...this.rowSelection }} bordered columns={this.columns} />
             </Card>
         </div>
 

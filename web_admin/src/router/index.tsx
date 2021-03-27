@@ -5,7 +5,7 @@ import FistScreen from '../views/fistScreen'
 import CommentList from '../views/comment'
 import {
   CoffeeOutlined,
-  AppleOutlined,
+  CommentOutlined,
   FundProjectionScreenOutlined,
   UnorderedListOutlined
 } from "@ant-design/icons";
@@ -24,16 +24,16 @@ const router: IRouters[] = [
     icon: () => <UnorderedListOutlined />,
   },
   {
+    path: '/commentReply',
+    title: "评论回复",
+    components: () => <CommentList />,
+    icon: () => <CommentOutlined  />,
+  },
+  {
     path: '/creatArticle',
     title: "创建文章",
     components: () => <CreatArticle />,
     icon: () => <CoffeeOutlined />,
-  },
-  {
-    path: '/commentReply',
-    title: "评论回复",
-    components: () => <CommentList />,
-    icon: () => <AppleOutlined />,
   },
 ];
 

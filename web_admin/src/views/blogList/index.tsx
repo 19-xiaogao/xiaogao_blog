@@ -1,6 +1,7 @@
 import React from "react";
 
-import { Input, Button, message, Table, Image, Pagination, Switch } from 'antd'
+import { Input, Button, message, Table, Image, Switch } from 'antd'
+import { PaginationProps } from 'antd/es/pagination/Pagination'
 
 import { ColumnsType } from 'antd/es/table';
 
@@ -41,6 +42,19 @@ interface IBlogListState {
 }
 
 export default class BlogList extends React.Component<{}, IBlogListState> {
+  
+  state = {
+    pageNo: 1,
+    pageSize: 10,
+    blogData: [],
+    loading: false,
+    total: 0,
+    title: undefined,
+    blogDetailVisible: false,
+    temporaryText: '',
+    visibleModal: false,
+    ModalData: {}
+  }
   private columns: ColumnsType<BlogData> = [
     {
       title: '标题',
@@ -98,26 +112,15 @@ export default class BlogList extends React.Component<{}, IBlogListState> {
       </div>
     }
   ];
-  state = {
-    pageNo: 1,
-    pageSize: 10,
-    blogData: [],
-    loading: false,
-    total: 0,
-    title: undefined,
-    blogDetailVisible: false,
-    temporaryText: '',
-    visibleModal: false,
-    ModalData: {}
-  }
-
   public async componentDidMount() {
     const { pageNo, pageSize } = this.state
     this.getInitData(pageNo, pageSize)
   }
+
   private blogDetail = (row: any) => {
     this.setState({ blogDetailVisible: true, temporaryText: row })
   }
+
   private switchClick = async (checked: boolean, row: BlogData) => {
     this.setState(() => ({ loading: true }))
     await httpPostUpdateBlog({ id: row.id, show_blog: checked ? '1' : '2' })
@@ -127,22 +130,25 @@ export default class BlogList extends React.Component<{}, IBlogListState> {
   private blogAlter = (row: BlogData) => {
     this.setState({ visibleModal: true, ModalData: row })
   }
+
   private onOk = () => {
     const { pageNo, pageSize } = this.state
     this.getInitData(pageNo, pageSize)
     this.setState({ visibleModal: false })
   }
+
   private oncloseDrawer = () => {
     this.setState({ blogDetailVisible: false, temporaryText: '' })
   }
+
   private async getInitData(pageNo: number, pageSize: number, title?: string) {
     this.setState(() => ({ loading: true }))
     const { data, success } = await httpGetSelectBlog({ pageNo, pageSize, title })
     if (!success) { return message.error('请求错误') }
-    console.log(data);
 
     this.setState({ blogData: this.disposeBlogData(data.list), loading: false, total: data.total })
   }
+
   private disposeBlogData(data: BlogData[]) {
     data.forEach((item, index) => {
       item.key = index
@@ -150,13 +156,16 @@ export default class BlogList extends React.Component<{}, IBlogListState> {
     })
     return data
   }
+
   private changeSelectTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ title: e.target.value })
   }
+
   private selectBlog = () => {
     const { pageNo, pageSize, title } = this.state
     this.getInitData(pageNo, pageSize, title)
   }
+
   private renderHeader = () => {
     return <>
       <span>标题</span>
@@ -164,26 +173,33 @@ export default class BlogList extends React.Component<{}, IBlogListState> {
       <Button type="primary" onClick={this.selectBlog}>查询</Button>
     </>
   }
-  private pagInactionChange = (page: number) => {
-    this.setState({ pageNo: page })
-    this.getInitData(page, 10, this.state.title)
-  }
-  // 渲染table
-  private renderTable = () => {
-    const { loading, blogData } = this.state
-    return <Table bordered columns={this.columns} loading={loading} dataSource={blogData} pagination={false} />
-  }
+
+  private pagination = (): PaginationProps => ({
+    current: this.state.pageNo,
+    total: this.state.total,
+    onChange: (page: number) => {
+      this.setState({ pageNo: page })
+      this.getInitData(page, 10, this.state.title)
+    },
+    showTotal: (total) => <span>共{total}条</span>
+  })
+
   render() {
+    const { loading, blogData } = this.state
     return <div className="blogList_box">
+
       <div className="renderHeader">
         {this.renderHeader()}
       </div>
+
       <div className="BlogList_table">
-        {this.renderTable()}
-        <Pagination current={this.state.pageNo} className="pagination" showTotal={total => `Total ${total} items`} total={this.state.total} onChange={this.pagInactionChange} />
+        <Table bordered columns={this.columns} loading={loading} dataSource={blogData} pagination={this.pagination()} />
       </div>
+
       <Drawer title="博客内容" visible={this.state.blogDetailVisible} context={this.state.temporaryText} onClose={this.oncloseDrawer} />
+      
       {this.state.visibleModal ? <Modal visible={this.state.visibleModal} onOK={this.onOk} onCancel={this.onOk} data={this.state.ModalData} /> : null}
+    
     </div>
   }
 }

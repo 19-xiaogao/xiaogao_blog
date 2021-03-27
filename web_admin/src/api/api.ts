@@ -46,3 +46,17 @@ interface ISearchComment {
 }
 // 查询评论
 export const httpGetGetComment = (params: ISearchComment): AxiosResponse => axios.get('/api/webAdmin/comment/list', { params })
+
+interface IDeleteC {
+    id: number[] | number
+}
+// 删除评论
+export const httpDeleteComment = (params: IDeleteC): AxiosResponse => axios.delete('/api/webAdmin/comment/delete', { data: params })
+
+
+interface IshieldingC {
+    id: number
+    show: string
+}
+export const httpshieldingComment = (data: IshieldingC): AxiosResponse => axios.post('/api/webAdmin/comment/shielding', data)
+
