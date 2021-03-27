@@ -37,6 +37,10 @@ interface IUpdateBlog {
 // 更新blog
 export const httpPostUpdateBlog = (data: IUpdateBlog): AxiosResponse => axios.post('/api/webAdmin/blog/update_blog', data)
 
+interface IDeleteBlog {
+    id: number[]
+}
+export const httpPostDelteBlog = (params: IDeleteBlog): AxiosResponse => axios.delete('/api/webAdmin/blog/delete', { data: params })
 
 interface ISearchComment {
     keyword?: string
@@ -58,5 +62,6 @@ interface IshieldingC {
     id: number
     show: string
 }
+// web 显示和隐藏
 export const httpshieldingComment = (data: IshieldingC): AxiosResponse => axios.post('/api/webAdmin/comment/shielding', data)
 

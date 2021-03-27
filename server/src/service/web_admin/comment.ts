@@ -38,7 +38,8 @@ export const deleteComment = async (options: IDeleteComment) => {
     try {
         return await performSql(sqlStr, params)
     } catch (error) {
-        return error
+        throw error
+
     }
 }
 
@@ -54,7 +55,8 @@ export const shieldingComment = async (options: shieldingC) => {
     try {
         return await performSql(sqlStr, params)
     } catch (error) {
-        return error
+        throw error
+
     }
 }
 

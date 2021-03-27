@@ -207,7 +207,12 @@ class App extends React.Component<IAppProps, IAppState> {
     }
     private renderHomeBlogList = () => {
         const { blogList } = this.props
-        const item = blogList[blogList.length - 1]
+        const item = blogList.length > 0 ? blogList[blogList.length - 1] : {
+            id: 1,
+            createDate: '',
+            content: '',
+            title: ''
+        }
         return <div className={Styles.info}>
             <div className={Styles.time}>{moment(item.createDate).format('YYYY-MM-DD')}</div>
             <div className={Styles.title}>

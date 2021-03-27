@@ -6,9 +6,8 @@ import { writeResult } from "../../utils/result";
 import { selectComment, deleteComment, shieldingComment } from '../../service/web_admin/comment'
 
 
-
 const router = express.Router();
-
+// 获取评论列表
 router.get('/list', (req, res) => {
 
     selectComment(req.query as any, result => {
@@ -20,7 +19,7 @@ router.get('/list', (req, res) => {
         res.send()
     })
 })
-
+//删除评论
 router.delete('/delete', async (req, res) => {
     try {
         const result = await deleteComment(req.body as any)
@@ -32,7 +31,7 @@ router.delete('/delete', async (req, res) => {
         res.send()
     }
 })
-
+// 修改是否显示
 router.post('/shielding', async (req, res) => {
     try {
         const result = await shieldingComment(req.body)

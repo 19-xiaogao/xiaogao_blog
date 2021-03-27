@@ -4,6 +4,8 @@ import { Input, Button, message, Table, Image, Switch } from 'antd'
 import { PaginationProps } from 'antd/es/pagination/Pagination'
 
 import { ColumnsType } from 'antd/es/table';
+import { TableRowSelection } from 'antd/es/table/interface'
+
 
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons'
 
@@ -11,7 +13,7 @@ import Drawer from './components/Drawer'
 
 import Modal from './components/modal'
 
-import { httpGetSelectBlog, httpPostUpdateBlog } from '../../api/api'
+import { httpGetSelectBlog, httpPostUpdateBlog, httpPostDelteBlog } from '../../api/api'
 
 import moment from 'moment'
 
@@ -39,10 +41,11 @@ interface IBlogListState {
   temporaryText: string
   visibleModal: boolean,
   ModalData: any
+  selectRowKeys: React.Key[] | number[]
 }
 
 export default class BlogList extends React.Component<{}, IBlogListState> {
-  
+
   state = {
     pageNo: 1,
     pageSize: 10,
@@ -53,7 +56,8 @@ export default class BlogList extends React.Component<{}, IBlogListState> {
     blogDetailVisible: false,
     temporaryText: '',
     visibleModal: false,
-    ModalData: {}
+    ModalData: {},
+    selectRowKeys: []
   }
   private columns: ColumnsType<BlogData> = [
     {
@@ -150,8 +154,8 @@ export default class BlogList extends React.Component<{}, IBlogListState> {
   }
 
   private disposeBlogData(data: BlogData[]) {
-    data.forEach((item, index) => {
-      item.key = index
+    data.forEach((item) => {
+      item.key = item.id
       item.createDate = moment(item.createDate).format('YYYY-MM-DD HH:MM:SS')
     })
     return data
@@ -160,6 +164,7 @@ export default class BlogList extends React.Component<{}, IBlogListState> {
   private changeSelectTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ title: e.target.value })
   }
+
 
   private selectBlog = () => {
     const { pageNo, pageSize, title } = this.state
@@ -171,7 +176,14 @@ export default class BlogList extends React.Component<{}, IBlogListState> {
       <span>标题</span>
       <Input placeholder="请输入文章的标题" width="100px" value={this.state.title} onChange={this.changeSelectTitle} />
       <Button type="primary" onClick={this.selectBlog}>查询</Button>
+      <Button type="primary" style={{ marginLeft: '10px' }} onClick={this.onDeleteComment} >删除</Button>
     </>
+  }
+
+  private onDeleteComment = async () => {
+    httpPostDelteBlog({ id: this.state.selectRowKeys })
+    message.success('删除成功')
+    this.getInitData(this.state.pageNo, 10, this.state.title)
   }
 
   private pagination = (): PaginationProps => ({
@@ -183,6 +195,12 @@ export default class BlogList extends React.Component<{}, IBlogListState> {
     },
     showTotal: (total) => <span>共{total}条</span>
   })
+  private rowSelection: TableRowSelection<BlogData> = {
+    onChange: (selectedRowKeys) => {
+      this.setState({ selectRowKeys: selectedRowKeys })
+    },
+
+  };
 
   render() {
     const { loading, blogData } = this.state
@@ -193,13 +211,13 @@ export default class BlogList extends React.Component<{}, IBlogListState> {
       </div>
 
       <div className="BlogList_table">
-        <Table bordered columns={this.columns} loading={loading} dataSource={blogData} pagination={this.pagination()} />
+        <Table bordered columns={this.columns} loading={loading} rowSelection={{ ...this.rowSelection }} dataSource={blogData} pagination={this.pagination()} />
       </div>
 
       <Drawer title="博客内容" visible={this.state.blogDetailVisible} context={this.state.temporaryText} onClose={this.oncloseDrawer} />
-      
+
       {this.state.visibleModal ? <Modal visible={this.state.visibleModal} onOK={this.onOk} onCancel={this.onOk} data={this.state.ModalData} /> : null}
-    
+
     </div>
   }
 }

@@ -30,7 +30,7 @@ export interface IUserData {
 export interface subscribeBlog {
   email: string
 }
-
+// 邮箱验证
 export interface IVerify {
   VerificationCode: number
   id: string
@@ -45,4 +45,8 @@ export interface IComment {
   commentEmail: string
   createTime: string
   context: string
+}
+
+export interface IImg {
+  imgUrl: string
 }

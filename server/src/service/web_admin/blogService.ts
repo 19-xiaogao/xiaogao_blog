@@ -1,12 +1,29 @@
+
 import createConnection from "../../db";
 import { performSql } from "../../db/performSql";
-
+// import { fsDeleteImgs } from '../../utils/fs'
+import { IImg } from '../../types/index'
+import fs from 'fs'
+import path from 'path'
 interface InsertBlogOptions {
   title: string; // 标题
   content: string; // 内容
   createDate: string; // 发布日期
   imgUrl: string;
   number_words: number
+}
+const fsDeleteImgs = async (urls: IImg[]) => {
+
+  try {
+    urls.forEach(item => {
+      const splitImgUrl = item.imgUrl.split('/')
+      const lastSuffix = splitImgUrl[splitImgUrl.length - 1]
+      const filePath = path.join(__dirname, '../../images', lastSuffix)
+      fs.unlinkSync(filePath)
+    })
+  } catch (error) {
+    throw error
+  }
 }
 
 // 插入博客
@@ -101,11 +118,38 @@ export const updateBlog = async (options: IUpdateBlog, success: (res) => void, e
   }
 }
 
-interface IDeleteBlog { }
+interface IDeleteBlog {
+  id: number[] // 博客id
 
-// 需要同步删除博客,博客的图片,博客对应的评论
-export const deleteBlog = (options: IDBDatabase) => {
-  const sqlStr = 'delete '
+}
+
+export const deleteBlog = async (options: IDeleteBlog) => {
+
+  const params = [options.id]
+  try {
+    // 查找博客的图片地址
+    const selectSqlStr = 'select imgUrl from blog where id in(?)';
+
+    const selectImgRespnse = await performSql(selectSqlStr, params) as IImg[]
+
+
+    fsDeleteImgs(selectImgRespnse)
+
+
+    const sqlStr = 'DELETE from blog WHERE id in (?);';
+
+    await performSql(sqlStr, params)
+
+    // 删除博客对应评论
+    const deleteCommentSql = 'delete from comment WHERE articleId in (?);'
+
+
+
+    await performSql(deleteCommentSql, params)
+
+  } catch (error) {
+    throw error
+  }
 }
 
 // 订阅
