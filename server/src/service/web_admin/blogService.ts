@@ -13,7 +13,6 @@ interface InsertBlogOptions {
   number_words: number
 }
 const fsDeleteImgs = async (urls: IImg[]) => {
-
   try {
     urls.forEach(item => {
       const splitImgUrl = item.imgUrl.split('/')
