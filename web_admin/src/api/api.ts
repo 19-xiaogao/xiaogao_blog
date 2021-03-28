@@ -67,4 +67,13 @@ interface IshieldingC {
 export const httpshieldingComment = (data: IshieldingC): AxiosResponse => axios.post('/api/webAdmin/comment/shielding', data)
 
 
+export interface ISubParams {
+    pageNo: number
+    pageSize: number
+    email?: string
+}
 
+//订阅列表
+export const getSubscribeLst = (params: ISubParams): AxiosResponse => axios.get('/api/webAdmin/subscribe/list', { params })
+
+export const delteSubscribeList = (params:IDeleteC) : AxiosResponse => axios.delete('/api/webAdmin/subscribe/delete', { data: params })

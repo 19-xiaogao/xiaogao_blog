@@ -199,7 +199,6 @@ export default class BlogList extends React.Component<{}, IBlogListState> {
     onChange: (selectedRowKeys) => {
       this.setState({ selectRowKeys: selectedRowKeys })
     },
-
   };
 
   render() {

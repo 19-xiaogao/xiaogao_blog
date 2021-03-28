@@ -55,5 +55,10 @@ export interface Isubscribe {
   id: number
   createTime: string
   email: string
-  
+
+}
+
+export interface IListResonse<T> {
+  list: T
+  total: number
 }

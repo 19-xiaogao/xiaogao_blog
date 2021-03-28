@@ -5,7 +5,7 @@ import blogRouter from "./routers/web_admin/blogList";
 import fileRouter from './routers/web_admin/updateFile'
 import loginRouter from './routers/web_admin/login'
 import commentRouter from './routers/web_admin/comment'
-
+import subscribeRouter from './routers/web_admin/subscribe'
 import webRouter from './routers/web/web'
 
 import { SSHKEY } from './auth/index'
@@ -72,6 +72,6 @@ app.all('/api/webAdmin/*', (req, res, next) => {
   }
 })
 app.use("/api/webAdmin/blog", blogRouter);
-app.use('/api/webAdmin/comment',commentRouter)
-
+app.use('/api/webAdmin/comment', commentRouter)
+app.use('/api/webAdmin/subscribe', subscribeRouter)
 app.listen(post, () => console.log(`runling ${host}:${post}`));

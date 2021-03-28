@@ -61,3 +61,4 @@ export const blog_createComment = (params: ICreateComment): Response => http.pos
 
 // 获取博客评论
 export const get_blogComment = (params: { id: number }): Response => http.get('/api/web/blog_comment', { params })
+
