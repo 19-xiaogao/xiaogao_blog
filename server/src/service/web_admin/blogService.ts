@@ -2,16 +2,10 @@
 import createConnection from "../../db";
 import { performSql } from "../../db/performSql";
 // import { fsDeleteImgs } from '../../utils/fs'
-import { IImg } from '../../types/index'
+import { IImg, InsertBlogOptions } from '../../types/index'
 import fs from 'fs'
 import path from 'path'
-interface InsertBlogOptions {
-  title: string; // 标题
-  content: string; // 内容
-  createDate: string; // 发布日期
-  imgUrl: string;
-  number_words: number
-}
+
 const fsDeleteImgs = async (urls: IImg[]) => {
   try {
     urls.forEach(item => {
@@ -94,6 +88,7 @@ interface IUpdateBlog {
   show_blog?: string
   id: number
 }
+
 // 更新文章
 export const updateBlog = async (options: IUpdateBlog, success: (res) => void, error: (error: any) => void) => {
   if (options.show_blog) {

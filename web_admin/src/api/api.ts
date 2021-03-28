@@ -76,4 +76,5 @@ export interface ISubParams {
 //订阅列表
 export const getSubscribeLst = (params: ISubParams): AxiosResponse => axios.get('/api/webAdmin/subscribe/list', { params })
 
+// 删除订阅用户
 export const delteSubscribeList = (params:IDeleteC) : AxiosResponse => axios.delete('/api/webAdmin/subscribe/delete', { data: params })

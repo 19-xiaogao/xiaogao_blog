@@ -13,12 +13,12 @@ export interface personal {
   email_pass: string
 }
 export interface IUser {
-  email: string,
+  email: string | string[],
   url?: string,
   title?: string
   name?: string
   authNumber?: string
-  id: string
+  id?: string
 }
 
 // 涉及邮箱发送 用户的信息
@@ -61,4 +61,21 @@ export interface Isubscribe {
 export interface IListResonse<T> {
   list: T
   total: number
+}
+
+export interface InsertBlogOptions {
+  title: string; // 标题
+  content: string; // 内容
+  createDate: string; // 发布日期
+  imgUrl: string;
+  number_words: number
+}
+
+export interface blog {
+  title: string; // 标题
+  content: string; // 内容
+  createDate: string; // 发布日期
+  imgUrl: string;
+  number_words: number,
+  id: number
 }

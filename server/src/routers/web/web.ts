@@ -92,7 +92,7 @@ router.post('/subscribe_email', async (req, res) => {
 
             res.write(writeResult({ success: false, message: ResponseState.success, data: '你已经订阅过了' }))
             res.send()
-
+            return
         }
 
         const randomNumber = createSixNumber();
