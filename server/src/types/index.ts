@@ -50,3 +50,10 @@ export interface IComment {
 export interface IImg {
   imgUrl: string
 }
+
+export interface Isubscribe {
+  id: number
+  createTime: string
+  email: string
+  
+}

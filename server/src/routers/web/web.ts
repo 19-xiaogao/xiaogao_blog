@@ -111,7 +111,7 @@ router.post('/subscribe_email', async (req, res) => {
         if (verifyCodeResponse && emailResponse) {
 
 
-            res.write(writeResult({ success: true, message: ResponseState.success, data: '邮箱发送成功' }))
+            res.write(writeResult({ success: true, message: ResponseState.success, data: '邮箱发送成功,请注意查收。' }))
             res.end()
 
         } else {
@@ -145,7 +145,7 @@ router.post('/subscribe_verify', async (req, res) => {
         return
     }
 
-    const insetResponse = await insetSubscribe(email)
+    const insetResponse = await insetSubscribe({ email, createTime: new Date() })
 
 
 

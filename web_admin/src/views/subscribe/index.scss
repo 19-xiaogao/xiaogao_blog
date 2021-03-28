@@ -1,0 +1,18 @@
+.subscribeBox {
+    padding: 5px;
+
+    .flex {
+        display: flex;
+        align-items: center;
+
+        span {
+            width: 60px;
+            display: inline-block;
+            text-align: center;
+        }
+
+        input {
+            width: 80%;
+        }
+    }
+}

@@ -7,13 +7,17 @@ export const selectSubscribeBlog = (email: string) => {
     return performSql(sqlStr, options)
 }
 
-export const insetSubscribe = (email: string) => {
+interface ISub {
+    email: string
+    createTime: Date
+}
+export const insetSubscribe = (options: ISub) => {
 
-    const sqlStr = 'INSERT INTO subscribeBlog (email) VALUES (?);'
+    const sqlStr = 'INSERT INTO subscribeBlog (email,createTime) VALUES (?,?);'
 
-    const options = [email];
+    const params = [options.email, options.createTime];
 
-    return performSql(sqlStr, options)
+    return performSql(sqlStr, params)
 
 }
 

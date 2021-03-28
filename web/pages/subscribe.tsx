@@ -44,8 +44,10 @@ const Subscribe: React.FC = () => {
         const { data, success } = await subscribe_email({ type: 1, email: email })
 
         if (!success) message.warn(data)
-        
+
         message.success(data)
+        setUserEmail('')
+
     }
     return <div className={Styles.content}>
 
@@ -65,7 +67,7 @@ const Subscribe: React.FC = () => {
                         </p>
             <div className={Styles.inputBox}>
 
-                <input type="text" placeholder="Your email address" onChange={userChange} />
+                <input type="text" placeholder="Your email address" value={email} onChange={userChange} />
                 <Texty className={Styles.warnText}>{warnTextTow}</Texty>
                 <Texty className={Styles.warnText}>{warnTextNo}</Texty>
                 <button onClick={subscribe}>subscribe</button>

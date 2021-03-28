@@ -1,13 +1,17 @@
-import { IRouters } from "../types/routerType";
 import CreatArticle from "../views/creatArticle";
 import BlogList from '../views/blogList'
 import FistScreen from '../views/fistScreen'
 import CommentList from '../views/comment'
+import Subscribe from '../views/subscribe'
+
+import { IRouters } from "../types/routerType";
+
 import {
   CoffeeOutlined,
   CommentOutlined,
   FundProjectionScreenOutlined,
-  UnorderedListOutlined
+  UnorderedListOutlined,
+  UsergroupAddOutlined
 } from "@ant-design/icons";
 
 const router: IRouters[] = [
@@ -27,7 +31,13 @@ const router: IRouters[] = [
     path: '/commentReply',
     title: "评论回复",
     components: () => <CommentList />,
-    icon: () => <CommentOutlined  />,
+    icon: () => <CommentOutlined />,
+  },
+  {
+    path: '/subscribe',
+    title: "订阅列表",
+    components: () => <Subscribe />,
+    icon: () => <UsergroupAddOutlined />
   },
   {
     path: '/creatArticle',
