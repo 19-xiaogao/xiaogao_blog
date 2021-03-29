@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { HaprySvg, Happy2Svg, Happy3Svg, Happy4Svg } from '../components/svg/svg';
+import { HappySvg, Happy2Svg, Happy3Svg, Happy4Svg } from '../components/svg/svg';
 
 import Header from '../components/Header'
 import { headerType } from '../types/response'
@@ -22,7 +22,7 @@ const MessageBoard: React.FC = () => {
             <div className={Styles.warnMeeage} id='warnMessage'>
                 <span className={Styles.xx} onClick={onclonse}>×</span>
                 <p>
-                    <HaprySvg />
+                    <HappySvg />
                     <span>留下你的留言</span>
                 </p>
                 <p>
