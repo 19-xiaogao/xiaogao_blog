@@ -81,3 +81,6 @@ export const deleteSubscribeList = (params: IDeleteC): AxiosResponse => axios.de
 
 // 给订阅发送邮箱
 export const postSendSubscribeEmail = (): AxiosResponse => axios.post('/api/webAdmin/email/sendEmail')
+
+//获取所有博客
+export const httpGetAllBlog = (): AxiosResponse => axios.get('/api/webAdmin/blog/all')

@@ -7,6 +7,7 @@ interface IVerify {
     verifyResponse: (flg: boolean) => void
     close: () => void
 }
+
 const PuzzleVerify: React.FC<IVerify> = (props) => {
 
     const sliderBtn = useRef<any>(null)

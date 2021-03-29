@@ -1,7 +1,7 @@
 import express from "express";
 import { ResponseState } from "../../types/enum";
 import { writeResult } from "../../utils/result";
-import { insertBlog, selectBlog, updateBlog, deleteBlog } from "../../service/web_admin/blogService";
+import { insertBlog, selectBlog, updateBlog, deleteBlog, getAllBlogService } from "../../service/web_admin/blogService";
 
 const router = express.Router();
 
@@ -37,7 +37,7 @@ router.get('/list_blog', (req, res) => {
 router.post('/update_blog', (req, res) => {
   res.writeHead(200, { 'Content-Type': ResponseState.ContentType })
   updateBlog(req.body, (result) => {
-   
+
     res.write(writeResult({ success: true, message: ResponseState.success, data: '' }))
     res.end()
   }, (err) => {
@@ -53,6 +53,19 @@ router.delete('/delete', async (req, res) => {
   try {
     await deleteBlog(req.body)
     res.write(writeResult({ success: true, message: ResponseState.success, data: '' }))
+    res.end()
+  } catch (error) {
+    res.write(writeResult({ success: false, message: ResponseState.failed, data: error }))
+    res.send()
+  }
+})
+
+// 获取所有博客
+router.get('/all', async (req, res) => {
+  res.writeHead(200, { 'Content-Type': ResponseState.ContentType })
+  try {
+    const result = await getAllBlogService() as any[]
+    res.write(writeResult({ success: true, message: ResponseState.success, data: result }))
     res.end()
   } catch (error) {
     res.write(writeResult({ success: false, message: ResponseState.failed, data: error }))

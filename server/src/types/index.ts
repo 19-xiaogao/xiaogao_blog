@@ -51,14 +51,14 @@ export interface IImg {
   imgUrl: string
 }
 
-export interface Isubscribe {
+export interface Subscribe {
   id: number
   createTime: string
   email: string
 
 }
 
-export interface IListResonse<T> {
+export interface IListResponse<T> {
   list: T
   total: number
 }
