@@ -77,7 +77,7 @@ export interface ISubParams {
 export const getSubscribeLst = (params: ISubParams): AxiosResponse => axios.get('/api/webAdmin/subscribe/list', { params })
 
 // 删除订阅用户
-export const deleteSubscribeList = (params:IDeleteC) : AxiosResponse => axios.delete('/api/webAdmin/subscribe/delete', { data: params })
+export const deleteSubscribeList = (params: IDeleteC): AxiosResponse => axios.delete('/api/webAdmin/subscribe/delete', { data: params })
 
 // 给订阅发送邮箱
-export const postSendSubscribeEmail = ():AxiosResponse => axios.post('/api/webAdmin/email/sendEmail')
+export const postSendSubscribeEmail = (): AxiosResponse => axios.post('/api/webAdmin/email/sendEmail')
