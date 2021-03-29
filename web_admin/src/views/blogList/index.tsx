@@ -13,7 +13,7 @@ import Drawer from './components/Drawer'
 
 import Modal from './components/modal'
 
-import { httpGetSelectBlog, httpPostUpdateBlog, httpPostDelteBlog } from '../../api/api'
+import { httpGetSelectBlog, httpPostUpdateBlog, httpPostDeleteBlog } from '../../api/api'
 
 import moment from 'moment'
 
@@ -181,7 +181,7 @@ export default class BlogList extends React.Component<{}, IBlogListState> {
   }
 
   private onDeleteComment = async () => {
-    httpPostDelteBlog({ id: this.state.selectRowKeys })
+    httpPostDeleteBlog({ id: this.state.selectRowKeys })
     message.success('删除成功')
     this.getInitData(this.state.pageNo, 10, this.state.title)
   }

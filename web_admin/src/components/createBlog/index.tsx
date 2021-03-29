@@ -3,7 +3,7 @@ import Styles from './index.module.scss'
 import { Row, Col, Input, Button, message, DatePicker, Space } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import moment, { Moment } from 'moment';
-import { httpPostInsertBlog, httpPostUpdateBlog } from '../../api/api'
+import { httpPostInsertBlog, httpPostUpdateBlog, postSendSubscribeEmail } from '../../api/api'
 import MarkDowns from '../MdEditor'
 import UpdateImage from '../updateImage'
 interface ICreateBlogProps {
@@ -58,7 +58,9 @@ class CreateBlog extends React.PureComponent<ICreateBlogProps, ICreateArticleSta
     private updateBlog = async () => {
         const { title, imgUrl, createTime, updateContext } = this.state
         if (this.props.WhetherToCreate) {
+            postSendSubscribeEmail()
             const { success } = await httpPostInsertBlog({ title, content: updateContext, imgUrl, createDate: moment(createTime).format(dateFormat), number_words: updateContext ? updateContext.length : undefined })
+
             if (!success) { return message.error('创建失败') }
             message.success('创建成功')
         } else {

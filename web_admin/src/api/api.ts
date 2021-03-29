@@ -41,7 +41,7 @@ interface IDeleteBlog {
     id: number[]
 }
 // 删除博客
-export const httpPostDelteBlog = (params: IDeleteBlog): AxiosResponse => axios.delete('/api/webAdmin/blog/delete', { data: params })
+export const httpPostDeleteBlog = (params: IDeleteBlog): AxiosResponse => axios.delete('/api/webAdmin/blog/delete', { data: params })
 
 interface ISearchComment {
     keyword?: string
@@ -59,12 +59,12 @@ interface IDeleteC {
 export const httpDeleteComment = (params: IDeleteC): AxiosResponse => axios.delete('/api/webAdmin/comment/delete', { data: params })
 
 
-interface IshieldingC {
+interface ShieldingC {
     id: number
     show: string
 }
 // 显示和隐藏 评论
-export const httpshieldingComment = (data: IshieldingC): AxiosResponse => axios.post('/api/webAdmin/comment/shielding', data)
+export const httpshieldingComment = (data: ShieldingC): AxiosResponse => axios.post('/api/webAdmin/comment/shielding', data)
 
 
 export interface ISubParams {
@@ -77,4 +77,7 @@ export interface ISubParams {
 export const getSubscribeLst = (params: ISubParams): AxiosResponse => axios.get('/api/webAdmin/subscribe/list', { params })
 
 // 删除订阅用户
-export const delteSubscribeList = (params:IDeleteC) : AxiosResponse => axios.delete('/api/webAdmin/subscribe/delete', { data: params })
+export const deleteSubscribeList = (params:IDeleteC) : AxiosResponse => axios.delete('/api/webAdmin/subscribe/delete', { data: params })
+
+// 给订阅发送邮箱
+export const postSendSubscribeEmail = ():AxiosResponse => axios.post('/api/webAdmin/email/sendEmail')
