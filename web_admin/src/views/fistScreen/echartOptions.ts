@@ -81,6 +81,7 @@ export const LineOptions: EChartsOption = {
         }
     },
     legend: {
+        // align
         data: ['喜欢量', '查看量'],
         orient: 'horizontal',
         bottom: '2%',
