@@ -16,10 +16,10 @@ export const subscribeService = async (options: ISList) => {
 
             const totalResponse = await performSql(totalMysql, [options.email]) as { total: number }[]
 
-            const subscribeRespnse = await performSql(sqlStr, [options.email, (options.pageNo - 1) * options.pageSize, options.pageSize])
+            const subscribeResponse = await performSql(sqlStr, [options.email, (options.pageNo - 1) * options.pageSize, options.pageSize])
 
             return {
-                list: subscribeRespnse,
+                list: subscribeResponse,
                 total: totalResponse[0].total
             }
 
@@ -28,9 +28,9 @@ export const subscribeService = async (options: ISList) => {
 
             const totalResponse = await performSql(totalMysql) as { total: number }[]
 
-            const subscribeRespnse = await performSql(sqlStr, [(options.pageNo - 1) * options.pageSize, options.pageSize])
+            const subscribeResponse = await performSql(sqlStr, [(options.pageNo - 1) * options.pageSize, options.pageSize])
             return {
-                list: subscribeRespnse,
+                list: subscribeResponse,
                 total: totalResponse[0].total
             }
         }
@@ -43,10 +43,10 @@ export const subscribeService = async (options: ISList) => {
 interface IDService {
     id: number[]
 }
-export const deSubService = async (optinos: IDService) => {
+export const deSubService = async (options: IDService) => {
     try {
         const strSql = 'DELETE from subscribeblog WHERE id in (?);';
-        await performSql(strSql, [optinos.id])
+        await performSql(strSql, [options.id])
     } catch (error) {
         throw error
     }

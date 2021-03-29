@@ -27,7 +27,7 @@ const BlogDetail: React.FC<IProps> = (props) => {
 
     const [likeTody, setLikeTody] = useState<boolean>(false)
 
-    const [scrollWidth, setScollWidth] = useState<string>('0%')
+    const [scrollWidth, setScrollWidth] = useState<string>('0%')
 
     const [commentName, setCommentName] = useState<string>('')
 
@@ -60,7 +60,7 @@ const BlogDetail: React.FC<IProps> = (props) => {
 
         const absolutely = (window.scrollY / section.scrollHeight) * 100
 
-        setScollWidth(absolutely.toFixed(2) + '%')
+        setScrollWidth(absolutely.toFixed(2) + '%')
     }
 
     const disposeLikeTody = () => {

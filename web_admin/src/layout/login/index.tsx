@@ -33,7 +33,6 @@ class Login extends Component<ILoginProps, {}> {
   render() {
     return (
       <div className={Styles.login}>
-        {/* <video src="/video/bg.mp4"></video> */}
         <div className={Styles.login_box}>
           <input type="text" name="username" placeholder="username" onChange={this.inputChange} />
           <input type="password" name='password' placeholder="Password" onChange={this.inputChange} />

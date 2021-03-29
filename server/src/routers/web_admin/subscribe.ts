@@ -4,7 +4,7 @@ import { subscribeService, deSubService } from '../../service/web_admin/subscrib
 
 import { writeResult } from "../../utils/result";
 import { ResponseState } from "../../types/enum";
-import { Isubscribe, IListResonse } from '../../types/index'
+import { Subscribe, IListResponse } from '../../types/index'
 
 
 
@@ -13,7 +13,7 @@ const router = express.Router();
 // 获取订阅列表
 router.get('/list', async (req, res) => {
     try {
-        const result = await subscribeService(req.query as any) as IListResonse<Isubscribe>
+        const result = await subscribeService(req.query as any) as IListResponse<Subscribe>
         res.writeHead(200, { 'Content-Type': ResponseState.ContentType })
         res.write(writeResult({ success: true, message: ResponseState.success, data: result }))
         res.end()

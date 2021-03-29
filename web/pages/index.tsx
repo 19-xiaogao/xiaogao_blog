@@ -19,7 +19,7 @@ interface IAppState {
     fatherBox: {
         [props: string]: string
     }
-    serccenHeight: number
+    screenHeight: number
     imgBoxStyle: {
         [props: string]: string
     }
@@ -44,7 +44,7 @@ class App extends React.Component<IAppProps, IAppState> {
             imgBoxStyle: {},
             navHied: false,
             loadingMore: false,
-            serccenHeight: 0,
+            screenHeight: 0,
             blogList: []
         }
     }
@@ -66,7 +66,7 @@ class App extends React.Component<IAppProps, IAppState> {
         const width = document.body.clientWidth;
         const height = document.body.clientHeight;
         const { featherBox, imgBoxStyle } = this.calculateFatherBox(width, height)
-        this.setState({ fatherBox: featherBox, serccenHeight: height, imgBoxStyle: imgBoxStyle })
+        this.setState({ fatherBox: featherBox, screenHeight: height, imgBoxStyle: imgBoxStyle })
     }
 
     private calculateFatherBox(w, h) {
@@ -89,10 +89,10 @@ class App extends React.Component<IAppProps, IAppState> {
             marginLeft: - 0.5 * x + 'px',
             marginTop: - 0.5 * y + 'px'
         }
-        const imgBoxStyle = this.claculateBox(_w + x, _h + y)
+        const imgBoxStyle = this.calculateBox(_w + x, _h + y)
         return { featherBox, imgBoxStyle }
     }
-    private claculateBox(w, h) {
+    private calculateBox(w, h) {
         const width = parseInt(w),
             height = parseInt(h),
             ratio = 1080 / 1920,
@@ -229,7 +229,7 @@ class App extends React.Component<IAppProps, IAppState> {
         return <div className={Styles.container}>
             <Helmet title=" home | 小膏" />
             <div className={Styles.home} >
-                <div ref={this.scene} className={Styles.scene} style={{ height: this.state.serccenHeight + 'px' }} >
+                <div ref={this.scene} className={Styles.scene} style={{ height: this.state.screenHeight + 'px' }} >
                     <div data-depth="0.4" className={Styles.bg} style={this.state.fatherBox} >
                         <img src='/image/bg.png' style={this.state.imgBoxStyle} />
                     </div>

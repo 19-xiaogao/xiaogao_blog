@@ -2,7 +2,7 @@ import React from 'react'
 import './index.scss'
 import moment from 'moment'
 
-import { getSubscribeLst, ISubParams, delteSubscribeList } from '../../api/api'
+import { getSubscribeLst, ISubParams, deleteSubscribeList } from '../../api/api'
 
 import { Card, Row, Col, Input, Button, message, Table } from 'antd'
 
@@ -10,24 +10,24 @@ import { ColumnsType } from 'antd/es/table';
 import { TableRowSelection } from 'antd/es/table/interface'
 import { PaginationProps } from 'antd/es/pagination/Pagination'
 
-export interface Isubscribe {
+export interface ISubscribe {
     id: number
     createTime: string
     email: string
     key: number
 }
 
-interface ISbuscribeState {
+interface ISubscribeState {
     pageNo: number
     pageSize: number
     loading: boolean
-    subscribeData: Isubscribe[]
+    subscribeData: ISubscribe[]
     total: number
     selectRowKeys: React.Key[] | number[]
     queryEmail: string | undefined
 
 }
-class Subscribe extends React.Component<{}, ISbuscribeState> {
+class Subscribe extends React.Component<{}, ISubscribeState> {
 
     state = {
         pageNo: 1,
@@ -38,7 +38,7 @@ class Subscribe extends React.Component<{}, ISbuscribeState> {
         selectRowKeys: [],
         queryEmail: undefined
     }
-    private columns: ColumnsType<Isubscribe> = [
+    private columns: ColumnsType<ISubscribe> = [
         {
             title: 'id',
             align: 'center',
@@ -69,7 +69,7 @@ class Subscribe extends React.Component<{}, ISbuscribeState> {
         showTotal: (total) => <span>共{total}条</span>
     })
 
-    private rowSelection: TableRowSelection<Isubscribe> = {
+    private rowSelection: TableRowSelection<ISubscribe> = {
         onChange: (selectedRowKeys) => {
             this.setState({ selectRowKeys: selectedRowKeys })
         },
@@ -89,7 +89,7 @@ class Subscribe extends React.Component<{}, ISbuscribeState> {
 
         this.setState({ loading: false, subscribeData: this.disposeBlogData(data.list), total: data.total })
     }
-    private disposeBlogData(data: Isubscribe[]) {
+    private disposeBlogData(data: ISubscribe[]) {
         data.forEach((item) => {
             item.key = item.id
         })
@@ -102,7 +102,7 @@ class Subscribe extends React.Component<{}, ISbuscribeState> {
     }
 
     private deleteSubscribe = async () => {
-        const { success } = await delteSubscribeList({ id: this.state.selectRowKeys })
+        const { success } = await deleteSubscribeList({ id: this.state.selectRowKeys })
         if (!success) return message.warn('删除失败')
         message.success('删除成功')
         const { pageNo, pageSize } = this.state

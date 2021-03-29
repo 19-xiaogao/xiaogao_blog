@@ -1,12 +1,11 @@
 
 import createConnection from "../../db";
 import { performSql } from "../../db/performSql";
-// import { fsDeleteImgs } from '../../utils/fs'
 import { IImg, InsertBlogOptions } from '../../types/index'
 import fs from 'fs'
 import path from 'path'
 
-const fsDeleteImgs = async (urls: IImg[]) => {
+const fsDeleteImage = async (urls: IImg[]) => {
   try {
     urls.forEach(item => {
       const splitImgUrl = item.imgUrl.split('/')
@@ -116,18 +115,19 @@ interface IDeleteBlog {
   id: number[] // 博客id
 
 }
-
+// 删除博客
 export const deleteBlog = async (options: IDeleteBlog) => {
 
   const params = [options.id]
   try {
+
     // 查找博客的图片地址
     const selectSqlStr = 'select imgUrl from blog where id in(?)';
 
-    const selectImgRespnse = await performSql(selectSqlStr, params) as IImg[]
+    const selectImgResponse = await performSql(selectSqlStr, params) as IImg[]
 
 
-    fsDeleteImgs(selectImgRespnse)
+    fsDeleteImage(selectImgResponse)
 
 
     const sqlStr = 'DELETE from blog WHERE id in (?);';
@@ -146,4 +146,12 @@ export const deleteBlog = async (options: IDeleteBlog) => {
   }
 }
 
-// 订阅
+// 获取所有博客
+export const getAllBlogService = async () => {
+  const sqlStr = 'select * from blog;'
+  try {
+    return await performSql(sqlStr)
+  } catch (error) {
+    throw error
+  }
+}

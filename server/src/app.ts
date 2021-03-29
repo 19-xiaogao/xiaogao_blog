@@ -6,6 +6,8 @@ import fileRouter from './routers/web_admin/updateFile'
 import loginRouter from './routers/web_admin/login'
 import commentRouter from './routers/web_admin/comment'
 import subscribeRouter from './routers/web_admin/subscribe'
+import sendEmailRouter from './routers/web_admin/email'
+
 import webRouter from './routers/web/web'
 
 import { SSHKEY } from './auth/index'
@@ -22,7 +24,7 @@ const post = process.env.POST || 3003;
  * 3001 web
  * 3003 server
  */
-const originList = ['http://localhost:3002', 'http://localhost:3000'];
+const originList = ['http://localhost:3002', 'http://localhost:3001'];
 // 设置跨域
 const corsOptionsDelegate = (req, callback) => {
   let corsOptions;
@@ -37,6 +39,7 @@ const corsOptionsDelegate = (req, callback) => {
   }
   callback(null, corsOptions);
 }
+
 app.all('*', cors(corsOptionsDelegate), (req, res, next) => {
   if (req.method.toLowerCase() === 'options') {
     res.sendStatus(200)
@@ -71,7 +74,10 @@ app.all('/api/webAdmin/*', (req, res, next) => {
     res.send()
   }
 })
+
 app.use("/api/webAdmin/blog", blogRouter);
-app.use('/api/webAdmin/comment', commentRouter)
-app.use('/api/webAdmin/subscribe', subscribeRouter)
-app.listen(post, () => console.log(`runling ${host}:${post}`));
+app.use('/api/webAdmin/comment', commentRouter);
+app.use('/api/webAdmin/subscribe', subscribeRouter);
+app.use('/api/webAdmin/email', sendEmailRouter);
+
+app.listen(post, () => console.log(`running ${host}:${post}`));

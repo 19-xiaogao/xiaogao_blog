@@ -3,7 +3,7 @@ import Styles from './index.module.scss'
 import { Row, Col, Input, Button, message, DatePicker, Space } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import moment, { Moment } from 'moment';
-import { httpPostInsertBlog, httpPostUpdateBlog } from '../../api/api'
+import { httpPostInsertBlog, httpPostUpdateBlog, postSendSubscribeEmail } from '../../api/api'
 import MarkDowns from '../MdEditor'
 import UpdateImage from '../updateImage'
 interface ICreateBlogProps {
@@ -20,6 +20,7 @@ interface ICreateArticleState {
     imgUrl: string | undefined
     title: string | undefined
     clearImage: boolean
+    loading: boolean
 }
 const dateFormat = 'YYYY-MM-DD mm:ss';
 class CreateBlog extends React.PureComponent<ICreateBlogProps, ICreateArticleState> {
@@ -29,7 +30,8 @@ class CreateBlog extends React.PureComponent<ICreateBlogProps, ICreateArticleSta
         createTime: moment(this.props.createTime),
         imgUrl: this.props.imgUrl,
         title: this.props.title,
-        clearImage: false
+        clearImage: false,
+        loading: false
     }
     private titleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         this.setState({ title: e.target.value })
@@ -57,13 +59,15 @@ class CreateBlog extends React.PureComponent<ICreateBlogProps, ICreateArticleSta
     }
     private updateBlog = async () => {
         const { title, imgUrl, createTime, updateContext } = this.state
+        this.setState({ loading: true })
         if (this.props.WhetherToCreate) {
+
             const { success } = await httpPostInsertBlog({ title, content: updateContext, imgUrl, createDate: moment(createTime).format(dateFormat), number_words: updateContext ? updateContext.length : undefined })
+
             if (!success) { return message.error('创建失败') }
             message.success('创建成功')
+            postSendSubscribeEmail().then(res => message.success('邮件发送成功')).catch(err => message.error('邮件发送失败'))
         } else {
-            console.log(this.props.WhetherToCreate);
-
             const { success: successful } = await httpPostUpdateBlog({ title, content: updateContext, imgUrl, id: this.props.id ? this.props.id : 0 })
             if (!successful) { return message.error('修改失败') }
             message.success('修改成功')
@@ -73,7 +77,8 @@ class CreateBlog extends React.PureComponent<ICreateBlogProps, ICreateArticleSta
             createTime: '',
             imgUrl: '',
             title: '',
-            clearImage: true
+            clearImage: true,
+            loading: false
         })
     }
     public componentWillUnmount() {
@@ -113,7 +118,7 @@ class CreateBlog extends React.PureComponent<ICreateBlogProps, ICreateArticleSta
                     </Space>
                 </Col>
                 <Col className={Styles.gutter_row} span={6}>
-                    <Button size='middle' type='primary' onClick={this.updateBlog}>
+                    <Button size='middle' type='primary' onClick={this.updateBlog} loading={this.state.loading}>
                         提交
                     </Button>
                 </Col>
