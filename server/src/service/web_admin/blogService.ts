@@ -148,7 +148,7 @@ export const deleteBlog = async (options: IDeleteBlog) => {
 
 // 获取所有博客
 export const getAllBlogService = async () => {
-  const sqlStr = 'select * from blog;'
+  const sqlStr = 'select * from blog order by likeCount asc ;'
   try {
     return await performSql(sqlStr)
   } catch (error) {

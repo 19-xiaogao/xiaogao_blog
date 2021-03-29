@@ -7,6 +7,7 @@ export interface IResponse {
 // blog table interface 
 
 export interface IBlog {
+    month: any;
     id: number
     imgUlr: string
     title: string

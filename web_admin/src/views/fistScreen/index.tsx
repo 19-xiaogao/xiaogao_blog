@@ -1,30 +1,114 @@
 import React from 'react'
 import './index.scss'
-import { EChartsOption } from 'echarts/types/dist/option';
 import ReactECharts from 'echarts-for-react';
-import { BarOption, pieOptions, LineOptions } from './echartOptions';
+import { BarOption, pieOptions, lineOptions } from './echartOptions';
 
-import { Card } from 'antd'
+import moment from 'moment'
+
+import { IBlog } from '../../types/response'
+import { Card, message } from 'antd'
+
+import { httpGetAllBlog } from '../../api/api'
+
+
 
 interface IFistScreenState {
-    barOptions: EChartsOption
-    pieOptions: EChartsOption
-    LineOptions: EChartsOption
+    barVariableOptions: {
+        xAxisData: string[]
+        seriesData: number[]
+    }
+    lineVariableOptions: {
+        xAxisData: string[],
+        seriesDataOne: number[],
+        seriesDataThow: number[]
+    }
+    pieVariableOptions: {
+        seriesData: { vlaue: number, name: string }[]
+    }
 }
 
 class FistScreen extends React.Component<{}, IFistScreenState> {
     state = {
-        barOptions: BarOption,
-        pieOptions,
-        LineOptions
+        barVariableOptions: {
+            xAxisData: [],
+            seriesData: []
+        },
+        lineVariableOptions: {
+            xAxisData: [],
+            seriesDataOne: [],
+            seriesDataThow: []
+        },
+        pieVariableOptions: {
+            seriesData: []
+        }
+    }
+
+    componentDidMount() {
+        this.initData()
+    }
+
+    private async initData() {
+
+        const { success, data } = await httpGetAllBlog()
+
+        if (!success) return message.error('服务器错误')
+
+        const mapData = data.map((item: IBlog) => ({ ...item, createDate: moment(item.createDate).format('YYYY-MM') }))
+
+        this.disponseBar(mapData)
+        this.disponsePie(mapData)
+    }
+    // 处理柱状图and折线图的数据
+    private disponseBar(arr: IBlog[]) {
+
+        const classify = arr.reduce((last: any, item: IBlog) => {
+            if (last[item.createDate]) {
+                last[item.createDate].push(item)
+            } else {
+                last[item.createDate] = [item]
+            }
+            return last
+        }, {})
+
+        const XaisData = Object.keys(classify)
+
+        let seriesData = []
+        let seriesDataTow = []
+        for (let k in classify) {
+
+            let count = 0
+            let countLike = 0
+            classify[k].forEach((item: IBlog) => {
+                count += item.viewCount
+                countLike += item.likeCount
+            });
+
+            seriesData.push(count)
+            seriesDataTow.push(countLike)
+        }
+
+        this.setState({
+            barVariableOptions: { xAxisData: XaisData, seriesData },
+            lineVariableOptions: { xAxisData: XaisData, seriesDataOne: seriesData, seriesDataThow: seriesDataTow }
+        })
+
+    }
+    private disponsePie(arr: IBlog[]) {
+        let seriesData: any[] = []
+        if (arr.length < 5) {
+            seriesData = arr.map(item => ({ value: item.likeCount, name: item.title }))
+        } else {
+            seriesData = arr.splice(0, 5).map(item => ({ value: item.likeCount, name: item.title }))
+        }
+        this.setState({ pieVariableOptions: { seriesData } })
     }
     render() {
-        const { barOptions, pieOptions, LineOptions } = this.state
+        const { barVariableOptions, lineVariableOptions, pieVariableOptions } = this.state
 
         return <Card className='fistScreen'>
             <div className='barCharts'>
                 <ReactECharts
-                    option={barOptions}
+                    option={BarOption(barVariableOptions.xAxisData, barVariableOptions.seriesData)}
                     notMerge={true}
                     lazyUpdate={true}
                     style={{ width: '100%', height: '100%' }}
@@ -32,7 +116,7 @@ class FistScreen extends React.Component<{}, IFistScreenState> {
             </div>
             <div className='pie'>
                 <ReactECharts
-                    option={pieOptions}
+                    option={pieOptions(pieVariableOptions.seriesData)}
                     notMerge={true}
                     lazyUpdate={true}
                     style={{ width: '100%', height: '100%' }}
@@ -40,7 +124,7 @@ class FistScreen extends React.Component<{}, IFistScreenState> {
             </div>
             <div className='line'>
                 <ReactECharts
-                    option={LineOptions}
+                    option={lineOptions(lineVariableOptions.xAxisData, lineVariableOptions.seriesDataOne, lineVariableOptions.seriesDataThow)}
                     notMerge={true}
                     lazyUpdate={true}
                     style={{ width: '100%', height: '100%' }}

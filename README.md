@@ -45,7 +45,7 @@
 - [x] 评论列表接口
 - [x] 订阅接口
 - [x] web_admin 评论接口
-- [ ] web_admin echarts 数据筛选接口
+- [x] web_admin echarts 数据筛选接口
 - [x] web_admin 修改博客 bug
 - [x] web_admin 屏蔽评论
 - [x] 创建文章 给 订阅用户发送邮箱
