@@ -68,8 +68,6 @@ class CreateBlog extends React.PureComponent<ICreateBlogProps, ICreateArticleSta
             message.success('创建成功')
             postSendSubscribeEmail().then(res => message.success('邮件发送成功')).catch(err => message.error('邮件发送失败'))
         } else {
-            console.log(this.props.WhetherToCreate);
-
             const { success: successful } = await httpPostUpdateBlog({ title, content: updateContext, imgUrl, id: this.props.id ? this.props.id : 0 })
             if (!successful) { return message.error('修改失败') }
             message.success('修改成功')

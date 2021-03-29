@@ -55,7 +55,7 @@ const email = (type: number, data: IUser, info: personal) => {
                 </tbody>
             </table>
                 `
-            }
+            },
         ]
         transport.sendMail(options[type - 1], (err, res) => err ? reject(false) : resolve(true))
     })

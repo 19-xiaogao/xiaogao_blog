@@ -30,9 +30,4 @@ export const sendEmailSubscribe = async () => {
         throw error
     }
 
-
-
-
-
-
 }

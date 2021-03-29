@@ -2,6 +2,7 @@ import express from "express";
 import { ResponseState } from "../../types/enum";
 import { writeResult } from "../../utils/result";
 import { insertBlog, selectBlog, updateBlog, deleteBlog } from "../../service/web_admin/blogService";
+
 const router = express.Router();
 
 // 创建博客
@@ -44,6 +45,8 @@ router.post('/update_blog', (req, res) => {
     res.send()
   })
 })
+
+
 // 删除博客
 router.delete('/delete', async (req, res) => {
   res.writeHead(200, { 'Content-Type': ResponseState.ContentType })

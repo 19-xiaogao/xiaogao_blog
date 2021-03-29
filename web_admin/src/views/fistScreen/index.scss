@@ -1,0 +1,29 @@
+.fistScreen {
+  width: 99%;
+  height: 96%;
+  margin-top: 5px !important;
+  margin-left: 5px !important;
+  margin-right: 5px !important;
+  position: relative !important;
+  .barCharts {
+    position: absolute;
+    width: 100%;
+    height: 50%;
+    left: 0;
+    top: 0;
+  }
+  .pie {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 30%;
+    height: 50%;
+  }
+  .line {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 70%;
+    height: 50%;
+  }
+}
