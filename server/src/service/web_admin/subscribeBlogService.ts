@@ -10,13 +10,13 @@ export const subscribeService = async (options: ISList) => {
     options.pageNo = Number(options.pageNo)
     options.pageSize = Number(options.pageSize)
     try {
-        const sqlStr = options.email ? 'select * from subscribeblog where email = ? limit ?,?;' : 'select * from subscribeblog limit ?,?;';
+        const sqlStr = options.email ? 'select * from subscribeblog where email like ? limit ?,?;' : 'select * from subscribeblog limit ?,?;';
         if (options.email) {
-            const totalMysql = 'select COUNT(id) as total from subscribeblog WHERE email = ?;';
+            const totalMysql = 'select COUNT(id) as total from subscribeblog WHERE email like ?;';
 
-            const totalResponse = await performSql(totalMysql, [options.email]) as { total: number }[]
+            const totalResponse = await performSql(totalMysql, [`%${options.email}%`]) as { total: number }[]
 
-            const subscribeResponse = await performSql(sqlStr, [options.email, (options.pageNo - 1) * options.pageSize, options.pageSize])
+            const subscribeResponse = await performSql(sqlStr, [`%${options.email}%`, (options.pageNo - 1) * options.pageSize, options.pageSize])
 
             return {
                 list: subscribeResponse,

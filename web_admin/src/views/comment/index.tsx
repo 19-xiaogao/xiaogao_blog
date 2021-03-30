@@ -33,6 +33,7 @@ interface ICommentState {
     commentList: Comment[]
     total: number
     selectRowKeys: React.Key[] | number[]
+    blogName: string
 }
 
 class Comment extends React.Component<{}, ICommentState> {
@@ -44,6 +45,7 @@ class Comment extends React.Component<{}, ICommentState> {
         commentList: [],
         total: 0,
         selectRowKeys: [],
+        blogName: ''
     }
     protected rowSelection: TableRowSelection<Comment> = {
         onChange: (selectedRowKeys) => {
@@ -70,10 +72,13 @@ class Comment extends React.Component<{}, ICommentState> {
             align: 'center',
             key: 'createTime',
         },
-        // TODO:
-        // {
-        //     title: "关联博客",
-        // },
+
+        {
+            title: "关联博客",
+            dataIndex: 'blogTitle',
+            align: 'center',
+            key: "blogTitle"
+        },
         {
             title: '吐槽干货',
             align: 'center',
@@ -110,7 +115,7 @@ class Comment extends React.Component<{}, ICommentState> {
         this.initComment(this.state.pageNo, this.state.pageSize)
     }
 
-    private onDelteComment = async () => {
+    private onDeleteComment = async () => {
 
         this.setState({ loading: true })
 
@@ -151,6 +156,13 @@ class Comment extends React.Component<{}, ICommentState> {
         return data
     }
 
+    private blogNameInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+        this.setState({ blogName: e.target.value })
+    }
+    private query = () => {
+        this.initComment(this.state.pageNo, this.state.pageSize, { blogName: this.state.blogName })
+    }
+
     componentDidMount() {
 
         this.initComment(this.state.pageNo, this.state.pageSize)
@@ -159,22 +171,17 @@ class Comment extends React.Component<{}, ICommentState> {
 
     render() {
 
-        const { selectRowKeys, loading } = this.state
+        const { selectRowKeys, loading, blogName } = this.state
         return <div className='comment_box'>
             <Card className='comment_header'>
                 <Row>
                     <Col span={6} className='flex'>
                         <span>博客:</span>
-                        <Input type="text" placeholder='搜索博客名称' />
+                        <Input type="text" placeholder='搜索博客名称' value={blogName} onChange={this.blogNameInput} />
                     </Col>
                     <Col span={6} className='flex'>
-                        <span>关键字:</span>
-                        <Input type="text" placeholder='搜索关键字' />
-                    </Col>
-                    <Col span={6} className='flex'>
-                        <Button type='primary'>查询</Button>
-                        <Button type='primary' style={{ margin: ' 0 10px' }}>重置</Button>
-                        <Button type='primary' disabled={selectRowKeys.length === 0} onClick={this.onDelteComment}>删除</Button>
+                        <Button type='primary' onClick={this.query}>查询</Button>
+                        <Button type='primary' style={{ margin: ' 0 10px' }} disabled={selectRowKeys.length === 0} onClick={this.onDeleteComment}>删除</Button>
                     </Col>
                 </Row>
             </Card>

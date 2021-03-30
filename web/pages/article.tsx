@@ -55,7 +55,7 @@ const Article: React.FC<IArticle> = (props) => {
                 if (!success) return
 
                 // TODO: 重新定位到最下面
-                
+
                 setBlogList(disposeBlogFiled(data.list))
 
                 if (props.total === data.list.length) {
@@ -74,7 +74,7 @@ const Article: React.FC<IArticle> = (props) => {
     const renderMonth = (blog: [IArticleList]) =>
 
         blog.map((item, index) => (<div className={Styles.year_list} key={index + '1'}>
-            
+
             <ul className={Styles.month_list}>
 
                 <li className={Styles.month}>{item.month}</li>
@@ -110,7 +110,7 @@ const Article: React.FC<IArticle> = (props) => {
 
             {renderMonth(blogList)}
             {bottomChar ? <div className={Styles.bottom} >呜呜,已经被掏空了</div> : null}
-            
+
         </section>
     </div>
 }
