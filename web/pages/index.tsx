@@ -26,11 +26,14 @@ interface IAppState {
     navHied: boolean
     loadingMore: boolean
     blogList: IBlogList[] | any[]
+    pageNo: number
+    pageSize: number
+    total: number
 }
 
 interface IAppProps {
-    blogList: IBlogList[]
-    total: number
+    // blogList: IBlogList[]
+    // total: number
 }
 let pageSize = 5
 class App extends React.Component<IAppProps, IAppState> {
@@ -45,17 +48,28 @@ class App extends React.Component<IAppProps, IAppState> {
             navHied: false,
             loadingMore: false,
             screenHeight: 0,
-            blogList: []
+            blogList: [],
+            pageNo: 1,
+            pageSize: 5,
+            total: 0
         }
     }
 
     componentDidMount() {
+        const { pageNo, pageSize } = this.state
         this.initParallax(this.scene.current)
         window.addEventListener('resize', this.disposeScreen, false)
         this.disposeScreen()
         document.addEventListener('scroll', () => {
             clearInterval(this.timer)
         })
+        this.initData(pageNo, pageSize)
+    }
+    private async initData(pageNo: number, pageSize: number) {
+        this.setState({ loadingMore: true })
+        const responseData = await getBlogList({ pageNo, pageSize })
+        this.setState({ blogList: responseData.list, total: responseData.total, loadingMore: false })
+
     }
 
     componentWillUnmount() {
@@ -108,11 +122,10 @@ class App extends React.Component<IAppProps, IAppState> {
         return style
     }
 
-    private loadMore = async () => {
-        this.setState({ loadingMore: true })
-        pageSize = pageSize + 5
-        const data = await getBlogList({ pageNo: 0, pageSize: pageSize })
-        this.setState({ blogList: data.list, loadingMore: false })
+    private loadMore = () => {
+        const { pageNo, pageSize } = this.state
+        this.setState(() => ({ pageNo: this.state.pageSize + 5 }))
+        this.initData(pageNo, pageSize + 5)
     }
 
     private initParallax = (DOMElement: React.ReactNode) => {
@@ -159,9 +172,8 @@ class App extends React.Component<IAppProps, IAppState> {
     </div>)
 
     private renderBlogList = () => {
-        const { blogList } = this.props
-        const concatBlogList = this.state.blogList.concat(blogList)
-        return concatBlogList.map(item => (<div className={Styles.post} key={item.id}>
+        const { blogList } = this.state
+        return blogList.map(item => (<div className={Styles.post} key={item.id}>
             <div className={Styles.img_box}>
                 <Link href={`/[${String(item.id)}]`} as={`/${String(item.id)}`}>
                     <a>
@@ -206,7 +218,7 @@ class App extends React.Component<IAppProps, IAppState> {
         ))
     }
     private renderHomeBlogList = () => {
-        const { blogList } = this.props
+        const { blogList } = this.state
         const item = blogList.length > 0 ? blogList[blogList.length - 1] : {
             id: 1,
             createDate: '',
@@ -251,7 +263,7 @@ class App extends React.Component<IAppProps, IAppState> {
             <div className={Styles.content}>
                 {this.renderBlogList()}
                 <div className={Styles.more} onClick={this.loadMore}>
-                    {this.props.total === this.props.blogList.length ? <div className={Styles.bottomTest}>到底了</div> : this.state.loadingMore ? <LoadingDom /> : <div className={Styles.loadingBtn}>加载更多 </div>}
+                    {this.state.total === this.state.blogList.length ? <div className={Styles.bottomTest}>到底了</div> : this.state.loadingMore ? <LoadingDom /> : <div className={Styles.loadingBtn}>加载更多 </div>}
                 </div>
             </div>
             <div className={Styles.foot}>
@@ -266,9 +278,9 @@ class App extends React.Component<IAppProps, IAppState> {
     }
 }
 
-export const getBlogList = async (params?) => {
+export const getBlogList = async (params) => {
     try {
-        const { data, success } = await getIndexPageData({ pageNo: 0, pageSize: pageSize, ...params })
+        const { data, success } = await getIndexPageData({ pageNo: params.pageNo, pageSize: params.pageSize })
         if (!success) return message.error('请求错误')
         return data
     } catch (error) {
@@ -277,11 +289,10 @@ export const getBlogList = async (params?) => {
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
-    const blogList = await getBlogList()
+
     return {
         props: {
-            blogList: blogList.list,
-            total: blogList.total
+
         },
         revalidate: 1
     }

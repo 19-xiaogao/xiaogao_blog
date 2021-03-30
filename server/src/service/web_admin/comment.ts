@@ -3,6 +3,7 @@ import { performSql } from '../../db/performSql';
 interface ISelectComment {
     pageNo: number
     pageSize: number
+    blogName?: string
 }
 // 查找博客
 // 可以博客查询 评论
@@ -13,20 +14,37 @@ export const selectComment = async (options: ISelectComment, success: (res) => a
     options.pageNo = Number(options.pageNo)
     options.pageSize = Number(options.pageSize)
 
-    const mysqlStr = 'select * from comment limit ?, ?;';
 
-    const sqlTotalStr = 'select COUNT(id) as total from comment;'
+    if (options.blogName) {
+        const sqlStr = 'SELECT comment.*,blog.title AS blogTitle FROM `comment` LEFT JOIN `blog` ON blog.id = comment.articleId where blog.title like ? limit ?, ?;'
+        const params = [`%${options.blogName}%`, (options.pageNo - 1) * options.pageSize, options.pageSize];
+        const sqlTotalStr = 'SELECT COUNT(comment.id) as total FROM `comment` LEFT JOIN `blog` ON blog.id = comment.articleId where blog.title like ? ;'
+        const sqlParams = [`%${options.blogName}%`]
+        try {
+            const resList = await performSql(sqlStr, params);
+            const resTotal: any = await performSql(sqlTotalStr, sqlParams);
+            success({ list: resList, total: resTotal[0].total });
+        } catch (err) {
+            error(err)
+        }
+    } else {
+        const mysqlStr = 'SELECT comment.*,blog.title AS blogTitle FROM `comment` LEFT JOIN `blog` ON blog.id = comment.articleId limit ?, ?;';
 
-    const params = [(options.pageNo - 1) * options.pageSize, options.pageSize];
+        const sqlTotalStr = 'select COUNT(id) as total from comment;'
 
-    try {
-        const resList = await performSql(mysqlStr, params);
-        const resTotal: any = await performSql(sqlTotalStr);
-        success({ list: resList, total: resTotal[0].total });
+        const params = [(options.pageNo - 1) * options.pageSize, options.pageSize];
 
-    } catch (err) {
-        error(err)
+        try {
+            const resList = await performSql(mysqlStr, params);
+            const resTotal: any = await performSql(sqlTotalStr);
+            success({ list: resList, total: resTotal[0].total });
+
+        } catch (err) {
+            error(err)
+        }
     }
+
+
 }
 interface IDeleteComment {
     id: number[]

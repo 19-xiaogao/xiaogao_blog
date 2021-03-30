@@ -20,10 +20,10 @@ interface IFistScreenState {
     lineVariableOptions: {
         xAxisData: string[],
         seriesDataOne: number[],
-        seriesDataThow: number[]
+        seriesDataThrow: number[]
     }
     pieVariableOptions: {
-        seriesData: { vlaue: number, name: string }[]
+        seriesData: { value: number, name: string }[]
     }
 }
 
@@ -37,7 +37,7 @@ class FistScreen extends React.Component<{}, IFistScreenState> {
         lineVariableOptions: {
             xAxisData: [],
             seriesDataOne: [],
-            seriesDataThow: []
+            seriesDataThrow: []
         },
         pieVariableOptions: {
             seriesData: []
@@ -56,14 +56,12 @@ class FistScreen extends React.Component<{}, IFistScreenState> {
 
         const mapData = data.map((item: IBlog) => ({ ...item, createDate: moment(item.createDate).format('YYYY-MM') }))
 
-        this.disponseBar(mapData)
-
-        this.disponsePie(mapData)
-
+        this.disposeBar(mapData)
+        this.disposePie(mapData)
     }
 
     // 处理柱状图and折线图的数据
-    private disponseBar(arr: IBlog[]) {
+    private disposeBar(arr: IBlog[]) {
 
         const classify = arr.reduce((last: any, item: IBlog) => {
             if (last[item.createDate]) {
@@ -74,7 +72,7 @@ class FistScreen extends React.Component<{}, IFistScreenState> {
             return last
         }, {})
 
-        const XaisData = Object.keys(classify)
+        const AxisData = Object.keys(classify)
 
         let seriesData = []
         let seriesDataTow = []
@@ -92,14 +90,12 @@ class FistScreen extends React.Component<{}, IFistScreenState> {
         }
 
         this.setState({
-            barVariableOptions: { xAxisData: XaisData, seriesData },
-            lineVariableOptions: { xAxisData: XaisData, seriesDataOne: seriesData, seriesDataThow: seriesDataTow }
+            barVariableOptions: { xAxisData: AxisData, seriesData },
+            lineVariableOptions: { xAxisData: AxisData, seriesDataOne: seriesData, seriesDataThrow: seriesDataTow }
         })
 
     }
-
-    // 处理饼状图数据
-    private disponsePie(arr: IBlog[]) {
+    private disposePie(arr: IBlog[]) {
         let seriesData: any[] = []
         if (arr.length < 5) {
             seriesData = arr.map(item => ({ value: item.likeCount, name: item.title }))
@@ -135,7 +131,7 @@ class FistScreen extends React.Component<{}, IFistScreenState> {
 
             <div className='line'>
                 <ReactECharts
-                    option={lineOptions(lineVariableOptions.xAxisData, lineVariableOptions.seriesDataOne, lineVariableOptions.seriesDataThow)}
+                    option={lineOptions(lineVariableOptions.xAxisData, lineVariableOptions.seriesDataOne, lineVariableOptions.seriesDataThrow)}
                     notMerge={true}
                     lazyUpdate={true}
                     style={{ width: '100%', height: '100%' }}

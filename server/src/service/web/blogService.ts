@@ -10,8 +10,8 @@ export const selectBlog = async (options: ISelectBlog, success: (res) => void, e
     options.pageSize = Number(options.pageSize);
     const sqlTotalStr = 'select COUNT(title) as total from blog WHERE show_blog = 1 ;'
     if (options.pageNo && options.pageSize) {
-        const params = [options.pageNo, options.pageSize];
-        const sqlStr = "select id,imgUrl,createDate,title,content,number_words,viewCount,likeCount from blog WHERE show_blog = 1 limit ?, ? ;";
+        const params = [(options.pageNo - 1) * options.pageSize, options.pageSize];
+        const sqlStr = "select * from blog WHERE show_blog = 1 limit ?, ? ;";
         try {
             const resList = await performSql(sqlStr, params);
             const resTotal: any = await performSql(sqlTotalStr);
@@ -20,7 +20,7 @@ export const selectBlog = async (options: ISelectBlog, success: (res) => void, e
             error(err);
         }
     } else {
-        const sqlStr = "select id,imgUrl,createDate,title,content,number_words,viewCount,likeCount from blog WHERE show_blog = 1;";
+        const sqlStr = "select * from blog WHERE show_blog = 1;";
         try {
             const resList = await performSql(sqlStr);
             const resTotal: any = await performSql(sqlTotalStr);

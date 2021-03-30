@@ -67,8 +67,8 @@ export const selectBlog = async (options: ISelectBlog, success: (res) => any, er
       error(err);
     }
   } else {
-    const sqlStr = `SELECT * FROM blog WHERE title = ? ORDER BY createDate DESC limit ?,? ;`
-    const params = [options.title, (options.pageNo - 1) * options.pageSize, options.pageSize];
+    const sqlStr = `SELECT * FROM blog WHERE title like ? ORDER BY createDate DESC limit ?,? ;`
+    const params = [`%${options.title}%`, (options.pageNo - 1) * options.pageSize, options.pageSize];
     const sqlTotalStr = 'select COUNT(title) as total from blog WHERE title = ?;'
     try {
       const result = await performSql(sqlStr, params);
@@ -144,6 +144,7 @@ export const deleteBlog = async (options: IDeleteBlog) => {
   } catch (error) {
     throw error
   }
+  
 }
 
 // 获取所有博客
