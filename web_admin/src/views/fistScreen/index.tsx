@@ -28,6 +28,7 @@ interface IFistScreenState {
 }
 
 class FistScreen extends React.Component<{}, IFistScreenState> {
+    
     state = {
         barVariableOptions: {
             xAxisData: [],
@@ -56,8 +57,11 @@ class FistScreen extends React.Component<{}, IFistScreenState> {
         const mapData = data.map((item: IBlog) => ({ ...item, createDate: moment(item.createDate).format('YYYY-MM') }))
 
         this.disponseBar(mapData)
+
         this.disponsePie(mapData)
+
     }
+
     // 处理柱状图and折线图的数据
     private disponseBar(arr: IBlog[]) {
 
@@ -93,6 +97,8 @@ class FistScreen extends React.Component<{}, IFistScreenState> {
         })
 
     }
+
+    // 处理饼状图数据
     private disponsePie(arr: IBlog[]) {
         let seriesData: any[] = []
         if (arr.length < 5) {
@@ -102,10 +108,13 @@ class FistScreen extends React.Component<{}, IFistScreenState> {
         }
         this.setState({ pieVariableOptions: { seriesData } })
     }
+
     render() {
+
         const { barVariableOptions, lineVariableOptions, pieVariableOptions } = this.state
 
         return <Card className='fistScreen'>
+
             <div className='barCharts'>
                 <ReactECharts
                     option={BarOption(barVariableOptions.xAxisData, barVariableOptions.seriesData)}
@@ -114,6 +123,7 @@ class FistScreen extends React.Component<{}, IFistScreenState> {
                     style={{ width: '100%', height: '100%' }}
                 />
             </div>
+
             <div className='pie'>
                 <ReactECharts
                     option={pieOptions(pieVariableOptions.seriesData)}
@@ -122,6 +132,7 @@ class FistScreen extends React.Component<{}, IFistScreenState> {
                     style={{ width: '100%', height: '100%' }}
                 />
             </div>
+
             <div className='line'>
                 <ReactECharts
                     option={lineOptions(lineVariableOptions.xAxisData, lineVariableOptions.seriesDataOne, lineVariableOptions.seriesDataThow)}
