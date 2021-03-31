@@ -226,7 +226,9 @@ const BlogDetail: React.FC<IProps> = (props) => {
 
         setValidation(false)
     }
-    const loadMore = async () => {
+    // 加载更多
+    const loadMore = async (e) => {
+        e.stopPropagation()
         SetLoading(true)
         const { success, data } = await get_blogComment({ id: props.blogDetail.id, pageNo: 1, pageSize: pageSize + 5 })
         setPageSize(pageSize + 5)
@@ -268,8 +270,8 @@ const BlogDetail: React.FC<IProps> = (props) => {
 
                 <h2 className={Styles.comment_title}><span>Comment List</span><span>({total})</span></h2>
                 {renderComment()}
-                <div className={Styles.more} onClick={loadMore}>
-                    {total === comment.length ? <div className={Styles.bottomTest}>到底了</div> : loadingMore ? <LoadingDom /> : <div className={Styles.loadingBtn}>加载更多 </div>}
+                <div className={Styles.more}>
+                    {total === comment.length ? <div className={Styles.bottomTest}>到底了</div> : loadingMore ? <LoadingDom /> : <div className={Styles.loadingBtn} onClick={loadMore} >加载更多 </div>}
                 </div>
             </section>
 

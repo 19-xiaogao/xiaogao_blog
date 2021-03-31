@@ -262,8 +262,8 @@ class App extends React.Component<IAppProps, IAppState> {
             </div>
             <div className={Styles.content}>
                 {this.renderBlogList()}
-                <div className={Styles.more} onClick={this.loadMore}>
-                    {this.state.total === this.state.blogList.length ? <div className={Styles.bottomTest}>到底了</div> : this.state.loadingMore ? <LoadingDom /> : <div className={Styles.loadingBtn}>加载更多 </div>}
+                <div className={Styles.more} >
+                    {this.state.total === this.state.blogList.length ? <div className={Styles.bottomTest}>到底了</div> : this.state.loadingMore ? <LoadingDom /> : <div className={Styles.loadingBtn} onClick={this.loadMore}>加载更多 </div>}
                 </div>
             </div>
             <div className={Styles.foot}>
