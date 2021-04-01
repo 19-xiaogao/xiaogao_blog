@@ -25,17 +25,15 @@ interface IAppState {
     }
     navHied: boolean
     loadingMore: boolean
-    blogList: IBlogList[] | any[]
+    blogList: IBlogList[] 
     pageNo: number
     pageSize: number
     total: number
 }
 
 interface IAppProps {
-    // blogList: IBlogList[]
-    // total: number
+
 }
-let pageSize = 5
 class App extends React.Component<IAppProps, IAppState> {
     private scene = React.createRef<any>();
     private timer: any = null;
@@ -124,7 +122,7 @@ class App extends React.Component<IAppProps, IAppState> {
 
     private loadMore = () => {
         const { pageNo, pageSize } = this.state
-        this.setState(() => ({ pageNo: this.state.pageSize + 5 }))
+        this.setState(() => ({ pageSize: this.state.pageSize + 5 }))
         this.initData(pageNo, pageSize + 5)
     }
 

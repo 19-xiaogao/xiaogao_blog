@@ -28,17 +28,17 @@ export const getBlogComment = async (options: ICommentParams) => {
     options.pageNo = Number(options.pageNo)
     options.pageSize = Number(options.pageSize)
     const strSql = 'SELECT * FROM `comment` WHERE articleId = ? LIMIT ?, ?;';
-    const totalStr = 'select count(id) as total from`comment`;';
-   try {
-    const params = [options.id, (options.pageNo - 1) * options.pageSize, options.pageSize]
-    const blogResponse = await performSql(strSql, params) as IComment[]
-    const totalResponse = await performSql(totalStr) as { total: number }
-    
-    return {
-        list: blogResponse,
-        total: totalResponse[0].total
+    const totalStr = 'select count(id) as total from`comment` WHERE articleId = ?;';
+    try {
+        const params = [options.id, (options.pageNo - 1) * options.pageSize, options.pageSize]
+        const blogResponse = await performSql(strSql, params) as IComment[]
+        const totalResponse = await performSql(totalStr, [options.id]) as { total: number }
+
+        return {
+            list: blogResponse,
+            total: totalResponse[0].total
+        }
+    } catch (error) {
+        throw error
     }
-   } catch (error) {
-     throw error  
-   }
 }

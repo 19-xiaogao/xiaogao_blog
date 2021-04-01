@@ -16,14 +16,13 @@ interface IArticle {
     total: number
 }
 
-let pageSize = 5;
-
-// 文章列表
+let pageSize = 10;
 const Article: React.FC<IArticle> = (props) => {
 
     const [blogList, setBlogList] = useState<[IArticleList]>(props.blogAll)
 
     const [bottomChar, setBottomChar] = useState<boolean>(false)
+
 
     const router = useRouter()
 
