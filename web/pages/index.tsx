@@ -141,9 +141,11 @@ class App extends React.Component<IAppProps, IAppState> {
             body.style.overflowY = ""
         }
     }
+
     private onSlide = () => {
         this.animate(0)
     }
+
     private animate = (targe: number, callback?: () => void) => {
         this.timer = setInterval(() => {
             let step = (targe - window.pageYOffset) / 10;
@@ -160,7 +162,7 @@ class App extends React.Component<IAppProps, IAppState> {
     private renderNav = () => (<div className={Styles.nav} style={!this.state.navHied ? { top: '-100%' } : { top: '0' }}>
         <ul className={Styles.nav_list} >
             <li><a href="/article">Article</a></li>
-            <li><a href="/messageBoard">MessageBoard</a></li>
+            {/* <li><a href="/messageBoard">MessageBoard</a></li> */}
             <li><Link href="/subscribe"><a>Subscribe</a></Link></li>
             <li><Link href="/aboutMe"><a>AboutMe</a></Link> </li>
         </ul>
@@ -196,7 +198,6 @@ class App extends React.Component<IAppProps, IAppState> {
                             <FontColorsOutlined className={Styles.icon} />
                             <span className={Styles.charts}>{item.number_words}</span>
                         </Tooltip>
-
                     </div>
                     <div>
                         <Tooltip title='查看' color='#50bcb6' overlayStyle={{ borderRadius: '4px' }}>

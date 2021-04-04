@@ -28,29 +28,43 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: #707171;
-  opacity: 0.8;
+  opacity: 0.7;
   border-radius: 3%;
   outline: 0;
-
-//   box-shadow: 0px 0px 4px 10px #eee;
+  background: #fff;
+  //   box-shadow: 0px 0px 4px 10px #eee;
 }
 
 
-.login_box input {
+.input {
   display: inline-block;
   height: 30px;
   width: 70%;
   margin-top: 60px;
   padding-left: 10px;
   padding-bottom: 3px;
-  outline: none;
   background: none;
+  outline: none;
+  color: black;
   font-size: 15px;
-  color: #fff;
-  
+  border-bottom: 1px solid #333;
+
 }
 
+.input:focus {
+  transition: borderBottom .4s;
+}
+
+@keyframes borderBottom {
+  to {
+    border-width: 0px;
+  }
+
+  from {
+    border-width: 100px;
+
+  }
+}
 
 .login_box button {
   width: 70%;
@@ -62,12 +76,12 @@
   border-radius: 10px;
   font-size: 17px;
   color: #fff;
-  background: #0984e3 ;
+  background: #0984e3;
 }
 
 .login_box button :hover {
-    animation: back 8s ease-in-out;
-} 
+  animation: back 8s ease-in-out;
+}
 
 @keyframes back {
   0% {

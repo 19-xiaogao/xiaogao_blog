@@ -18,6 +18,8 @@ const Header: React.FC<IHeaders> = (props) => {
     const router = useRouter()
     const jumpHomePage = (e) => {
         e.preventDefault()
+        const body = document.querySelector('body')
+        body.style.overflowY = ""
         router.push('/')
     }
     useEffect(() => {
