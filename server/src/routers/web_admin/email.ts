@@ -4,7 +4,7 @@ import { writeResult } from "../../utils/result";
 import { sendEmailSubscribe } from '../../service/common/emailService'
 
 const router = express.Router();
-
+// 发送邮箱
 router.post('/sendEmail', async (req, res) => {
     res.writeHead(200, { 'Content-Type': ResponseState.ContentType })
     try {

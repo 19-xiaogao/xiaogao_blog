@@ -25,10 +25,4 @@ export const sendEmai = async () => {
     } catch (error) {
         throw error
     }
-
-
-
-
-
-
 }
