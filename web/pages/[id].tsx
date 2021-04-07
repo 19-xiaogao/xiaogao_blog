@@ -302,11 +302,7 @@ export async function getStaticProps({ params }) {
     const { success, data } = await getBlogDetail({ id: params.id })
 
     if (!success) return message.warn('请求错误---getStaticProps')
-
-
-
-
-
+    
     return {
         props: {
             blogDetail: data[0],

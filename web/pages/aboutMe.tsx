@@ -15,7 +15,7 @@ const AboutMe: React.FC = () => {
 
     const mailContent = (<div>longjiuwei999@163.com</div>)
 
-    const githubContent = (<div>此项目的开源地址, 来个star~</div>)
+    const githubContent = (<div>此项目的开源地址, 来个star吧~</div>)
 
     return <div>
         <Helmet title="He 我是小膏" />
