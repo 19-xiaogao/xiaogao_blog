@@ -5,7 +5,7 @@ export interface IResponse {
     message: string
 }
 
-//index.tsx 首页页面博客列表data数据格式
+// 首页页面博客列表data数据格式
 export interface IBlogList {
     imgUrl: string
     content: string

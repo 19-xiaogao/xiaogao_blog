@@ -17,7 +17,7 @@ const storage = multer.diskStorage({
 })
 const upload = multer({ storage });
 router.post('/update_img', upload.single('file'), (req: any, res) => {
-    const imgUrl = `http://${req.headers.host}/images/${req.file.name}`
+    const imgUrl = `http://${req.headers.host}/public/images/${req.file.name}`
     res.writeHead(200, { 'Content-Type': ResponseState.ContentType });
     res.write(writeResult({ success: true, message: ResponseState.success, data: imgUrl }))
     res.end();
