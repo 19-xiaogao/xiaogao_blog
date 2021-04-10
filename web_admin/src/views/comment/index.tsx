@@ -33,7 +33,7 @@ interface ICommentState {
     commentList: Comment[]
     total: number
     selectRowKeys: React.Key[] | number[]
-    blogName: string
+    blogName: string | undefined
 }
 
 class Comment extends React.Component<{}, ICommentState> {
@@ -45,7 +45,7 @@ class Comment extends React.Component<{}, ICommentState> {
         commentList: [],
         total: 0,
         selectRowKeys: [],
-        blogName: ''
+        blogName: undefined
     }
     protected rowSelection: TableRowSelection<Comment> = {
         onChange: (selectedRowKeys) => {
