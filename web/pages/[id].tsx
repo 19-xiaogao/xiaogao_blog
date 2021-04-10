@@ -7,13 +7,13 @@ import PageHeader from '../components/Header'
 import PuzzleVerify from '../components/puzzleVerify'
 
 import { getBlogDetail, getIndexPageData, goodLikeBlog, blog_createComment, get_blogComment } from '../api/api'
+import LoadingDom from '../components/loading'
 
 import { IBlogList, headerType, IComment } from '../types/response'
 import { Email } from '../util/RegExp'
 
 interface IProps {
     blogDetail: IBlogList
-    commentData: IComment[]
 
 }
 
@@ -23,8 +23,8 @@ const BlogDetail: React.FC<IProps> = (props) => {
 
     let section = null
 
-    const [comment, setComment] = useState<IComment[]>(props.commentData)
-
+    const [comment, setComment] = useState<IComment[]>([])
+    const [total, setTotal] = useState<number>(0)
     const [likeTody, setLikeTody] = useState<boolean>(false)
 
     const [scrollWidth, setScrollWidth] = useState<string>('0%')
@@ -38,6 +38,10 @@ const BlogDetail: React.FC<IProps> = (props) => {
     const [errorInfo, setErrorInfo] = useState<string>('~认真和用心是一种态度, 感谢支持~')
 
     const [openValidation, setValidation] = useState<boolean>(false)
+
+    const [pageSize, setPageSize] = useState<number>(5)
+
+    const [loadingMore, SetLoading] = useState<boolean>(false)
 
     const { blogDetail } = props
 
@@ -55,6 +59,17 @@ const BlogDetail: React.FC<IProps> = (props) => {
 
         return () => window.removeEventListener('scroll', scrollBar, false)
     }, [])
+
+    // 获取评论数据
+    useEffect(() => {
+        (async () => {
+            const { success, data } = await get_blogComment({ id: props.blogDetail.id, pageNo: 1, pageSize: pageSize })
+            if (!success) return message.warn('请求错误---getStaticProps')
+            setComment(data.list)
+            setTotal(data.total)
+        })()
+    }, [])
+
 
     const scrollBar = () => {
 
@@ -201,16 +216,27 @@ const BlogDetail: React.FC<IProps> = (props) => {
         setCommentName('')
         setCommentEmail('')
         setContext('')
-        const { success: commentSuccess, data } = await get_blogComment({ id: props.blogDetail.id })
+        const { success: commentSuccess, data } = await get_blogComment({ id: props.blogDetail.id, pageNo: 1, pageSize: pageSize })
         if (!commentSuccess) return
-        setComment(data)
+        setComment(data.list)
+        setTotal(data.total)
 
     }
     const closeVerify = () => {
 
         setValidation(false)
     }
-
+    // 加载更多
+    const loadMore = async (e) => {
+        e.stopPropagation()
+        SetLoading(true)
+        const { success, data } = await get_blogComment({ id: props.blogDetail.id, pageNo: 1, pageSize: pageSize + 5 })
+        setPageSize(pageSize + 5)
+        if (!success) return message.warn('请求错误')
+        SetLoading(false)
+        setComment(data.list)
+        setTotal(data.total)
+    }
 
     return <div className={Styles.bigBox}>
 
@@ -242,8 +268,11 @@ const BlogDetail: React.FC<IProps> = (props) => {
                     </div>
                 </div>
 
-                <h2 className={Styles.comment_title}><span>Comment List</span><span>({comment.length})</span></h2>
+                <h2 className={Styles.comment_title}><span>Comment List</span><span>({total})</span></h2>
                 {renderComment()}
+                <div className={Styles.more}>
+                    {total === comment.length ? <div className={Styles.bottomTest}>到底了</div> : loadingMore ? <LoadingDom /> : <div className={Styles.loadingBtn} onClick={loadMore} >加载更多 </div>}
+                </div>
             </section>
 
         </div>
@@ -273,17 +302,10 @@ export async function getStaticProps({ params }) {
     const { success, data } = await getBlogDetail({ id: params.id })
 
     if (!success) return message.warn('请求错误---getStaticProps')
-
-    const { success: commentSuccess, data: commentData } = await get_blogComment({ id: params.id })
-
-    if (!commentSuccess) return message.warn('请求错误---getStaticProps')
-
-
-
+    
     return {
         props: {
             blogDetail: data[0],
-            commentData: commentData,
         }
     }
 }

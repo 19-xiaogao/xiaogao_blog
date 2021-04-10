@@ -34,8 +34,8 @@ class Login extends Component<ILoginProps, {}> {
     return (
       <div className={Styles.login}>
         <div className={Styles.login_box}>
-          <input type="text" name="username" placeholder="username" onChange={this.inputChange} />
-          <input type="password" name='password' placeholder="Password" onChange={this.inputChange} />
+          <input type="text" name="username" className={Styles.input} placeholder="username" onChange={this.inputChange} />
+          <input type="password" name='password' className={Styles.input}  placeholder="Password" onChange={this.inputChange} />
           <button onClick={this.btnLogin}><span>SIGN IN</span></button>
         </div>
       </div>

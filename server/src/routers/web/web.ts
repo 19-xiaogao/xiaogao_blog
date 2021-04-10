@@ -161,11 +161,15 @@ router.post('/subscribe_verify', async (req, res) => {
 })
 
 router.get('/blog_comment', async (req, res) => {
-    const { id }: { id: number } = req.query as any
-    const response = await getBlogComment({ id }) as IComment[]
     res.writeHead(200, { 'Content-Type': ResponseState.ContentType })
-    res.write(writeResult({ success: true, message: ResponseState.success, data: response.reverse() }))
-    res.send()
+    try {
+        const response = await getBlogComment(req.query as any)
+        res.write(writeResult({ success: true, message: ResponseState.success, data: { list: response.list.reverse(), total: response.total } }))
+        res.send()
+    } catch (error) {
+        res.write(writeResult({ success: false, message: ResponseState.failed, data: error }))
+        res.send()
+    }
 })
 
 export default router

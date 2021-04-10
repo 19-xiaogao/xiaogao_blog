@@ -28,6 +28,7 @@ interface IFistScreenState {
 }
 
 class FistScreen extends React.Component<{}, IFistScreenState> {
+    
     state = {
         barVariableOptions: {
             xAxisData: [],
@@ -58,6 +59,7 @@ class FistScreen extends React.Component<{}, IFistScreenState> {
         this.disposeBar(mapData)
         this.disposePie(mapData)
     }
+
     // 处理柱状图and折线图的数据
     private disposeBar(arr: IBlog[]) {
 
@@ -102,10 +104,13 @@ class FistScreen extends React.Component<{}, IFistScreenState> {
         }
         this.setState({ pieVariableOptions: { seriesData } })
     }
+
     render() {
+
         const { barVariableOptions, lineVariableOptions, pieVariableOptions } = this.state
 
         return <Card className='fistScreen'>
+
             <div className='barCharts'>
                 <ReactECharts
                     option={BarOption(barVariableOptions.xAxisData, barVariableOptions.seriesData)}
@@ -114,6 +119,7 @@ class FistScreen extends React.Component<{}, IFistScreenState> {
                     style={{ width: '100%', height: '100%' }}
                 />
             </div>
+
             <div className='pie'>
                 <ReactECharts
                     option={pieOptions(pieVariableOptions.seriesData)}
@@ -122,6 +128,7 @@ class FistScreen extends React.Component<{}, IFistScreenState> {
                     style={{ width: '100%', height: '100%' }}
                 />
             </div>
+
             <div className='line'>
                 <ReactECharts
                     option={lineOptions(lineVariableOptions.xAxisData, lineVariableOptions.seriesDataOne, lineVariableOptions.seriesDataThrow)}

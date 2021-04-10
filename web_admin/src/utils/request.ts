@@ -2,8 +2,11 @@ import axios, { AxiosResponse } from "axios";
 import { IResponse } from '../types/response'
 import store from '../redux'
 
+console.log(process.env.REACT_APP_API);
+
+
 const server = axios.create({
-  baseURL: '/devApi',
+  baseURL: process.env.REACT_APP_API,
   timeout: 5000,
 });
 

@@ -1,5 +1,5 @@
 import { performSql } from '../../db/performSql';
-let nextId = 1
+
 interface IComment {
     articleId: number
     commentName: string
@@ -18,9 +18,27 @@ export const createComment = async (options: IComment, success: (res: any) => an
         err(error)
     }
 }
+interface ICommentParams {
+    pageNo: number
+    pageSize: number
+    id: number
+}
 //获取文章对应的评论
-export const getBlogComment = (options: { id: number }) => {
-    const strSql = 'SELECT * FROM `comment` WHERE articleId = ?;';
-    const params = [options.id]
-    return performSql(strSql, params)
+export const getBlogComment = async (options: ICommentParams) => {
+    options.pageNo = Number(options.pageNo)
+    options.pageSize = Number(options.pageSize)
+    const strSql = 'SELECT * FROM `comment` WHERE articleId = ? LIMIT ?, ?;';
+    const totalStr = 'select count(id) as total from`comment` WHERE articleId = ?;';
+    try {
+        const params = [options.id, (options.pageNo - 1) * options.pageSize, options.pageSize]
+        const blogResponse = await performSql(strSql, params) as IComment[]
+        const totalResponse = await performSql(totalStr, [options.id]) as { total: number }
+
+        return {
+            list: blogResponse,
+            total: totalResponse[0].total
+        }
+    } catch (error) {
+        throw error
+    }
 }

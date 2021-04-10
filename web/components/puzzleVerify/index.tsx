@@ -74,6 +74,7 @@ const PuzzleVerify: React.FC<IVerify> = (props) => {
             props.verifyResponse(true)
         } else {
             setVerifyStatus(false)
+          
             props.verifyResponse(false)
         }
         removeMouseMoveListener()

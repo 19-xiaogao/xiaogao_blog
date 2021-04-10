@@ -144,6 +144,7 @@ export const deleteBlog = async (options: IDeleteBlog) => {
   } catch (error) {
     throw error
   }
+  
 }
 
 // 获取所有博客

@@ -17,13 +17,12 @@ interface IArticle {
 }
 
 let pageSize = 10;
-
-// 文章列表
 const Article: React.FC<IArticle> = (props) => {
 
     const [blogList, setBlogList] = useState<[IArticleList]>(props.blogAll)
 
     const [bottomChar, setBottomChar] = useState<boolean>(false)
+
 
     const router = useRouter()
 
@@ -54,7 +53,6 @@ const Article: React.FC<IArticle> = (props) => {
 
                 if (!success) return
 
-                // TODO: 重新定位到最下面
 
                 setBlogList(disposeBlogFiled(data.list))
 
@@ -135,6 +133,7 @@ const disposeBlogFiled = (list: IBlogList[]): [IArticleList] => {
         return last
     }, {})
 
+
     const arr: any = []
 
     for (const iterator in classify) {
@@ -156,7 +155,7 @@ interface IBlogCategorize {
 
 export const getStaticProps: GetStaticProps = async () => {
 
-    const { data, success }: IBlogCategorize = await blogCategorize({ pageNo: 0, pageSize: pageSize })
+    const { data, success }: IBlogCategorize = await blogCategorize({ pageNo: 1, pageSize: pageSize })
 
     if (!success) return
 

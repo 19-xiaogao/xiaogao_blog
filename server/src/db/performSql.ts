@@ -11,3 +11,4 @@ export const performSql = (sql, params?) =>
         );
         connection.end();
     });
+

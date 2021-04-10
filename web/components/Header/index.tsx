@@ -14,11 +14,12 @@ interface IHeaders {
     likeTody?: boolean
 }
 const Header: React.FC<IHeaders> = (props) => {
-    const [scrollView, setScrollView] = useState<boolean>(false)
     const [pageUOffset, setPageUOffset] = useState<number>(0)
     const router = useRouter()
     const jumpHomePage = (e) => {
         e.preventDefault()
+        const body = document.querySelector('body')
+        body.style.overflowY = ""
         router.push('/')
     }
     useEffect(() => {
@@ -27,11 +28,6 @@ const Header: React.FC<IHeaders> = (props) => {
         }
         let rememberPageYOffset = window.pageYOffset;
         const onScroll = (e) => {
-            if (window.pageYOffset > rememberPageYOffset) {
-                setScrollView(true)
-            } else {
-                setScrollView(false)
-            }
             rememberPageYOffset = window.pageYOffset
             setPageUOffset(window.pageYOffset)
         }
@@ -39,9 +35,9 @@ const Header: React.FC<IHeaders> = (props) => {
         return () => window.removeEventListener('scroll', onScroll, false)
     })
     const onClickLike = () => props.onOk()
-    return <header className={Styles.header} style={scrollView ? { display: 'none' } : { display: 'block' }}>
+    return <header className={Styles.header} style={props.type === headerType.subscribe ? { backgroundColor: '#ffffff21' } : {}}>
         <div className={Styles.logo}>
-            <i className="web-font" onClick={jumpHomePage} style={props.type === headerType.subscribe ? { color: '#fff' } : { color: "black" }}>小 · 膏</i>
+            <i className="web-font" onClick={jumpHomePage} style={props.type === headerType.subscribe ? { color: '#fff', } : { color: "black" }}>小 · 膏</i>
         </div>
         <div className={Styles.title} style={pageUOffset < 20 ? { display: 'none' } : { display: 'block' }}>{props.title}</div>
         <div className={Styles.menuIcon}>

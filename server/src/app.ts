@@ -1,6 +1,6 @@
 import express from "express";
 import cors from 'cors'
-
+import path from 'path'
 import blogRouter from "./routers/web_admin/blogList";
 import fileRouter from './routers/web_admin/updateFile'
 import loginRouter from './routers/web_admin/login'
@@ -55,6 +55,8 @@ app.use(
 
 // 解析 json 格式请求体
 app.use(express.json());
+
+app.use(express.static(path.join(__dirname, '../', '/public')))
 
 // 获取本地图片
 app.get('/images/*', (req, res) => {
