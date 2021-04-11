@@ -1,8 +1,8 @@
 import React from "react";
 import { Button, Dropdown, Menu } from "antd";
 import { ApartmentOutlined } from "@ant-design/icons";
-import { clearToken } from '../../redux/action';
-import { useDispatch } from 'react-redux'
+import { clearToken } from "../../redux/action";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import "./index.scss";
 
@@ -10,7 +10,8 @@ const Header: React.FC = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const logout = () => {
-    dispatch(clearToken())
+    dispatch(clearToken());
+    localStorage.removeItem("token");
     history.push("/login");
   };
   const menu = (
@@ -19,9 +20,9 @@ const Header: React.FC = () => {
     </Menu>
   );
   return (
-    <div className="home_header">
-      <Dropdown overlay={menu} placement="bottomCenter">
-        <Button type="primary" shape="round" icon={<ApartmentOutlined />} />
+    <div className='home_header'>
+      <Dropdown overlay={menu} placement='bottomCenter'>
+        <Button type='primary' shape='round' icon={<ApartmentOutlined />} />
       </Dropdown>
     </div>
   );

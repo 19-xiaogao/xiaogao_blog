@@ -5,10 +5,6 @@ interface ISelectComment {
     pageSize: number
     blogName?: string
 }
-// 查找博客
-// 可以博客查询 评论
-// 可以根据关键字查询 评论
-
 export const selectComment = async (options: ISelectComment, success: (res) => any, error: (err: any) => any) => {
 
     options.pageNo = Number(options.pageNo)

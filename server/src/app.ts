@@ -1,7 +1,6 @@
 import express from "express";
 import cors from "cors";
 import path from "path";
-
 import blogRouter from "./routers/web_admin/blogList";
 import fileRouter from "./routers/web_admin/updateFile";
 import loginRouter from "./routers/web_admin/login";
@@ -57,17 +56,11 @@ app.use(
 // 解析 json 格式请求体
 app.use(express.json());
 
-
-// 获取本地图片
-app.get("/images/*", (req, res) => {
-  res.sendFile(__dirname + "/" + req.url);
-});
-
+app.use(express.static(path.join(__dirname, "../", "/public")));
 
 // web 路由
 app.use("/api/web/", webRouter);
 app.use("/api/webAdmin/", loginRouter);
-app.use("/api/webAdmin/image", fileRouter);
 app.all("/api/webAdmin/*", (req, res, next) => {
   const token = req.headers.authorization ? req.headers.authorization : "";
   try {
@@ -80,7 +73,7 @@ app.all("/api/webAdmin/*", (req, res, next) => {
     res.send();
   }
 });
-
+app.use("/api/webAdmin/image", fileRouter);
 app.use("/api/webAdmin/blog", blogRouter);
 app.use("/api/webAdmin/comment", commentRouter);
 app.use("/api/webAdmin/subscribe", subscribeRouter);

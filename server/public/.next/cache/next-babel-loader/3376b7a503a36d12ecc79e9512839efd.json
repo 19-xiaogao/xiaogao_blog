@@ -1,0 +1,1 @@
+{"ast":null,"code":"import axios from 'axios';\nconst http = axios.create({\n  baseURL: 'http://localhost:3003/'\n});\nhttp.interceptors.request.use(config => {\n  return config;\n}, err => Promise.reject(err));\nhttp.interceptors.response.use(res => {\n  return res.data;\n}, err => Promise.reject(err));\nexport default http;","map":null,"metadata":{},"sourceType":"module"}
