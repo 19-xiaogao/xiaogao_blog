@@ -8,7 +8,7 @@ import commentRouter from "./routers/web_admin/comment";
 import subscribeRouter from "./routers/web_admin/subscribe";
 import sendEmailRouter from "./routers/web_admin/email";
 
-import webRouter from "./routers/web/web";
+import webRoazuter from "./routers/web/web";
 
 import { SSHKEY } from "./auth/index";
 import JWTverify from "./auth/jwt";
@@ -57,9 +57,14 @@ app.use(
 app.use(express.json());
 
 app.use(express.static(path.join(__dirname, "../", "/public")));
+app.use(express.static(path.join(__dirname,  "../",'public/build')));
+
+app.get("/", function (req, res) {
+  res.sendFile(path.join(__dirname, "../", "build",'index.html'));
+});
 
 // web 路由
-app.use("/api/web/", webRouter);
+app.use("/api/web/", webRoazuter);
 app.use("/api/webAdmin/", loginRouter);
 app.all("/api/webAdmin/*", (req, res, next) => {
   const token = req.headers.authorization ? req.headers.authorization : "";

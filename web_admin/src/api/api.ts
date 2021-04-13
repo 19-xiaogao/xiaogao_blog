@@ -7,6 +7,7 @@ interface ILogin {
     username: string
     password: string
 }
+
 export const httpPostLogin = (data: ILogin): AxiosResponse => axios.post('/api/webAdmin/login', data)
 
 // 创建博客
@@ -40,6 +41,7 @@ export const httpPostUpdateBlog = (data: IUpdateBlog): AxiosResponse => axios.po
 interface IDeleteBlog {
     id: number[]
 }
+
 // 删除博客
 export const httpPostDeleteBlog = (params: IDeleteBlog): AxiosResponse => axios.delete('/api/webAdmin/blog/delete', { data: params })
 
@@ -49,12 +51,14 @@ interface ISearchComment {
     pageNo: number
     pageSize: number
 }
+
 // 查询评论
 export const httpGetGetComment = (params: ISearchComment): AxiosResponse => axios.get('/api/webAdmin/comment/list', { params })
 
 interface IDeleteC {
     id: number[] | number
 }
+
 // 删除评论
 export const httpDeleteComment = (params: IDeleteC): AxiosResponse => axios.delete('/api/webAdmin/comment/delete', { data: params })
 
