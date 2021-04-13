@@ -23,7 +23,7 @@ const UpdateImage: React.FC<UpdateImageProps> = (props) => {
   const [previewImage, setPreviewImage] = useState<string>("");
   const [previewTitle, setPreviewTitle] = useState<string>("");
   const [fileList, setFileList] = useState<any[]>(file);
-  const actionUrl = "/devApi/api/webAdmin/image/update_img";
+  const actionUrl = `${process.env.REACT_APP_API}/api/webAdmin/image/update_img`;
   const header = {
     Authorization: JSON.parse(localStorage.getItem("token") as string),
   };
