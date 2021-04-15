@@ -4,13 +4,12 @@ import { performSql } from "../../db/performSql";
 import { IImg, InsertBlogOptions } from '../../types/index'
 import fs from 'fs'
 import path from 'path'
-
 const fsDeleteImage = async (urls: IImg[]) => {
   try {
     urls.forEach(item => {
       const splitImgUrl = item.imgUrl.split('/')
       const lastSuffix = splitImgUrl[splitImgUrl.length - 1]
-      const filePath = path.join(__dirname, '../../images', lastSuffix)
+      const filePath = path.join(__dirname, '../../../public/images', lastSuffix)
       fs.unlinkSync(filePath)
     })
   } catch (error) {
@@ -24,6 +23,8 @@ export const insertBlog = (
   success: (res: any) => void,
   error: (error: any) => void
 ) => {
+  console.log(options.createDate);
+  
   const sqlStr =
     "INSERT INTO blog SET title = ?,content = ?,imgUrl = ?,createDate = ?,number_words = ?;";
   const fromTime = options.createDate.replace(new RegExp('-', 'gm'), "/")

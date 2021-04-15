@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { IResponse } from '../types/response'
-import store from '../redux'
+// import store from '../redux'
 
 console.log(process.env.REACT_APP_API);
 
@@ -12,7 +12,8 @@ const server = axios.create({
 
 server.interceptors.request.use(
   (confirm) => {
-    const token = store.getState().token
+    // const token = store.getState().token
+    const token = JSON.parse(localStorage.getItem('token') as string)
     if (token) {
       confirm.headers.Authorization = token
     }

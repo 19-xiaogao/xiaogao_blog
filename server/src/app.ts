@@ -1,17 +1,17 @@
 import express from "express";
-import cors from 'cors'
-import path from 'path'
+import cors from "cors";
+import path from "path";
 import blogRouter from "./routers/web_admin/blogList";
-import fileRouter from './routers/web_admin/updateFile'
-import loginRouter from './routers/web_admin/login'
-import commentRouter from './routers/web_admin/comment'
-import subscribeRouter from './routers/web_admin/subscribe'
-import sendEmailRouter from './routers/web_admin/email'
+import fileRouter from "./routers/web_admin/updateFile";
+import loginRouter from "./routers/web_admin/login";
+import commentRouter from "./routers/web_admin/comment";
+import subscribeRouter from "./routers/web_admin/subscribe";
+import sendEmailRouter from "./routers/web_admin/email";
 
-import webRouter from './routers/web/web'
+import webRoazuter from "./routers/web/web";
 
-import { SSHKEY } from './auth/index'
-import JWTverify from './auth/jwt'
+import { SSHKEY } from "./auth/index";
+import JWTverify from "./auth/jwt";
 
 import { writeResult } from "./utils/result";
 
@@ -24,29 +24,29 @@ const post = process.env.POST || 3003;
  * 3001 web
  * 3003 server
  */
-const originList = ['http://localhost:3002', 'http://localhost:3001'];
+const originList = ["http://localhost:3002", "http://localhost:3001"];
 // 设置跨域
 const corsOptionsDelegate = (req, callback) => {
   let corsOptions;
-  if (originList.includes(req.header('Origin'))) {
+  if (originList.includes(req.header("Origin"))) {
     corsOptions = {
-      origin: true
-    }
+      origin: true,
+    };
   } else {
     corsOptions = {
-      origin: true
-    }
+      origin: true,
+    };
   }
   callback(null, corsOptions);
-}
+};
 
-app.all('*', cors(corsOptionsDelegate), (req, res, next) => {
-  if (req.method.toLowerCase() === 'options') {
-    res.sendStatus(200)
+app.all("*", cors(corsOptionsDelegate), (req, res, next) => {
+  if (req.method.toLowerCase() === "options") {
+    res.sendStatus(200);
   } else {
-    next()
+    next();
   }
-})
+});
 app.use(
   express.urlencoded({
     extended: true,
@@ -56,31 +56,32 @@ app.use(
 // 解析 json 格式请求体
 app.use(express.json());
 
-app.use(express.static(path.join(__dirname, '../', '/public')))
+app.use(express.static(path.join(__dirname, "../", "/public")));
+app.use(express.static(path.join(__dirname,  "../",'public/build')));
 
-// 获取本地图片
-app.get('/images/*', (req, res) => {
-  res.sendFile(__dirname + '/' + req.url)
-})
+app.get("/", function (req, res) {
+  res.sendFile(path.join(__dirname, "../", "build",'index.html'));
+});
 
 // web 路由
-app.use('/api/web/', webRouter)
-app.use('/api/webAdmin/', loginRouter)
-app.use('/api/webAdmin/image', fileRouter)
-app.all('/api/webAdmin/*', (req, res, next) => {
-  const token = req.headers.authorization ? req.headers.authorization : ''
+app.use("/api/web/", webRoazuter);
+app.use("/api/webAdmin/", loginRouter);
+app.all("/api/webAdmin/*", (req, res, next) => {
+  const token = req.headers.authorization ? req.headers.authorization : "";
   try {
-    JWTverify(token, SSHKEY)
-    next()
+    JWTverify(token, SSHKEY);
+    next();
   } catch (error) {
-    res.write(writeResult({ success: false, message: '登陆失效', data: error }))
-    res.send()
+    res.write(
+      writeResult({ success: false, message: "登陆失效", data: error })
+    );
+    res.send();
   }
-})
-
+});
+app.use("/api/webAdmin/image", fileRouter);
 app.use("/api/webAdmin/blog", blogRouter);
-app.use('/api/webAdmin/comment', commentRouter);
-app.use('/api/webAdmin/subscribe', subscribeRouter);
-app.use('/api/webAdmin/email', sendEmailRouter);
+app.use("/api/webAdmin/comment", commentRouter);
+app.use("/api/webAdmin/subscribe", subscribeRouter);
+app.use("/api/webAdmin/email", sendEmailRouter);
 
 app.listen(post, () => console.log(`running ${host}:${post}`));

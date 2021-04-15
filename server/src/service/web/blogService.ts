@@ -3,7 +3,9 @@ interface ISelectBlog {
     pageNo?: number | string;
     pageSize?: number | string;
 }
-
+// web_admin 
+// web
+// server
 // 查找博客列表
 export const selectBlog = async (options: ISelectBlog, success: (res) => void, error: (error: any) => void) => {
     options.pageNo = Number(options.pageNo);

@@ -1,0 +1,13 @@
+{
+  "/404": "pages/404.html",
+  "/[id]": "pages/[id].js",
+  "/_app": "pages/_app.js",
+  "/aboutMe": "pages/aboutMe.html",
+  "/article": "pages/article.js",
+  "/": "pages/index.js",
+  "/messageBoard": "pages/messageBoard.html",
+  "/subscribe": "pages/subscribe.html",
+  "/validation": "pages/validation.html",
+  "/_error": "pages/_error.js",
+  "/_document": "pages/_document.js"
+}
