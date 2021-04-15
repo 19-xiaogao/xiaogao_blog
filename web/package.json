@@ -5,8 +5,15 @@
   "scripts": {
     "dev": "next dev -p 3001",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "dev_e": "cross-env NODE_ENV=dev node server.js",
+    "start_e": "cross-env NODE_ENV=production node server.js"
   },
+  "browserslist": [
+    "defaults",
+    "not IE 11",
+    "maintained node versions"
+  ],
   "dependencies": {
     "@ant-design/icons": "^4.4.0",
     "@types/marked": "^1.2.2",
