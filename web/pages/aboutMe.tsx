@@ -9,6 +9,7 @@ import {
     MailOutlined,
     GithubOutlined
 } from '@ant-design/icons'
+
 const AboutMe: React.FC = () => {
 
     const WxContent = (<div className={Styles.img}><img src="/image/wx.jpg"></img></div>)

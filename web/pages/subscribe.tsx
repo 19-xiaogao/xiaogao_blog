@@ -55,7 +55,7 @@ const Subscribe: React.FC = () => {
 
         <PageHeader type={headerType.subscribe} />
 
-        <h1 className={Styles.h1}>[ 死亡如风-常伴无声 ]</h1>
+        <h1 className={Styles.h1}>[ 喜欢你,不辞万里 ]</h1>
 
         <div className={Styles.beginBox}>
 

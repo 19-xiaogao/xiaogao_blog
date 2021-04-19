@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import moment from 'moment'
-import { GetStaticProps } from 'next'
+import { GetServerSideProps } from 'next'
 import Header from '../components/Header'
 import { useRouter } from 'next/router'
 import Styles from '../styles/Article/index.module.scss'
@@ -27,6 +27,7 @@ const Article: React.FC<IArticle> = (props) => {
     const router = useRouter()
 
     useEffect(() => {
+        
         // 判断是否出现滚动条
         const hasScrollbar = () => document.body.scrollHeight > (window.innerHeight || document.documentElement.clientHeight);
 
@@ -153,7 +154,7 @@ interface IBlogCategorize {
     success: boolean
 }
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
 
     const { data, success }: IBlogCategorize = await blogCategorize({ pageNo: 1, pageSize: pageSize })
 

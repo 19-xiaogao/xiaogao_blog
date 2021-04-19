@@ -21,4 +21,5 @@ const LoadingUrl: React.FC<ILoading> = (props) => {
         </div>
     </div>)
 }
+
 export default LoadingUrl

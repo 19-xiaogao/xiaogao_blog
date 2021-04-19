@@ -17,8 +17,6 @@ interface IProps {
 
 }
 
-
-
 const BlogDetail: React.FC<IProps> = (props) => {
 
     let section = null
@@ -58,6 +56,7 @@ const BlogDetail: React.FC<IProps> = (props) => {
         window.addEventListener('scroll', scrollBar, false)
 
         return () => window.removeEventListener('scroll', scrollBar, false)
+        
     }, [])
 
     // 获取评论数据
@@ -104,7 +103,7 @@ const BlogDetail: React.FC<IProps> = (props) => {
             <span>{moment(blogDetail.createDate).format('YYYY-MM-DD')}</span>
             <span>阅读&nbsp;{blogDetail.viewCount}</span>
             <span>字符&nbsp;{blogDetail.number_words}</span>
-            <span>评论&nbsp;1920</span>
+            <span>评论&nbsp;{total}</span>
             <span>喜欢&nbsp;{blogDetail.likeCount}</span>
         </div>
 
@@ -226,6 +225,7 @@ const BlogDetail: React.FC<IProps> = (props) => {
 
         setValidation(false)
     }
+
     // 加载更多
     const loadMore = async (e) => {
         e.stopPropagation()
@@ -263,14 +263,13 @@ const BlogDetail: React.FC<IProps> = (props) => {
                         <button onClick={submitComment}>
                             SUBMIT
                         </button>
-                        <div className={Styles.charts} style={errorInfo.length <= 17 ? { color: "red" } : { color: '#909090' }} >{errorInfo}</div>
-
                     </div>
                 </div>
 
                 <h2 className={Styles.comment_title}><span>Comment List</span><span>({total})</span></h2>
                 {renderComment()}
                 <div className={Styles.more}>
+                    {/* TODO: loading效果 抽离一个单独的函数 */}
                     {total === comment.length ? <div className={Styles.bottomTest}>到底了</div> : loadingMore ? <LoadingDom /> : <div className={Styles.loadingBtn} onClick={loadMore} >加载更多 </div>}
                 </div>
             </section>
@@ -281,28 +280,28 @@ const BlogDetail: React.FC<IProps> = (props) => {
         </div> : null}
     </div>
 }
+// 静态生成模式
+// export async function getStaticPaths() {
 
-export async function getStaticPaths() {
+//     const { data, success } = await getIndexPageData()
 
-    const { data, success } = await getIndexPageData()
+//     if (!success) return message.warn('请求错误-getStaticPaths')
 
-    if (!success) return message.warn('请求错误-getStaticPaths')
+//     const paths = data.list.map(item => ({
 
-    const paths = data.list.map(item => ({
+//         params: { id: String(item.id) }
 
-        params: { id: String(item.id) }
+//     }))
 
-    }))
+//     return { paths, fallback: false }
+// }
 
-    return { paths, fallback: false }
-}
-
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
 
     const { success, data } = await getBlogDetail({ id: params.id })
 
     if (!success) return message.warn('请求错误---getStaticProps')
-    
+
     return {
         props: {
             blogDetail: data[0],

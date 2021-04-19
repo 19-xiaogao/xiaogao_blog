@@ -21,7 +21,6 @@ router.post("/login", (req, res) => {
   const token = JWT.sign(
     {
       exp: Math.floor(Date.now() / 1000) + 60 * 60,
-      data: { username: "xiaogao" },
     },
     SSHKEY
   );
