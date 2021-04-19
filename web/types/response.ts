@@ -1,4 +1,5 @@
 // 响应后端接口的数据格式
+//TODO: 可以写泛型
 export interface IResponse {
     data: any
     success: boolean

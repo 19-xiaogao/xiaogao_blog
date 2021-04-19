@@ -291,7 +291,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
     return {
         props: {
-
+            
         },
         revalidate: 1
     }

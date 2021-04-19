@@ -1,8 +1,8 @@
 import CreatArticle from "../views/creatArticle";
-import BlogList from '../views/blogList'
-import FistScreen from '../views/fistScreen'
-import CommentList from '../views/comment'
-import Subscribe from '../views/subscribe'
+import BlogList from "../views/blogList";
+import FistScreen from "../views/fistScreen";
+import CommentList from "../views/comment";
+import Subscribe from "../views/subscribe";
 
 import { IRouters } from "../types/routerType";
 
@@ -11,37 +11,49 @@ import {
   CommentOutlined,
   FundProjectionScreenOutlined,
   UnorderedListOutlined,
-  UsergroupAddOutlined
+  UsergroupAddOutlined,
 } from "@ant-design/icons";
 
 const router: IRouters[] = [
   {
-    path: '/',
+    path: "/",
     title: "首页",
     components: () => <FistScreen />,
-    icon: () => <FundProjectionScreenOutlined />
+    icon: () => <FundProjectionScreenOutlined />,
   },
   {
-    path: '/articleList',
+    path: "/articleList",
     title: "文章列表",
     components: () => <BlogList />,
     icon: () => <UnorderedListOutlined />,
   },
   {
-    path: '/commentReply',
+    path: "/commentReply",
     title: "评论回复",
     components: () => <CommentList />,
     icon: () => <CommentOutlined />,
   },
   {
-    path: '/subscribe',
+    path: "/subscribe",
     title: "订阅列表",
     components: () => <Subscribe />,
-    icon: () => <UsergroupAddOutlined />
+    icon: () => <UsergroupAddOutlined />,
   },
   {
-    path: '/creatArticle',
+    path: "/creatArticle",
     title: "创建文章",
+    components: () => <CreatArticle />,
+    icon: () => <CoffeeOutlined />,
+  },
+  {
+    path: "/home",
+    title: "首页设置",
+    components: () => <CreatArticle />,
+    icon: () => <CoffeeOutlined />,
+  },
+  {
+    path: "/aboutMe",
+    title: "aboutMe设置",
     components: () => <CreatArticle />,
     icon: () => <CoffeeOutlined />,
   },
