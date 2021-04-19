@@ -25,7 +25,7 @@ interface IAppState {
     }
     navHied: boolean
     loadingMore: boolean
-    blogList: IBlogList[] 
+    blogList: IBlogList[]
     pageNo: number
     pageSize: number
     total: number
@@ -267,7 +267,7 @@ class App extends React.Component<IAppProps, IAppState> {
             </div>
             <div className={Styles.foot}>
                 <a target="_blank">
-                    粤ICP备181222222号
+                    湘ICP备2021005675号
                     </a>
             </div>
             <div className={Styles.navigationBar} onClick={this.onSlide} >
@@ -286,17 +286,6 @@ export const getBlogList = async (params) => {
         console.log(error);
     }
 }
-
-export const getStaticProps: GetStaticProps = async (context) => {
-
-    return {
-        props: {
-            
-        },
-        revalidate: 1
-    }
-}
-
 
 export default App
 

@@ -5,9 +5,13 @@
   "scripts": {
     "dev": "next dev -p 3001",
     "build": "next build",
-    "start": "next start",
-    "export": "next export"
+    "start": "next start"
   },
+  "browserslist": [
+    "defaults",
+    "not IE 11",
+    "maintained node versions"
+  ],
   "dependencies": {
     "@ant-design/icons": "^4.4.0",
     "@types/marked": "^1.2.2",

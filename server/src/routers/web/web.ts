@@ -97,7 +97,7 @@ router.post('/subscribe_email', async (req, res) => {
 
         const randomNumber = createSixNumber();
 
-        const url = 'http://localhost:3001/validation';
+        const url = 'http://www.longjiuwei999.com/validation';
 
         const id = uuidv4();
 

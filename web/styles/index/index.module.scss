@@ -32,7 +32,6 @@
       }
     }
 
-
     .head {
       position: absolute !important;
       width: 100%;
@@ -188,6 +187,7 @@
         display: -webkit-box;
         -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
+        max-height: 62px;
         overflow: hidden;
       }
 
@@ -246,7 +246,6 @@
         transition: all .3s;
 
         &:hover {
-          
           transition: all .3s;
         }
 
@@ -320,6 +319,7 @@
           display: -webkit-box;
           -webkit-line-clamp: 3;
           -webkit-box-orient: vertical;
+          max-height: 40px;
           overflow: hidden;
           line-height: 22px;
         }

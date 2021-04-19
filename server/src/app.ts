@@ -47,6 +47,7 @@ app.all("*", cors(corsOptionsDelegate), (req, res, next) => {
     next();
   }
 });
+
 app.use(
   express.urlencoded({
     extended: true,
@@ -78,6 +79,7 @@ app.all("/api/webAdmin/*", (req, res, next) => {
     res.send();
   }
 });
+
 app.use("/api/webAdmin/image", fileRouter);
 app.use("/api/webAdmin/blog", blogRouter);
 app.use("/api/webAdmin/comment", commentRouter);

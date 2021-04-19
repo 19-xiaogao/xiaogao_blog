@@ -1,1 +1,0 @@
-{"ast":null,"code":"// 响应后端接口的数据格式\n// 首页页面博客列表data数据格式\n// 处理header 头部类型\nexport var headerType;\n\n(function (headerType) {\n  headerType[\"blog_detail\"] = \"blog_detail\";\n  headerType[\"subscribe\"] = \"subscribe\";\n})(headerType || (headerType = {}));","map":null,"metadata":{},"sourceType":"module"}

@@ -8,7 +8,7 @@ const router = express.Router();
 router.post('/sendEmail', async (req, res) => {
     res.writeHead(200, { 'Content-Type': ResponseState.ContentType })
     try {
-        const result = await sendEmailSubscribe()
+        await sendEmailSubscribe()
         res.write(writeResult({ success: true, message: ResponseState.success, data: '' }))
         res.end()
     } catch (error) {

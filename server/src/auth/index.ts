@@ -1,4 +1,5 @@
 import bcrypt from "bcrypt";
+
 import { personal } from '../types/index'
 
 const salt = bcrypt.genSaltSync(10);

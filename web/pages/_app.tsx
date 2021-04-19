@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+
 import "../styles/globals.css";
-import Loading from "../components/loadingUrl";
+
+// import Loading from "../components/loadingUrl";
+
 import NProgress from "nprogress";
+
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
 
@@ -24,6 +28,7 @@ function MyApp({ Component, pageProps }) {
   }, []);
 
   return <Component {...pageProps} />;
+  
 }
 
 export default MyApp;

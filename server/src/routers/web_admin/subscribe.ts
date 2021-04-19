@@ -22,10 +22,10 @@ router.get('/list', async (req, res) => {
         res.send()
     }
 })
-
+// 取消订阅
 router.delete('/delete', async (req, res) => {
     try {
-        const result = await deSubService(req.body as any)
+        await deSubService(req.body as any)
         res.writeHead(200, { 'Content-Type': ResponseState.ContentType })
         res.write(writeResult({ success: true, message: ResponseState.success, data: '' }))
         res.end()
