@@ -18,6 +18,7 @@ export interface IBlogList {
     id: number
     [props: string]: any
 }
+// comment the interface
 export interface IComment {
     id: number
     articleId: number
