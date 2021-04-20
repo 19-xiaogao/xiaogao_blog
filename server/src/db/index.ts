@@ -1,4 +1,4 @@
-  
+
 import mysql from "mysql2";
 
 const createConnection = () =>
@@ -9,5 +9,8 @@ const createConnection = () =>
     password: "root",
     database: "xiao_gao",
   });
-
+  // user: "root",
+  // password: "rootroot",
+  // database: "xiao_gao",
 export default createConnection;
+
