@@ -7,7 +7,12 @@
     "serve": "vite preview"
   },
   "dependencies": {
-    "vue": "^3.0.5"
+    "ant-design-vue": "^2.1.2",
+    "axios": "^0.21.1",
+    "node-sass": "^5.0.0",
+    "sass": "^1.32.11",
+    "vue": "^3.0.5",
+    "vue-router": "4"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^1.2.1",
