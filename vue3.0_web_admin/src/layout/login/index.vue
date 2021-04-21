@@ -3,8 +3,8 @@
     <form>
       <input
         type="text"
-        v-model="formParams.name"
-        name="name"
+        v-model="formParams.username"
+        name="username"
         @input="onInput"
         placeholder="请输入账号"
       />
@@ -23,37 +23,55 @@
 
 <script lang="ts">
 import { reactive } from "vue";
+
 import { useRouter } from "vue-router";
-import { IFormParamsState } from "../../types/index";
+
+import { IFormParamsState, ILoginResponse } from "../../types/index";
+
 import { ajaxLogin } from "../../api/api";
+
 import { message } from "ant-design-vue";
+
 export default {
   setup() {
     const router = useRouter();
+
     const formParams = reactive<IFormParamsState>({
-      name: "",
+      username: "",
       password: "",
     });
+
     const onSumbitClick = async (e: PointerEvent) => {
       e.preventDefault();
-      if (formParams.name.trim() === "") {
+      if (formParams.username.trim() === "") {
         return message.warn("请输入账号");
       }
       if (formParams.password.trim() === "") {
         return message.warn("请输入密码");
       }
-      const { success } = await ajaxLogin(formParams);
+
+      const {
+        success,
+        data,
+      }: { success: boolean; data: ILoginResponse } = await ajaxLogin(
+        formParams
+      );
+
       if (!success) return message.error("密码错误");
-      formParams.name = "";
+      formParams.username = "";
       formParams.password = "";
       router.push("/");
+      localStorage.setItem(
+        "token",
+        JSON.stringify({ token: data.token, timeStamp: new Date().getTime() })
+      );
     };
 
     const onInput = (e: any) => {
-      const name = e.target.name as string;
+      const name = e.target.username as string;
       const value = e.target.value;
       name === "name"
-        ? (formParams.name = value)
+        ? (formParams.username = value)
         : (formParams.password = value);
     };
     return {

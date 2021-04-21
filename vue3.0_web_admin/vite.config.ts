@@ -7,7 +7,7 @@ export default defineConfig({
     port: 3001,
     proxy: {
       '/devApi': {
-        target: 'localhost:3003',
+        target: 'http://localhost:3003',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/devApi/, '')
       }
