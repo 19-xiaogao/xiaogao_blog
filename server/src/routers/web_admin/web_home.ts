@@ -15,7 +15,7 @@ router.post("/inset", async (req, res) => {
   const insetParams = req.body as IInsetParams;
   const sqlStr =
     // union 合并两个sql语句的集合
-    " DELETE * FROM table_name union inset into home_web(bg_url,headerLogo,name,recordNumber) values(?,?,?,?);";
+    "DELETE * FROM web_home union inset into home_web(bg_url,headerLogo,name,recordNumber) values(?,?,?,?);";
   res.writeHead(200, { "Content-Type": ResponseState.ContentType });
   try {
     await performSql(sqlStr, insetParams);

@@ -3,7 +3,7 @@ import BlogList from "../views/blogList";
 import FistScreen from "../views/fistScreen";
 import CommentList from "../views/comment";
 import Subscribe from "../views/subscribe";
-
+import WebHome from '../views/web_home'
 import { IRouters } from "../types/routerType";
 
 import {
@@ -48,7 +48,7 @@ const router: IRouters[] = [
   {
     path: "/home",
     title: "首页设置",
-    components: () => <CreatArticle />,
+    components: () => <WebHome />,
     icon: () => <CoffeeOutlined />,
   },
   {
