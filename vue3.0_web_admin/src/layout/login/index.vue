@@ -60,11 +60,11 @@ export default {
       if (!success) return message.error("密码错误");
       formParams.username = "";
       formParams.password = "";
-      router.push("/");
       localStorage.setItem(
         "token",
         JSON.stringify({ token: data.token, timeStamp: new Date().getTime() })
       );
+      router.push("/");
     };
 
     const onInput = (e: any) => {

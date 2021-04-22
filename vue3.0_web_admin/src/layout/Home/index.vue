@@ -1,8 +1,6 @@
 <template>
   <a-layout>
-    <a-layout-sider
-      :style="{ overflow: 'auto', height: '100vh', position: 'fixed', left: 0 }"
-    >
+    <a-layout-sider class="sider">
       <div class="logo">小膏_管理后台</div>
       <a-menu theme="dark" mode="inline" v-model="selectedKeys">
         <a-menu-item key="1">
@@ -20,14 +18,10 @@
       </a-menu>
     </a-layout-sider>
 
-    <a-layout :style="{ marginLeft: '200px' }">
-      <a-layout-header :style="{ background: '#fff', padding: 0 }">
-        header
-      </a-layout-header>
-      <a-layout-content :style="{ margin: '24px 16px 0', overflow: 'initial' }">
-        aa
-      </a-layout-content>
-      <a-layout-footer :style="{ textAlign: 'center' }">
+    <a-layout class="right-body">
+      <a-layout-header class="right-body-header"> header </a-layout-header>
+      <a-layout-content class="right-body-content"> aa </a-layout-content>
+      <a-layout-footer class="right-body-footer">
         Ant Design ©2018 Created by Ant UED
       </a-layout-footer>
     </a-layout>
@@ -65,14 +59,33 @@ export default defineComponent({
 });
 </script>
 <style lang="scss"  scoped>
-.logo {
-  height: 32px;
-  background: rgba(255, 255, 255, 0.2);
-  margin: 16px;
-  color: #fff;
-  text-align: center;
-  line-height: 32px;
-  font-size: 18px;
+.sider {
+  display: flex;
+  overflow: auto;
+  height: 100vh;
+  left: 0;
+  .logo {
+    height: 32px;
+    background: rgba(255, 255, 255, 0.2);
+    margin: 16px;
+    color: #fff;
+    text-align: center;
+    line-height: 32px;
+    font-size: 18px;
+  }
+}
+.right-body {
+  .right-body-header {
+    background: "#fff";
+    padding: 0;
+  }
+  .right-body-content {
+    margin: 24px 16px 0;
+    overflow: initial;
+  }
+  .right-body-footer {
+    text-align: center;
+  }
 }
 .site-layout .site-layout-background {
   background: #fff;
