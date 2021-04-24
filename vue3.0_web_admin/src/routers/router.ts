@@ -9,6 +9,12 @@ const routes = [
   {
     path: "/",
     component: Home,
+    children: [
+      {
+        path: "/",
+        component: Login,
+      },
+    ],
   },
   { path: "/login", component: Login },
 ];
