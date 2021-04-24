@@ -1,4 +1,5 @@
 import { createRouter, createWebHashHistory } from "vue-router";
+import { isToken } from '../utils/isToken'
 import Login from "../layout/login/index.vue";
 import Home from "../layout/Home/index.vue";
 
@@ -23,5 +24,16 @@ const router = createRouter({
   history: createWebHashHistory(),
   routes,
 });
+
+//路由守卫 判断是否存在token
+router.beforeEach((to, form, next) => {
+  const token = isToken()
+  if (!to.path.includes('login') && !token) {
+    next('/login')
+  } else {
+    next()
+  }
+
+})
 
 export default router;
