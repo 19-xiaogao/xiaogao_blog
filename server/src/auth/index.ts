@@ -10,6 +10,6 @@ export const SSHKEY = "webServer@)@)!@@&SSHKEY";
 
 export const personalInformation: personal = {
     name: '小膏',
-    email_user: 'longjiuwei999@163.com',
-    email_pass: 'AQVGRABRVTQZDHFO'
+    email_user: '',
+    email_pass: ''
 }
