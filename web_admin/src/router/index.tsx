@@ -45,18 +45,18 @@ const router: IRouters[] = [
     components: () => <CreatArticle />,
     icon: () => <CoffeeOutlined />,
   },
-  {
-    path: "/home",
-    title: "首页设置",
-    components: () => <WebHome />,
-    icon: () => <CoffeeOutlined />,
-  },
-  {
-    path: "/aboutMe",
-    title: "aboutMe设置",
-    components: () => <CreatArticle />,
-    icon: () => <CoffeeOutlined />,
-  },
+  // {
+  //   path: "/home",
+  //   title: "首页设置",
+  //   components: () => <WebHome />,
+  //   icon: () => <CoffeeOutlined />,
+  // },
+  // {
+  //   path: "/aboutMe",
+  //   title: "aboutMe设置",
+  //   components: () => <CreatArticle />,
+  //   icon: () => <CoffeeOutlined />,
+  // },
 ];
 
 export default router;

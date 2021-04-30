@@ -60,7 +60,7 @@ class CreateBlog extends React.PureComponent<
   //选择时间
   private onSelectTimeOk = (value: any) => {
     this.setState({
-      createTime: moment(value).format("YYYY-MM-DD MM-HH"),
+      createTime: value,
     });
   };
   private updateBlog = async () => {
@@ -150,6 +150,7 @@ class CreateBlog extends React.PureComponent<
               showTime
               onOk={this.onSelectTimeOk}
               placeholder='请选择日期时间'
+              disabled={!this.props.WhetherToCreate}
               value={this.props.id ? this.state.createTime : undefined}
               onChange={this.onSelectTimeOk}
             />
