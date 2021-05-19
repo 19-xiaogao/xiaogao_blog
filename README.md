@@ -1,8 +1,8 @@
 # <div align="center">Litter.Dragon</div>
 
 <div align="center">
-    <img src="https://img.shields.io/badge/next-10.0.4-green">
-   <img src="https://img.shields.io/badge/react-17.1-green">
+    <img src="https://img.shields.io/badge/next-10.0-green">
+    <img src="https://img.shields.io/badge/react-17.1-green">
     <img src="https://img.shields.io/badge/glslify-v7.1.1-green">
     <img src="https://img.shields.io/badge/gsap-v3.6.0-green"><br>
     <img src="https://img.shields.io/badge/redux-4.0.5-blue">
