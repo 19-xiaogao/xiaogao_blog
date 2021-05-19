@@ -14,6 +14,5 @@
     <img src="https://img.shields.io/badge/mysql2-v2.2.5-red">
     <img src="https://img.shields.io/badge/jsonwebtoken-v8.5.1-red">
     <img src="https://img.shields.io/badge/MySQL-.exe8.0.23-red">
-      <img src="https://img.shields.io/badge/express-4.17.1-red">
-    
+    <img src="https://img.shields.io/badge/express-4.17.1-red">
 </div>
