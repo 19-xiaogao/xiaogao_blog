@@ -19,7 +19,7 @@
 
 ## ☠️ ONE PIECE
 <div style="width: 100%;">
-    <img src="./docImgs/bg.png" style="width: 100%;margin: 0 20px;" alt="wechat" title="wechat">
+    <img src="./docimgs/bg.png" style="width: 100%;margin: 0 20px;" alt="wechat" title="wechat">
 </div>
 
 ## 🤩 功能介绍
