@@ -1,4 +1,4 @@
-# <div align="center">Litter.Dragon</div>
+# <div align="center">Little.Dragon</div>
 
 <div align="center">
     <img src="https://img.shields.io/badge/next-10.0.4-green">
