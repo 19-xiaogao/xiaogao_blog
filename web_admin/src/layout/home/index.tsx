@@ -7,7 +7,7 @@ import HeaderTiTile from "../../views/Header";
 import { Helmet } from "react-helmet";
 
 import Body from "../body";
-import image from "../../assets/image/bg.png";
+// import image from "../../assets/image/bg.png";
 
 export default class Home extends React.Component<RouteComponentProps, {}> {
 
@@ -16,7 +16,7 @@ export default class Home extends React.Component<RouteComponentProps, {}> {
       <Box>
         <Helmet>
           <title>首页</title>
-          <link rel="canonical" href={image} />
+          {/* <link rel="canonical" href={image} /> */}
         </Helmet>
         <Box.Header>
           <HeaderTiTile />

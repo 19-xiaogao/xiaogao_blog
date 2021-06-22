@@ -21,7 +21,7 @@ export const sendEmailSubscribe = async () => {
         let subscribeResponse = await performSql(sqlSubscribeStr) as any[]
 
         subscribeResponse = subscribeResponse.map(item => item.email)
-        const sendResponse = await nodeEmail(2, { title: blogResponse[0].title, url: `http://localhost:3001/${blogResponse[0].id}`, email: subscribeResponse }, personalInformation)
+        const sendResponse = await nodeEmail(2, { title: blogResponse[0].title, url: `http://longjiuwei999.com/${blogResponse[0].id}`, email: subscribeResponse }, personalInformation)
         if (!sendResponse) {
             throw Error('发送邮箱错误;')
         }
