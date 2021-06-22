@@ -23,6 +23,7 @@
     "express": "^4.17.1",
     "glslify": "^7.1.1",
     "gsap": "^3.6.0",
+    "highlight.js": "^11.0.1",
     "http-proxy-middleware": "^1.0.6",
     "marked": "^2.0.0",
     "moment": "^2.29.1",
