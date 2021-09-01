@@ -58,7 +58,7 @@
     "jest-resolve": "26.6.0",
     "jest-watch-typeahead": "0.6.1",
     "markdown-it": "^12.0.4",
-    "marked": "^1.2.7",
+    "marked": "^2.0.0",
     "mini-css-extract-plugin": "0.11.3",
     "moment": "^2.29.1",
     "node-sass": "^5.0.0",
