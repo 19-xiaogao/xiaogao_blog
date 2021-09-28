@@ -1,7 +1,7 @@
 export interface IInitStore {
-    token: string | undefined
+  token: string | undefined;
 }
 export interface IActions {
-    type: String
-    payload: any
+  type: String;
+  payload: any;
 }

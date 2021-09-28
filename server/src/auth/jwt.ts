@@ -1,3 +1,3 @@
-import JWT from 'jsonwebtoken'
+import JWT from "jsonwebtoken";
 
-export default (token: string, SSHKEY: string) => JWT.verify(token, SSHKEY)
+export default (token: string, SSHKEY: string) => JWT.verify(token, SSHKEY);
